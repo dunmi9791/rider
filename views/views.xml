@@ -1,0 +1,60 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <!--
+    <record model="ir.ui.view" id="rider.list">
+      <field name="name">rider list</field>
+      <field name="model">rider.rider</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+    -->
+
+    <!-- actions opening views on models -->
+    <!--
+    <record model="ir.actions.act_window" id="rider.action_window">
+      <field name="name">rider window</field>
+      <field name="res_model">rider.rider</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    -->
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="rider.action_server">
+      <field name="name">rider server</field>
+      <field name="model_id" ref="model_rider_rider"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+    <!--
+    <menuitem name="rider" id="rider.menu_root"/>
+    -->
+    <!-- menu categories -->
+    <!--
+    <menuitem name="Menu 1" id="rider.menu_1" parent="rider.menu_root"/>
+    <menuitem name="Menu 2" id="rider.menu_2" parent="rider.menu_root"/>
+    -->
+    <!-- actions -->
+    <!--
+    <menuitem name="List" id="rider.menu_1_list" parent="rider.menu_1"
+              action="rider.action_window"/>
+    <menuitem name="Server to list" id="rider" parent="rider.menu_2"
+              action="rider.action_server"/>
+    -->
+  </data>
+</odoo>
