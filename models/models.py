@@ -33,7 +33,7 @@ class ServiceRequest(models.Model):
     tools = fields.Boolean(string="Tools",  )
     caution_triangle = fields.Boolean(string="Caution Triangle",  )
     fire_extinguisher = fields.Boolean(string="Fire Extinguisher",  )
-    new_field_ids = fields.Many2many(comodel_name="", relation="", column1="", column2="", string="", )
+
 
 
 
