@@ -3,12 +3,21 @@
 
     <menuitem name="Riders E-forms" id="riders_root_menu"/>
 
+    <record model="ir.actions.act_window" id="action_riders_jobcards">
+        <field name="name">Job Cards</field>
+        <field name="res_model">servicerequest.rider</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+
 
 
 
 
     <menuitem name="Workshop " id="riders_workshop_menu" parent="riders_root_menu"
               sequence="1" />
+
+    <menuitem name="Job Cards" id="riders_workshop_jobcard_menu" parent="riders_workshop_menu"
+              sequence="6" action="action_riders_jobcards"/>
 
 
     <menuitem name="Supply Chain Management" id="riders_supply_menu" parent="riders_root_menu"
