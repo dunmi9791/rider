@@ -4,6 +4,7 @@ from odoo import models, fields, api
 
 class ServiceRequest(models.Model):
     _name = 'servicerequest.rider'
+    _inherit = ['mail.thread']
 
     vehicle_id = fields.Many2one('vehicles.rider')
     checkin_date = fields.Datetime(string="Check-in Date/Time", required=False, )
