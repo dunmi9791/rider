@@ -8,10 +8,10 @@
           <form name="DLC Issues Form">
               <header>
 
-                  <button name="technician_complete" string="Technician check complete" class="oe_highlight" resolution_status="check-in" type="object"/>
+                  <button name="technician_complete" string="Technician check complete" class="oe_highlight" state="check-in" type="object"/>
 
 
-                  <field name="state" widget="statusbar" statusbar_visible="check-in"/>
+                  <field name="state" widget="statusbar" statusbar_visible="check-in,Technician service completed,Unit Manager parts approved,store officer parts released,Unit manager quality check,Checked out"/>
               </header>
     <sheet>
               <div class="oe_title">
