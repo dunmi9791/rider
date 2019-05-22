@@ -38,7 +38,7 @@ class ServiceRequest(models.Model):
 
 
 
-@api.multi
+    @api.multi
     def technician_complete(self):
         self.state = 'Technician service completed'
 
