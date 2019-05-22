@@ -1,5 +1,60 @@
 <odoo>
   <data>
+
+    <record id="view_riders_jobcard_form" model="ir.ui.view">
+        <field name="name">view.riders.jobcard.form</field>
+        <field name="model">servicerequest.rider</field>
+        <field name="arch" type="xml">
+          <form name="DLC Issues Form">
+              <header>
+
+                  <button name="technician_complete" string="Technician check complete" class="oe_highlight" resolution_status="check-in" type="object"/>
+
+
+                  <field name="state" widget="statusbar" statusbar_visible="check-in"/>
+              </header>
+    <sheet>
+              <div class="oe_title">
+                  <label for="vehicle_id" class="oe_edit_only"/>
+                  <h1>
+                      <field name="vehicle_id" />
+                  </h1>
+              </div>
+              <group>
+                  <group>
+                      <field name="checkin_date"/>
+                      <field name="checkout_date"/>
+                    <field name="service_type"/>
+                    <field name="checkin_comment"/>
+                  </group>
+                <group>
+                  <field name="spare_tyre"/>
+                  <field name="jack"/>
+                  <field name="wheel_spanner"/>
+                  <field name="tools"/>
+                  <field name="caution_triangle"/>
+                  <field name="fire_extinguisher"/>
+
+                </group>
+                  <group>
+                      <field name="electrics_ta"/>
+                      <field name="suspension_ta"/>
+                      <field name="engine_ta"/>
+                    <field name="bodywork_ta"/>
+                    <field name="interior_ta"/>
+                    <field name="tyres_ta"/>
+                    <field name="technical_comment"/>
+                  </group>
+              </group>
+            </sheet>
+              <div class="oe_chatter">
+                <field name="message_follower_ids" widget="mail_followers"/>
+                <field name="message_ids" widget="mail_thread"/>
+            </div>
+          </form>
+
+        </field>
+      </record>
     <!-- explicit list view definition -->
     <!--
     <record model="ir.ui.view" id="rider.list">
