@@ -1,3 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_rider_rider,rider.rider,model_servicerequest_rider,,1,1,1,1
+access_rider_vehicles,rider.vehicles,model_vehicles_rider,,1,1,1,1
 

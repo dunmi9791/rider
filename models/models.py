@@ -38,14 +38,6 @@ class ServiceRequest(models.Model):
 
 
 
-class Vehicle(models.Model):
-    _name = 'vehicles.rider'
-    _rec_name = 'vehicles'
-    _description = 'Vehicles'
-
-    vehicle_type = fields.Char()
-    vehicle_registration = fields.Char()
-    client_id = fields.Many2one(comodel_name="client.riders", string="Client", required=False, )
 
     
 
