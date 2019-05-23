@@ -10,7 +10,6 @@ class OrderMemo(models.Model):
     subject = fields.Char(string="Subject")
     employee_from_id = fields.Many2one(comodel_name="res.users", string="From", required=False, )
     employee_to_id = fields.Many2one(comodel_name="res.users", string="To", required=False, )
-    employee_copy_ids = fields.Many2many(comodel_name="res.users", relation="", column1="", column2="", string="CC", )
     date = fields.Date(string="Date", required=False, )
     memo_content = fields.HTML(string="",  )
 
