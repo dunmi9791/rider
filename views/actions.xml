@@ -9,6 +9,12 @@
         <field name="view_mode">tree,form,kanban</field>
     </record>
 
+     <record model="ir.actions.act_window" id="action_riders_cashrequisition">
+        <field name="name">Cash Requitision</field>
+        <field name="res_model">cashrequisition.rider</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+
 
 
 
@@ -25,6 +31,8 @@
 
     <menuitem name="Finance" id="riders_finance_menu" parent="riders_root_menu"
               sequence="3" />
+     <menuitem name="Cash Requisition" id="riders_finance_cashrequisition_menu" parent="riders_finance_menu"
+              sequence="6" action="action_riders_cashrequisition"/>
 
 
 </odoo>
