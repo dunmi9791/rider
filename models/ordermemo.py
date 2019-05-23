@@ -10,6 +10,6 @@ class OrderMemo(models.Model):
     subject = fields.Char(string="Subject")
 
     date = fields.Date(string="Date", required=False, )
-    memo_content = fields.HTML(string="",  )
+    memo_content = fields.Html(string="",  )
 
 
