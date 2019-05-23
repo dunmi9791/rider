@@ -15,6 +15,18 @@
         <field name="view_mode">tree,form,kanban</field>
     </record>
 
+    <record model="ir.actions.act_window" id="action_riders_order">
+        <field name="name">Orders</field>
+        <field name="res_model">order.rider</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_riders_ordermemo">
+        <field name="name">Order Memo</field>
+        <field name="res_model">ordermemo.rider</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+
 
 
 
@@ -28,6 +40,12 @@
 
     <menuitem name="Supply Chain Management" id="riders_supply_menu" parent="riders_root_menu"
               sequence="2" />
+
+     <menuitem name="Orders" id="riders_supply_order_menu" parent="riders_supply_menu"
+              sequence="6" action="action_riders_order"/>
+
+     <menuitem name="Order Memo" id="riders_supply_ordermemo_menu" parent="riders_supply_menu"
+              sequence="8" action="action_riders_ordermemo"/>
 
     <menuitem name="Finance" id="riders_finance_menu" parent="riders_root_menu"
               sequence="3" />

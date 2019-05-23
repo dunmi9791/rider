@@ -2,4 +2,8 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_rider_rider,rider.rider,model_servicerequest_rider,,1,1,1,1
 access_rider_vehicles,rider.vehicles,model_vehicles_rider,,1,1,1,1
 access_rider_cashrequisition,rider.cashrequisition,model_cashrequisition_rider,,1,1,1,1
+access_rider_order,rider.order,model_order_rider,,1,1,1,1
+access_rider_partner,rider.partner,model_partner_rider,,1,1,1,1
+access_rider_ordermemo,rider.odermemo,model_odermemo_rider,,1,1,1,1
+
 
