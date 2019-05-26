@@ -23,8 +23,17 @@ class Parts(models.Model):
 
     name = fields.Char(string="Name")
     description = fields.Char(string="Description", required=False, )
-    cost = fields.Float(string="Cost",  required=False, )
+    cost = fields.Float(string=" Unit Cost",  required=False, )
     fundrequest_id = fields.Many2one(comodel_name="fundrequestw.rider", index=True, ondelete='cascade')
+    quantity = fields.Float(string="Quantity",  required=False, default=1.0, )
+    price_subtotal = fields.Float('Subtotal', compute='_compute_price_subtotal', store=True, digits=0)
+
+    @api.one
+    @api.depends('cost', 'fundrequestw_id', 'quantity', 'name',)
+    def _compute_price_subtotal(self):
+
+        self.price_subtotal = self.cost*self.quantity
+
 
 
 
