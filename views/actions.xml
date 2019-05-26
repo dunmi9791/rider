@@ -27,6 +27,12 @@
         <field name="view_mode">tree,form,kanban</field>
     </record>
 
+    <record model="ir.actions.act_window" id="action_riders_fundrequest">
+        <field name="name">Fund Request</field>
+        <field name="res_model">fundrequestw.rider</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+
 
 
 
@@ -36,6 +42,9 @@
 
     <menuitem name="Job Cards" id="riders_workshop_jobcard_menu" parent="riders_workshop_menu"
               sequence="6" action="action_riders_jobcards"/>
+
+    <menuitem name="Fund Request" id="riders_workshop_fundrequest_menu" parent="riders_workshop_menu"
+              sequence="7" action="action_riders_fundrequest"/>
 
 
     <menuitem name="Supply Chain Management" id="riders_supply_menu" parent="riders_root_menu"
