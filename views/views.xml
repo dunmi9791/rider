@@ -60,6 +60,7 @@
         <field name="model">fundrequestw.rider</field>
         <field name="arch" type="xml">
             <form string="Fund Request">
+                <field name="state" widget="statusbar" statusbar_visible="draft,Requested,Approved"/>
 
                     <notebook>
                     <page string="Parts">
