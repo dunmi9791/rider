@@ -5,5 +5,6 @@ access_rider_cashrequisition,rider.cashrequisition,model_cashrequisition_rider,,
 access_rider_order,rider.order,model_order_rider,,1,1,1,1
 access_rider_partner,rider.partner,model_partner_rider,,1,1,1,1
 access_rider_ordermemo,rider.odermemo,model_ordermemo_rider,,1,1,1,1
-
+access_rider_funrequestw,rider.fundrequestw,model_fundrequestw_rider,,1,1,1,1
+access_rider_parts,rider.parts,model_parts_rider,,1,1,1,1
 
