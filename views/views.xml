@@ -65,19 +65,9 @@
                     <page string="Parts">
                         <field name="operations" context="{'default_quantity': product_qty}">
                         </field>
-                        <group>
 
-                                                <field name="name"/>
-                                                <label for="quantity"/>
-                                                <div class="o_row">
-                                                    <field name="quantity"/>
 
-                                                </div>
 
-                                                <field name="cost"/>
-
-                                                <field name="price_subtotal" widget="monetary" invisible="1"/>
-                                            </group>
                     </page>
                     </notebook>
             </form>
