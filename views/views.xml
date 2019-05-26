@@ -61,10 +61,12 @@
         <field name="arch" type="xml">
             <form string="Fund Request">
                 <field name="state" widget="statusbar" statusbar_visible="draft,Requested,Approved"/>
+                <group>
                 <field name="date"/>
                 <field name="request_no"/>
                 <field name="programme_id"/>
                 <field name="jobcard_id"/>
+                </group>
 
 
                     <notebook>
