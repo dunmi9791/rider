@@ -13,7 +13,7 @@ class FundRequestWorkshop(models.Model):
     jobcard_id = fields.Many2one(comodel_name="servicerequest.rider", string="Job Card ref", required=False, )
     state = fields.Selection(string="", selection=[('draft', 'draft'), ('Requested', 'Requested'), ('Approved', 'Approved'), ], required=False, copy=False, default='draft', readonly=True, track_visibility='onchange', )
     operations = fields.One2many(
-        'parts.rider', 'fundrequest_id', 'Parts',
+        'fundrequest.partsline', 'fundrequest_id', 'Parts',
         copy=True, readonly=True, states={'draft': [('readonly', False)]})
     part_qty = fields.Float(string="Quantity",  required=False, )
 
@@ -25,21 +25,35 @@ class Parts(models.Model):
     name = fields.Char(string="Name")
     description = fields.Char(string="Description", required=False, )
     cost = fields.Float(string=" Unit Cost",  required=False, )
+
+
+
+
+class FundrequestLine(models.Model):
+    _name = 'fundrequest.partsline'
+
+    _description = 'Parts request line'
+
+    name = fields.Text(string='Description', required=True)
     fundrequest_id = fields.Many2one(comodel_name="fundrequestw.rider", index=True, ondelete='cascade')
-    quantity = fields.Float(string="Quantity",  required=False, default=1.0, )
-    price_subtotal = fields.Float('Subtotal', compute='_compute_price_subtotal', store=True, digits=0)
+    parts_id = fields.Many2one('parts.rider', string='Parts',
+                                 ondelete='restrict', index=True)
     state = fields.Selection([
         ('draft', 'Draft'),
         ('confirmed', 'Confirmed'),
         ('done', 'Done'),
         ('cancel', 'Cancelled')], 'Status', default='draft',
-        copy=False, readonly=True, required=True,)
+        copy=False, readonly=True, required=True, )
+    price_subtotal = fields.Float('Subtotal', compute='_compute_price_subtotal', store=True, digits=0)
 
     @api.one
-    @api.depends('cost', 'fundrequest_id', 'quantity', 'name',)
+    @api.depends('cost', 'fundrequest_id', 'quantity', 'name', )
     def _compute_price_subtotal(self):
+        self.price_subtotal = self.cost * self.quantity
 
-        self.price_subtotal = self.cost*self.quantity
+    quantity = fields.Float(string="Quantity", required=False, default=1.0, )
+
+
 
 
 
