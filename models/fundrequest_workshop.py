@@ -29,7 +29,7 @@ class Parts(models.Model):
     price_subtotal = fields.Float('Subtotal', compute='_compute_price_subtotal', store=True, digits=0)
 
     @api.one
-    @api.depends('cost', 'fundrequestw_id', 'quantity', 'name',)
+    @api.depends('cost', 'fundrequest_id', 'quantity', 'name',)
     def _compute_price_subtotal(self):
 
         self.price_subtotal = self.cost*self.quantity
