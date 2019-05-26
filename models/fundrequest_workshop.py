@@ -27,6 +27,12 @@ class Parts(models.Model):
     fundrequest_id = fields.Many2one(comodel_name="fundrequestw.rider", index=True, ondelete='cascade')
     quantity = fields.Float(string="Quantity",  required=False, default=1.0, )
     price_subtotal = fields.Float('Subtotal', compute='_compute_price_subtotal', store=True, digits=0)
+    state = fields.Selection([
+        ('draft', 'Draft'),
+        ('confirmed', 'Confirmed'),
+        ('done', 'Done'),
+        ('cancel', 'Cancelled')], 'Status', default='draft',
+        copy=False, readonly=True, required=True,)
 
     @api.one
     @api.depends('cost', 'fundrequest_id', 'quantity', 'name',)
