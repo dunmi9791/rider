@@ -61,11 +61,15 @@
         <field name="arch" type="xml">
             <form string="Fund Request">
                 <field name="state" widget="statusbar" statusbar_visible="draft,Requested,Approved"/>
-                <field name="part_qty"/>
+                <field name="date"/>
+                <field name="request_no"/>
+                <field name="programme_id"/>
+                <field name="job_id"/>
+
 
                     <notebook>
                     <page string="Parts">
-                        <field name="operations" context="{'default_quantity': part_qty}">
+                        <field name="operations" >
                         </field>
 
 
