@@ -7,4 +7,5 @@ access_rider_partner,rider.partner,model_partner_rider,,1,1,1,1
 access_rider_ordermemo,rider.odermemo,model_ordermemo_rider,,1,1,1,1
 access_rider_funrequestw,rider.fundrequestw,model_fundrequestw_rider,,1,1,1,1
 access_rider_parts,rider.parts,model_parts_rider,,1,1,1,1
+access_rider_partsline,rider.partsline,model_fundrequest_partsline,,1,1,1,1
 
