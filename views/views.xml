@@ -63,7 +63,7 @@
 
                     <notebook>
                     <page string="Parts">
-                        <field name="operations" context="{'default_quantity': product_qty}">
+                        <field name="operations" >
                         </field>
 
 
