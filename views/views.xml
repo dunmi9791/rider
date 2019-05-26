@@ -64,7 +64,7 @@
                 <field name="date"/>
                 <field name="request_no"/>
                 <field name="programme_id"/>
-                <field name="job_id"/>
+                <field name="jobcard_id"/>
 
 
                     <notebook>
