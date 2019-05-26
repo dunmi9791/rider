@@ -61,6 +61,7 @@
         <field name="arch" type="xml">
             <form string="Fund Request">
                 <field name="state" widget="statusbar" statusbar_visible="draft,Requested,Approved"/>
+                <field name="part_qty"/>
 
                     <notebook>
                     <page string="Parts">
