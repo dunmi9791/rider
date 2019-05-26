@@ -15,6 +15,7 @@ class FundRequestWorkshop(models.Model):
     operations = fields.One2many(
         'parts.rider', 'fundrequest_id', 'Parts',
         copy=True, readonly=True, states={'draft': [('readonly', False)]})
+    part_qty = fields.Float(string="Quantity",  required=False, )
 
 class Parts(models.Model):
     _name = 'parts.rider'
