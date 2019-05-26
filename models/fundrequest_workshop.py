@@ -52,6 +52,7 @@ class FundrequestLine(models.Model):
         self.price_subtotal = self.cost * self.quantity
 
     quantity = fields.Float(string="Quantity", required=False, default=1.0, )
+    cost = fields.Float(string=" Unit Cost", required=False, )
 
 
 
