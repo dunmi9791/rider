@@ -85,7 +85,7 @@
             <field name="name">fundrequest.partsline.tree</field>
             <field name="model">fundrequest.partsline</field>
             <field name="arch" type="xml">
-                <tree string="Parts Line">
+                <tree string="Parts Line" create="true" delete="true" editable="top">
 
                     <field name="parts_id" />
                     <field name="quantity"/>
