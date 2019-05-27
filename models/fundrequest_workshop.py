@@ -4,6 +4,7 @@ from odoo import models, fields, api
 
 class FundRequestWorkshop(models.Model):
     _name = 'fundrequestw.rider'
+    _inherit = ['mail.thread']
 
     _description = 'Fund request workshop'
 
