@@ -62,9 +62,9 @@ class FundrequestLine(models.Model):
                                  ondelete='restrict', index=True)
     state = fields.Selection([
         ('draft', 'Draft'),
-        ('confirmed', 'Confirmed'),
-        ('done', 'Done'),
-        ('cancel', 'Cancelled')], 'Status', default='draft',
+        ('Requested', 'Requested'),
+        ('Approved', 'Approved'),
+        ('Rejected', 'Rejected')], 'Status', default='draft',
         copy=False, readonly=True, required=True, )
     price_subtotal = fields.Float('Subtotal', compute='_compute_price_subtotal', store=True, digits=0)
 
