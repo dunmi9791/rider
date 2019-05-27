@@ -62,7 +62,7 @@
             <form string="Fund Request">
                 <header>
                     <button name="workshop_fund_request" type="object" string="Request Fund" class="oe_highlight" state="draft"/>
-                    <button name="workshop_fund_approve" type="object" string="Approve Request" class="oe_highlight" state="Requested"/>
+                    <button name="workshop_fund_approve" type="object" string="Approve Request" class="oe_highlight" attrs="{'invisible':['|',('state', 'not in', ('Requested'))]}"/>
                     <button name="workshop_fund_reject" type="object" string="Reject Request" class="oe_highlight" state="Requested"/>
                 <field name="state" widget="statusbar" statusbar_visible="draft,Requested,Approved,Rejected"/>
                 </header>
