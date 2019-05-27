@@ -60,7 +60,10 @@
         <field name="model">fundrequestw.rider</field>
         <field name="arch" type="xml">
             <form string="Fund Request">
+                <header>
                 <field name="state" widget="statusbar" statusbar_visible="draft,Requested,Approved"/>
+                </header>
+                <sheet>
                 <group>
                 <field name="date"/>
                 <field name="request_no"/>
@@ -78,6 +81,7 @@
 
                     </page>
                     </notebook>
+                </sheet>
             </form>
         </field>
       </record>
