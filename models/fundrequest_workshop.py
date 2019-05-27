@@ -20,7 +20,7 @@ class FundRequestWorkshop(models.Model):
     amount_total = fields.Float('Total', compute='_amount_total', store=True)
 
     @api.one
-    @api.depends('operations.price_subtotal', 'invoice_method', 'fees_lines.price_subtotal', 'pricelist_id.currency_id')
+    @api.depends('operations.price_subtotal',)
     def _amount_total(self):
 
         self.amount_total = sum(operation.price_subtotal for operation in self.operations)
