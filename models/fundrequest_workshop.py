@@ -17,6 +17,14 @@ class FundRequestWorkshop(models.Model):
         'fundrequest.partsline', 'fundrequest_id', 'Parts',
         copy=True, readonly=True, states={'draft': [('readonly', False)]})
     part_qty = fields.Float(string="Quantity",  required=False, )
+    amount_total = fields.Float('Total', compute='_amount_total', store=True)
+
+    @api.one
+    @api.depends('operations.price_subtotal', 'invoice_method', 'fees_lines.price_subtotal', 'pricelist_id.currency_id')
+    def _amount_total(self):
+
+        self.amount_total = sum(operation.price_subtotal for operation in self.operations)
+
 
 class Parts(models.Model):
     _name = 'parts.rider'
