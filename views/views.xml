@@ -86,10 +86,11 @@
             <field name="model">fundrequest.partsline</field>
             <field name="arch" type="xml">
                 <tree string="Parts Line">
-                    <field name="name"/>
+
                     <field name="parts_id" />
                     <field name="quantity"/>
                     <field name="cost" />
+                    <field name="price_subtotal"/>
 
 
                 </tree>

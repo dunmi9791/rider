@@ -19,6 +19,7 @@ class FundRequestWorkshop(models.Model):
 
 class Parts(models.Model):
     _name = 'parts.rider'
+    _rec_name = 'name'
 
     _description = 'Parts'
 
