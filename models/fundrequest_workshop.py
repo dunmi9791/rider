@@ -10,8 +10,8 @@ class FundRequestWorkshop(models.Model):
 
     date = fields.Date(string="Date", required=False, )
     request_no = fields.Char(string="Request Number" , requires=False, )
-    programme_id = fields.Many2one(comodel_name="programme", string="Programme ID", required=False, )
-    jobcard_id = fields.Many2one(comodel_name="servicerequest.rider", string="Job Card ref", required=False, )
+    programme_id = fields.Many2one(comodel_name="programme", string="Programme ID", required=False, readonly=True, states={'draft': [('readonly', False)]})
+    jobcard_id = fields.Many2one(comodel_name="servicerequest.rider", string="Job Card ref", required=False, readonly=True, states={'draft': [('readonly', False)]})
     state = fields.Selection(string="", selection=[('draft', 'draft'), ('Requested', 'Requested'), ('Approved', 'Approved'), ('Rejected', 'Rejected',) ], required=False, copy=False, default='draft', readonly=True, track_visibility='onchange', )
     operations = fields.One2many(
         'fundrequest.partsline', 'fundrequest_id', 'Parts',
