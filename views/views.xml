@@ -81,7 +81,9 @@
 
                     </page>
                     </notebook>
+                    <group>
                     <field name="amount_total"/>
+                    </group>
                 </sheet>
                 <div class="oe_chatter">
                 <field name="message_follower_ids" widget="mail_followers"/>
