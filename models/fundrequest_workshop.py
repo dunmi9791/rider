@@ -61,7 +61,7 @@ class FundrequestLine(models.Model):
 
     name = fields.Text(string='Description', required=False)
     fundrequest_id = fields.Many2one(comodel_name="fundrequestw.rider", index=True, ondelete='cascade')
-    parts_id = fields.Many2one('parts.rider', string='Parts',
+    parts_id = fields.Many2one('product.product', string='Parts',
                                  ondelete='restrict', index=True)
     state = fields.Selection([
         ('draft', 'Draft'),
