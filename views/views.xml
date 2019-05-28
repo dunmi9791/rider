@@ -110,21 +110,6 @@
                 </tree>
             </field>
         </record>
-      <record id="view_fundrequest_tree" model="ir.ui.view">
-            <field name="name">fundrequest.tree</field>
-            <field name="model">fundrequestw.rider</field>
-            <field name="arch" type="xml">
-                <tree string="Fund Request">
-
-                    <field name="date" />
-                    <field name="request_no"/>
-                    <field name="jobcard_id" />
-                    <field name="amount_total"/>
-
-
-                </tree>
-            </field>
-        </record>
 
     <!-- explicit list view definition -->
     <!--
