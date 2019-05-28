@@ -163,6 +163,46 @@
                 </tree>
             </field>
         </record>
+      <record id="view_partsrequest_workshop_form" model="ir.ui.view">
+        <field name="name">partsrequest.form</field>
+        <field name="model">partsrequest.rider</field>
+        <field name="arch" type="xml">
+            <form string="Fund Request">
+                <header>
+                    <button name="workshop_fund_request" type="object" string="Request Fund" class="oe_highlight" attrs="{'invisible':['|',('state', 'not in', ('draft'))]}"/>
+                    <button name="workshop_fund_approve" type="object" string="Approve Request" class="oe_highlight" attrs="{'invisible':['|',('state', 'not in', ('Requested'))]}"/>
+                    <button name="workshop_fund_reject" type="object" string="Reject Request" class="oe_highlight" attrs="{'invisible':['|',('state', 'not in', ('Requested'))]}"/>
+                <field name="state" widget="statusbar" statusbar_visible="draft,Requested,Approved,Rejected"/>
+                </header>
+                <sheet>
+                <group>
+                <field name="date"/>
+                <field name="request_no"/>
+                <field name="programme_id"/>
+                <field name="jobcard_id"/>
+                </group>
+
+
+                    <notebook>
+                    <page string="Parts">
+                        <field name="operations" >
+                        </field>
+
+
+
+                    </page>
+                    </notebook>
+                    <group>
+                    <field name="amount_total"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                <field name="message_follower_ids" widget="mail_followers"/>
+                <field name="message_ids" widget="mail_thread"/>
+            </div>
+            </form>
+        </field>
+      </record>
 
 
     <!-- explicit list view definition -->

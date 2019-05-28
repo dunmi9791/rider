@@ -33,6 +33,12 @@
         <field name="view_mode">tree,form,kanban</field>
     </record>
 
+    <record model="ir.actions.act_window" id="action_riders_partsrequest">
+        <field name="name">Parts Request</field>
+        <field name="res_model">partsrequest.rider</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+
 
 
 
@@ -45,6 +51,9 @@
 
     <menuitem name="Fund Request" id="riders_workshop_fundrequest_menu" parent="riders_workshop_menu"
               sequence="7" action="action_riders_fundrequest"/>
+
+    <menuitem name="Parts Request" id="riders_workshop_partsrequest_menu" parent="riders_workshop_menu"
+              sequence="8" action="action_riders_partsrequest"/>
 
 
     <menuitem name="Supply Chain Management" id="riders_supply_menu" parent="riders_root_menu"
