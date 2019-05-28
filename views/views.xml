@@ -115,6 +115,7 @@
             <field name="model">fundrequestw.rider</field>
             <field name="arch" type="xml">
                 <tree string="Fund Request">
+                    <field name="state" invisible="1"/>
 
                     <field name="date" />
                     <field name="request_no"/>
