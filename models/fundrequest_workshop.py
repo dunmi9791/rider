@@ -125,7 +125,7 @@ class PartsrequestLine(models.Model):
     @api.one
     @api.depends('partsrequest_id', 'quantity', 'name', )
     def _compute_price_subtotal(self):
-        self.price_subtotal = self.cost * self.quantity
+        self.price_subtotal = self.cost_supplier1 * self.quantity
 
     quantity = fields.Float(string="Quantity", required=False, default=1.0, )
     cost_supplier1 = fields.Float(string=" Unit Cost", required=False, )
