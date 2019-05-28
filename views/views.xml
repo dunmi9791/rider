@@ -126,6 +126,43 @@
                 </tree>
             </field>
         </record>
+       <record id="view_partsrequest_tree" model="ir.ui.view">
+            <field name="name">partsrequest.tree</field>
+            <field name="model">partsrequest.rider</field>
+            <field name="arch" type="xml">
+                <tree string="Fund Request">
+                    <field name="state" invisible="1"/>
+
+                    <field name="date" />
+                    <field name="request_no"/>
+                    <field name="jobcard_id" />
+                    <field name="amount_total"/>
+
+
+                </tree>
+            </field>
+        </record>
+       <record id="view_partsrequest_partsline_tree" model="ir.ui.view">
+            <field name="name">partsrequest.partsline.tree</field>
+            <field name="model">partsrequest.partsline</field>
+            <field name="arch" type="xml">
+                <tree string="Parts Line" create="true" delete="true" editable="bottom">
+
+                    <field name="parts_id" />
+                    <field name="quantity"/>
+                    <field name="supplier1_id"/>
+                    <field name="cost_supplier1" />
+                    <field name="supplier2_id"/>
+                    <field name="cost_supplier2" />
+                    <field name="supplier3_id"/>
+                    <field name="cost_supplier3" />
+                    <field name="recommended"/>
+                    <field name="price_subtotal"/>
+
+
+                </tree>
+            </field>
+        </record>
 
 
     <!-- explicit list view definition -->
