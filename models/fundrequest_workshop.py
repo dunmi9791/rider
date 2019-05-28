@@ -38,6 +38,7 @@ class FundRequestWorkshop(models.Model):
     def workshop_fund_reject(self):
         self.state = 'Rejected'
 
+
 class Parts(models.Model):
     _name = 'parts.rider'
     _rec_name = 'name'
