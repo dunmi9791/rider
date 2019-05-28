@@ -2,6 +2,7 @@
 
 from odoo import models, fields, api
 from datetime import datetime
+from datetime import date
 
 class FundRequestWorkshop(models.Model):
     _name = 'fundrequestw.rider'
