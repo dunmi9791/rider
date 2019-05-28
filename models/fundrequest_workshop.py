@@ -10,7 +10,7 @@ class FundRequestWorkshop(models.Model):
     _description = 'Fund request workshop'
 
     date = fields.Date(string="Date", required=False, readonly=True, states={'draft': [('readonly', False)]})
-    request_no = fields.Char(string="Request Number", default=lambda self: self.env['ir.sequence'].next_by_code('increment_fund_request'), requires=False, readonly=True, states={'draft': [('readonly', False)]})
+    request_no = fields.Char(string="Request Number", default=lambda self: self.env['ir.sequence'].next_by_code('increment_fund_request'), requires=False, readonly=True,)
     programme_id = fields.Many2one(comodel_name="programme", string="Programme ID", required=False, readonly=True, states={'draft': [('readonly', False)]})
     jobcard_id = fields.Many2one(comodel_name="servicerequest.rider", string="Job Card ref", required=False, readonly=True, states={'draft': [('readonly', False)]})
     state = fields.Selection(string="", selection=[('draft', 'draft'), ('Requested', 'Requested'), ('Approved', 'Approved'), ('Rejected', 'Rejected'),], required=False, copy=False, default='draft', readonly=True, track_visibility='onchange', )
