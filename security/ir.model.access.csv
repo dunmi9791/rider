@@ -10,4 +10,7 @@ access_rider_parts,rider.parts,model_parts_rider,,1,1,1,1
 access_rider_partsline,rider.partsline,model_fundrequest_partsline,,1,1,1,1
 access_rider_partsrequest,rider.partsrequest,model_partsrequest_rider,,1,1,1,1
 access_rider_partsreqline,rider.partsrqline,model_partsrequest_partsline,,1,1,1,1
+access_rider_vehicletype,rider.vehicletype,model_vehicletype_rider,,1,1,1,1
+access_rider_vehiclemake,rider.vehiclemake,model_vehiclemake_rider,,1,1,1,1
+access_rider_vehiclemodel,rider.vehiclemodel,model_vehiclemodel_rider,,1,1,1,1
 
