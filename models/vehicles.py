@@ -7,4 +7,4 @@ class Vehicle(models.Model):
 
     vehicle_type = fields.Char()
     vehicle_registration = fields.Char()
-    client_id = fields.Many2one(comodel_name="client.riders", string="Client", required=False, )
+    client_id = fields.Many2one(comodel_name="res.partner", string="Client", required=False, )
