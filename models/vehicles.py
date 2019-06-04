@@ -15,7 +15,7 @@ class Vehicle(models.Model):
 
 class VehicleType(models.Model):
     _name = 'vehicletype.rider'
-    _rec_name = 'name'
+
     _description = 'Vehicle Type'
 
     name = fields.Char()
