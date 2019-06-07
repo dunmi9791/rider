@@ -203,6 +203,22 @@
             </form>
         </field>
       </record>
+      <record id="view_jobcard_tree" model="ir.ui.view">
+            <field name="name">jobcard.tree</field>
+            <field name="model">servicerequest.rider</field>
+            <field name="arch" type="xml">
+                <tree string="Job card" >
+
+                    <field name="vehicle_id" />
+                    <field name="checkin_date"/>
+                    <field name="service_type"/>
+                    <field name="state" />
+
+
+
+                </tree>
+            </field>
+        </record>
 
 
     <!-- explicit list view definition -->
