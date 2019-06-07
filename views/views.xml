@@ -18,9 +18,15 @@
                   <label for="vehicle_id" class="oe_edit_only"/>
                   <h1>
                       <field name="vehicle_id" />
-                      <field name="jobcard_no"/>
+
                   </h1>
               </div>
+              <div>
+                  <h1>
+                 <field name="jobcard_no"/>
+                  </h1>
+              </div>
+
               <group>
                   <group>
                       <field name="checkin_date"/>
