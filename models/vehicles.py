@@ -4,6 +4,7 @@ from odoo import models, fields, api
 
 class Vehicle(models.Model):
     _name = 'vehicles.rider'
+    _rec_name = 'vehicle_registration'
 
     vehicle_type = fields.Many2one(comodel_name="vehicletype.rider", string="Vehicle Type")
     vehicle_make = fields.Many2one(comodel_name="vehiclemake.rider", string="Vehicle Make")
