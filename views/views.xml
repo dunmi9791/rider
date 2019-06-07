@@ -9,6 +9,8 @@
               <header>
 
                   <button name="technician_complete" string="Technician check complete" class="oe_highlight" state="check-in" type="object"/>
+                  <button name="unitmanager_approve" string="Unit Manager approval" class="oe_highlight" state="Technician service completed" type="object"/>
+                  <button name="parts_released" string="Parts released" class="oe_highlight" state="Unit Manager parts approved" type="object"/>
 
 
                   <field name="state" widget="statusbar" statusbar_visible="check-in,Technician service completed,Unit Manager parts approved,store officer parts released,Unit manager quality check,Checked out"/>

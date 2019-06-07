@@ -46,7 +46,13 @@ class ServiceRequest(models.Model):
     def technician_complete(self):
         self.state = 'Technician service completed'
 
-    
+    @api.multi
+    def unitmanager_approve(self):
+        self.state = 'Unit Manager parts approved'
+
+    @api.multi
+    def parts_released(self):
+        self.state = 'store officer parts released'
 
 # class rider(models.Model):
 #     _name = 'rider.rider'
