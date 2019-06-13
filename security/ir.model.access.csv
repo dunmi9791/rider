@@ -9,8 +9,12 @@ access_rider_vehicles2,rider.vehicles2,model_vehicles_rider,rider.workshop_manag
 access_rider_vehicles3,rider.vehicles3,model_vehicles_rider,rider.store_group,1,0,0,0
 access_rider_vehicles4,rider.vehicles4,model_vehicles_rider,rider.finance_group,1,0,0,0
 access_rider_vehicles5,rider.vehicles5,model_vehicles_rider,rider.group_manager_group,1,0,0,0
-access_rider_cashrequisition,rider.cashrequisition,model_cashrequisition_rider,,1,1,1,0
-access_rider_cashrequisition,rider.cashrequisition,model_cashrequisition_rider,rider.finance_group,1,1,1,1
+access_rider_cashrequisition,rider.cashrequisition,model_cashrequisition_rider,technician_group,1,1,1,0
+access_rider_cashrequisition2,rider.cashrequisition2,model_cashrequisition_rider,store_group,1,1,1,0
+access_rider_cashrequisition3,rider.cashrequisition3,model_cashrequisition_rider,workshop_manager_group,1,1,1,0
+access_rider_cashrequisition4,rider.cashrequisition4,model_cashrequisition_rider,rider.supplychain_manager_group,1,1,1,0
+access_rider_cashrequisition5,rider.cashrequisition5,model_cashrequisition_rider,finance_group,1,1,1,1
+access_rider_cashrequisition6,rider.cashrequisition6,model_cashrequisition_rider,group_manager_group,1,1,1,0
 access_rider_order,rider.order,model_order_rider,,1,1,1,1
 access_rider_partner,rider.partner,model_partner_rider,,1,1,1,1
 access_rider_ordermemo,rider.odermemo,model_ordermemo_rider,rider.supplychain_manager_group,1,1,1,1
