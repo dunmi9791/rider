@@ -2,15 +2,17 @@
 <odoo>
 <data noupdate="0">
 
-    <record id="technician_group" model="res.groups">
-        <field name="name">technician</field>
-        <field name="comment">Technician Permission Group.</field>
-        <field name="category_id" ref="rider.module_category_rider"/>
-    </record>
     <record model="ir.module.category" id="module_category_rider">
             <field name="name">Rider</field>
             <field name="description">Rider Applilcation</field>
             <field name="sequence">20</field>
     </record>
+
+    <record id="technician_group" model="res.groups">
+        <field name="name">technician</field>
+        <field name="comment">Technician Permission Group.</field>
+        <field name="category_id" ref="rider.module_category_rider"/>
+    </record>
+
 </data>
 </odoo>
