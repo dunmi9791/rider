@@ -1,9 +1,9 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_rider_rider,rider.rider,model_servicerequest_rider,rider.technician_group,1,1,1,0
-access_rider_rider,rider.rider,model_servicerequest_rider,rider.store_group,1,0,0,0
-access_rider_rider,rider.rider,model_servicerequest_rider,rider.workshop_manager_group,1,1,1,1
-access_rider_rider,rider.rider,model_servicerequest_rider,rider.finance_group,1,0,0,0
-access_rider_rider,rider.rider,model_servicerequest_rider,rider.group_manager_group,1,0,0,0
+access_rider_rider2,rider.rider2,model_servicerequest_rider,rider.store_group,1,0,0,0
+access_rider_rider3,rider.rider3,model_servicerequest_rider,rider.workshop_manager_group,1,1,1,1
+access_rider_rider4,rider.rider4,model_servicerequest_rider,rider.finance_group,1,0,0,0
+access_rider_rider5,rider.rider5,model_servicerequest_rider,rider.group_manager_group,1,0,0,0
 access_rider_vehicles,rider.vehicles,model_vehicles_rider,,1,1,1,1
 access_rider_cashrequisition,rider.cashrequisition,model_cashrequisition_rider,,1,1,1,1
 access_rider_order,rider.order,model_order_rider,,1,1,1,1
