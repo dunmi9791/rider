@@ -14,5 +14,11 @@
         <field name="category_id" ref="rider.module_category_rider"/>
     </record>
 
+    <record id="store_group" model="res.groups">
+        <field name="name">store</field>
+        <field name="comment">Store Permission Group.</field>
+        <field name="category_id" ref="rider.module_category_rider"/>
+    </record>
+
 </data>
 </odoo>
