@@ -29,6 +29,7 @@
         'views/templates.xml',
         'views/actions.xml',
         'data/automation.xml',
+        'data/groups.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
