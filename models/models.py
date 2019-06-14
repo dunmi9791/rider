@@ -59,7 +59,7 @@ class ServiceRequest(models.Model):
 
     @api.multi
     def quality_check(self):
-        self.state = 'Unit manager quality checked'
+        self.state = 'Unit Manager quality checked'
 
     @api.multi
     def check_out(self):
