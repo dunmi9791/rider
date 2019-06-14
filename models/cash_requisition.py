@@ -12,6 +12,6 @@ class CashRequisition(models.Model):
     amount_figures = fields.Float(string="Amount in Figures",  required=False, )
     payable = fields.Char(string="Payable to", required=False, )
     details = fields.Text(string="Details", required=False, )
-    state = fields.Selection(string="", selection=[('Requested', 'Requested'), ('Authorised', 'Authorised'), ('Approved', 'Approved'), ('Processed', 'Processed'), ('Received', 'Received'), ], required=False, )
+    state = fields.Selection(string="", selection=[('Requested', 'Requested'), ('Authorised', 'Authorised'), ('Approved', 'Approved'), ('Processed', 'Processed'), ('Received', 'Received'), ], required=False, default='Requested', track_visibility='onchange', )
 
 

@@ -34,7 +34,7 @@ class ServiceRequest(models.Model):
     tools = fields.Boolean(string="Tools",  )
     caution_triangle = fields.Boolean(string="Caution Triangle",  )
     fire_extinguisher = fields.Boolean(string="Fire Extinguisher",  )
-    state = fields.Selection(string="", selection=[('check-in', 'check-in'), ('Technician service completed', 'Technician service completed'), ('Unit Manager parts approved', 'Unit Manager parts approved'), ('store officer parts released', 'store officer parts released'), ('Unit manager quality check', 'Unit manager quality checked'), ('Checked out', 'Checked out'), ], default='check-in', required=False, )
+    state = fields.Selection(string="", selection=[('check-in', 'check-in'), ('Technician service completed', 'Technician service completed'), ('Unit Manager parts approved', 'Unit Manager parts approved'), ('store officer parts released', 'store officer parts released'), ('Unit manager quality check', 'Unit manager quality checked'), ('Checked out', 'Checked out'), ], default='check-in', required=False, trace_visibility='onchange', )
     jobcard_no = fields.Char(string="Jobcard Number",
                              default=lambda self: self.env['ir.sequence'].next_by_code('increment_jobcard'),
                              requires=False, readonly=True, )
