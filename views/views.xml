@@ -10,7 +10,7 @@
 
                   <button name="technician_complete" string="Technician check complete" class="oe_highlight" state="check-in" groups="rider.technician_group" type="object"/>
                   <button name="unitmanager_approve" string="Unit Manager approval" class="oe_highlight" state="Technician service completed" groups="rider.workshop_manager_group" type="object"/>
-                  <button name="parts_released" string="Parts released" class="oe_highlight" state="Unit Manager parts approved" type="object"/>
+                  <button name="parts_released" string="Parts released" class="oe_highlight" state="Unit Manager parts approved" groups="rider.store_group" type="object"/>
 
 
                   <field name="state" widget="statusbar" statusbar_visible="check-in,Technician service completed,Unit Manager parts approved,store officer parts released,Unit manager quality check,Checked out"/>

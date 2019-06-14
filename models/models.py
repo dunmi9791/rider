@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
+from datetime import datetime
+from datetime import date
 
 class ServiceRequest(models.Model):
     _name = 'servicerequest.rider'
@@ -53,6 +55,16 @@ class ServiceRequest(models.Model):
     @api.multi
     def parts_released(self):
         self.state = 'store officer parts released'
+
+
+    @api.multi
+    def quality_check(self):
+        self.state = 'Unit manager quality checked'
+
+    @api.multi
+    def check_out(self):
+        self.state = 'Checked out'
+        self.checkout_date = datetime.datetime.now()
 
     def _track_subtype(self, init_values):
         # init_values contains the modified fields' values before the changes
