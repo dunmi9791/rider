@@ -8,8 +8,8 @@
           <form name="DLC Issues Form">
               <header>
 
-                  <button name="technician_complete" string="Technician check complete" class="oe_highlight" state="check-in" type="object"/>
-                  <button name="unitmanager_approve" string="Unit Manager approval" class="oe_highlight" state="Technician service completed" type="object"/>
+                  <button name="technician_complete" string="Technician check complete" class="oe_highlight" state="check-in" groups="rider.technician_group" type="object"/>
+                  <button name="unitmanager_approve" string="Unit Manager approval" class="oe_highlight" state="Technician service completed" groups="rider.workshop_manager_group" type="object"/>
                   <button name="parts_released" string="Parts released" class="oe_highlight" state="Unit Manager parts approved" type="object"/>
 
 
