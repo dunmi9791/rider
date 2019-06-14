@@ -61,7 +61,7 @@ class ServiceRequest(models.Model):
         # in cache
         self.ensure_one()
         if 'state' in init_values and self.state == 'Unit Manager parts approved':
-            return 'Rider.jc_state_change'  # Full external id
+            return 'rider.jc_state_change'  # Full external id
         return super(ServiceRequest, self)._track_subtype(init_values)
 
 # class rider(models.Model):
