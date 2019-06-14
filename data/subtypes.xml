@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data noupdate="0">
+
+<record id="jc_state_change" model="mail.message.subtype">
+    <field name="name">Parts approved</field>
+    <field name="res_model">servicerequest.rider</field>
+    <field name="default" eval="True"/>
+    <field name="description">Parts Approved!</field>
+</record>
+</data>
+</odoo>

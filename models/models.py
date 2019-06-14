@@ -54,6 +54,16 @@ class ServiceRequest(models.Model):
     def parts_released(self):
         self.state = 'store officer parts released'
 
+    def _track_subtype(self, init_values):
+        # init_values contains the modified fields' values before the changes
+        #
+        # the applied values can be accessed on the record as they are already
+        # in cache
+        self.ensure_one()
+        if 'state' in init_values and self.state == 'Unit Manager parts approved':
+            return 'my_module.mt_state_change'  # Full external id
+        return super(ServiceRequest, self)._track_subtype(init_values)
+
 # class rider(models.Model):
 #     _name = 'rider.rider'
 
