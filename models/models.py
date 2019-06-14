@@ -6,6 +6,7 @@ from datetime import date
 
 class ServiceRequest(models.Model):
     _name = 'servicerequest.rider'
+    _rec_name = 'jobcard_no'
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     vehicle_id = fields.Many2one('vehicles.rider')
@@ -79,6 +80,9 @@ class ServiceRequest(models.Model):
         if 'state' in init_values:
             return 'mail.mt_comment'
         return False
+
+
+
 
 # class rider(models.Model):
 #     _name = 'rider.rider'
