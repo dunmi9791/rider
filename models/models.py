@@ -64,7 +64,6 @@ class ServiceRequest(models.Model):
     @api.multi
     def check_out(self):
         self.state = 'Checked out'
-        self.checkout_date = datetime.datetime.now()
 
     def _track_subtype(self, init_values):
         # init_values contains the modified fields' values before the changes
