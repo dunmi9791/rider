@@ -34,7 +34,7 @@ class ServiceRequest(models.Model):
     tools = fields.Boolean(string="Tools",  )
     caution_triangle = fields.Boolean(string="Caution Triangle",  )
     fire_extinguisher = fields.Boolean(string="Fire Extinguisher",  )
-    state = fields.Selection(string="", selection=[('check-in', 'check-in'), ('Technician service completed', 'Technician service completed'), ('Unit Manager parts approved', 'Unit Manager parts approved'), ('store officer parts released', 'store officer parts released'), ('Unit manager quality check', 'Unit manager quality checked'), ('Checked out', 'Checked out'), ], default='check-in', required=False, trace_visibility='onchange', )
+    state = fields.Selection(string="", selection=[('check-in', 'check-in'), ('Technician service completed', 'Technician service completed'), ('Unit Manager parts approved', 'Unit Manager parts approved'), ('store officer parts released', 'store officer parts released'), ('Unit manager quality check', 'Unit manager quality checked'), ('Checked out', 'Checked out'), ], default='check-in', required=False, track_visibility=True, trace_visibility='onchange', )
     jobcard_no = fields.Char(string="Jobcard Number",
                              default=lambda self: self.env['ir.sequence'].next_by_code('increment_jobcard'),
                              requires=False, readonly=True, )
@@ -63,6 +63,11 @@ class ServiceRequest(models.Model):
         if 'state' in init_values and self.state == 'Unit Manager parts approved':
             return 'rider.jc_state_change'  # Full external id
         return super(ServiceRequest, self)._track_subtype(init_values)
+
+    def _track_subtype(self, init_values):
+        if 'state' in init_values:
+            return 'mail.mt_comment'
+        return False
 
 # class rider(models.Model):
 #     _name = 'rider.rider'
