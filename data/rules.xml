@@ -5,7 +5,7 @@
 
            <field name="name">No Edit in checkout state</field>
 
-            <field name="model_id" ref="servicerequest.rider"/>
+            <field name="model_id" ref="servicerequest_rider"/>
 
            <field name="groups" eval="[(4, ref('base.group_user'))]"/>
 
