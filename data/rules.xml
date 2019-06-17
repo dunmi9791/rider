@@ -17,7 +17,7 @@
 
            <field eval="0" name="perm_create"/>
 
-           <field name="domain_force">[('state', '=', 'Checked out'])]</field>
+           <field name="domain_force">[('state', '=', 'Checked out')]</field>
 
    </record>
     </data>
