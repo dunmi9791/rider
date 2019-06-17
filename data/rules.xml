@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.rule" id="no_edit_in_checkout_state">
+
+           <field name="name">No Edit in checkout state</field>
+
+            <field name="model_id" ref="servicerequest.rider"/>
+
+           <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+
+           <field eval="0" name="perm_unlink"/>
+
+           <field eval="0" name="perm_write"/>
+
+           <field eval="1" name="perm_read"/>
+
+           <field eval="0" name="perm_create"/>
+
+           <field name="domain_force">[('state', '=', 'Checked out'])]</field>
+
+   </record>
+    </data>
+</odoo>
