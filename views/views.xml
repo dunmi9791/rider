@@ -228,6 +228,7 @@
             <field name="model">servicerequest.rider</field>
             <field name="arch" type="xml">
                 <tree string="Job card" >
+                     <field name="state" invisible="1"/>
 
                     <field name="jobcard_no"/>
                     <field name="vehicle_id" />
