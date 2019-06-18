@@ -41,6 +41,9 @@ class ServiceRequest(models.Model):
     jobcard_no = fields.Char(string="Jobcard Number",
                              default=lambda self: self.env['ir.sequence'].next_by_code('increment_jobcard'),
                              requires=False, readonly=True, )
+    operations = fields.One2many(
+        'jobcard.partsline', 'servicerequest_id', 'Parts',
+        copy=True, readonly=True, states={'draft': [('readonly', False)]})
 
 
 
@@ -82,6 +85,16 @@ class ServiceRequest(models.Model):
         return False
 
 
+class JobcardParts(models.Model):
+    _name = 'jobcard.partsline'
+
+    _description = 'Parts Required used'
+
+    name = fields.Text(string='Description', required=False)
+    servicerequest_id = fields.Many2one(comodel_name="servicerequest.rider", index=True, ondelete='cascade')
+    parts_id = fields.Many2one('product.product', string='Parts',
+                               ondelete='restrict', index=True)
+    quantity = fields.Integer(string="Quantity", required=False, )
 
 
 # class rider(models.Model):

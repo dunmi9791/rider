@@ -57,6 +57,15 @@
                     <field name="technical_comment"/>
                   </group>
               </group>
+                   <notebook>
+                    <page string="Parts Required/Used">
+                        <field name="operations" >
+                        </field>
+
+
+
+                    </page>
+                    </notebook>
             </sheet>
               <div class="oe_chatter">
                 <field name="message_follower_ids" widget="mail_followers"/>
@@ -231,6 +240,18 @@
                 </tree>
             </field>
         </record>
+      <record id="view_servicerequest_partsline_tree" model="ir.ui.view">
+            <field name="name">servicerequest.partsline.tree</field>
+            <field name="model">jobcard.partsline</field>
+            <field name="arch" type="xml">
+                <tree string="Parts Required" create="true" delete="true" editable="bottom">
+
+                    <field name="parts_id" />
+                    <field name="quantity"/>
+
+
+
+                </tree>
 
 
     <!-- explicit list view definition -->
