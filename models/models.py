@@ -43,7 +43,7 @@ class ServiceRequest(models.Model):
                              requires=False, readonly=True, )
     operations = fields.One2many(
         'jobcard.partsline', 'servicerequest_id', 'Parts',
-        copy=True, readonly=True, states={'draft': [('readonly', False)]})
+        copy=True, readonly=True, states={'check-in': [('readonly', False)]})
 
 
 
