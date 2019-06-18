@@ -31,8 +31,5 @@ access_rider_partsreqline,rider.partsrqline,model_partsrequest_partsline,,1,1,1,
 access_rider_vehicletype,rider.vehicletype,model_vehicletype_rider,,1,1,1,1
 access_rider_vehiclemake,rider.vehiclemake,model_vehiclemake_rider,,1,1,1,1
 access_rider_vehiclemodel,rider.vehiclemodel,model_vehiclemodel_rider,,1,1,1,1
-access_rider_jobpartsline,rider.jobpartsline,model_jobcard_partsline,technician_group,1,1,1,1
-access_rider_jobpartsline2,rider.jobpartsline2,model_jobcard_partsline,workshop_manager_group,1,1,1,1
-access_rider_jobpartsline3,rider.jobpartsline3,model_jobcard_partsline,store_group,1,0,0,0
-access_rider_jobpartsline4,rider.jobpartsline4,model_jobcard_partsline,finance_group,1,0,0,0
+access_rider_jobpartsline,rider.jobpartsline,model_jobcard_partsline,,1,1,1,1
 

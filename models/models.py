@@ -95,6 +95,12 @@ class JobcardParts(models.Model):
     parts_id = fields.Many2one('product.product', string='Parts',
                                ondelete='restrict', index=True)
     quantity = fields.Integer(string="Quantity", required=False, )
+    state = fields.Selection([
+        ('draft', 'Draft'),
+        ('Requested', 'Requested'),
+        ('Approved', 'Approved'),
+        ('Rejected', 'Rejected')], 'Status', default='draft',
+        copy=False, readonly=True, required=True, )
 
 
 # class rider(models.Model):
