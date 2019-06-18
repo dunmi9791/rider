@@ -241,7 +241,19 @@
                 </tree>
             </field>
         </record>
+         <record id="view_jobcard_partsline_tree" model="ir.ui.view">
+            <field name="name">jobcard.partsline.tree</field>
+            <field name="model">jobcard.partsline</field>
+            <field name="arch" type="xml">
+                <tree string="Parts Line" create="true" delete="true" editable="bottom">
 
+                    <field name="parts_id" />
+                    <field name="quantity"/>
+
+
+                </tree>
+            </field>
+        </record>
 
 
     <!-- explicit list view definition -->
