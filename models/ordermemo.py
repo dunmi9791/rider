@@ -11,6 +11,6 @@ class OrderMemo(models.Model):
     subject = fields.Char(string="Subject")
 
     date = fields.Date(string="Date", required=False, )
-    memo_content = fields.Html(string="",  )
+    memo_content = fields.Html(string="",)
     memo_to = fields.Many2one(comodel_name="hr.employee", string="To", )
-    state = fields.Selection(string="", selection=[('new', 'new'), ('approved', 'approved'), ('canceled', 'canceled') ], required=False, default='new', track_visibility='onchange' )
+    state = fields.Selection(string="", selection=[('new', 'new'), ('approved', 'approved'), ('canceled', 'canceled')], required=False, default='new', track_visibility='onchange')
