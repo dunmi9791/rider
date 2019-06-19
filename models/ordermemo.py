@@ -24,6 +24,18 @@ class OrderMemo(models.Model):
                              default=lambda self: self.env['ir.sequence'].next_by_code('increment_memo'),
                              requires=False, readonly=True, )
 
+    @api.multi
+    def order_memo_request(self):
+        self.state = 'Requested'
+
+    @api.multi
+    def order_memo_approve(self):
+        self.state = 'Approved'
+
+    @api.multi
+    def order_memo_reject(self):
+        self.state = 'Rejected'
+
 
 
 
