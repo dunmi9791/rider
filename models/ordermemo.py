@@ -8,5 +8,5 @@ class OrderMemo(models.Model):
     _description = 'New Description'
 
     name = fields.Char(string="Memo Subject", required=False,)
-    new_field = fields.HTML(string="",  )
+
     date = fields.Date(string="", required=False, )
