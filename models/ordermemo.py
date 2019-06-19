@@ -4,11 +4,9 @@ from odoo import models, fields, api
 
 class OrderMemo(models.Model):
     _name = 'ordermemo.rider'
-    _inherit = ['mail.thread']
+    _rec_name = 'name'
+    _description = 'New Description'
 
-    _description = 'Order Memo'
-
-    subject = fields.Char(string="Subject")
-
-    date = fields.Date(string="Date", required=False, )
-    memo_content = fields.Html(string="",)
+    name = fields.Char(string="Memo Subject", required=False,)
+    new_field = fields.HTML(string="",  )
+    new_field = fields.Date(string="", required=False, )
