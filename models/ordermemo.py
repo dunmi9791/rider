@@ -2,8 +2,8 @@
 
 from odoo import models, fields, api
 
-class OrderMemo(models.Model):
-    _name = 'ordermemo.rider'
+class Memo(models.Model):
+    _name = 'memo.rider'
     _rec_name = 'name'
     _description = 'New Description'
 
