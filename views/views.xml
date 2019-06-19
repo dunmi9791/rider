@@ -254,6 +254,36 @@
                 </tree>
             </field>
         </record>
+      <record id="view_order_memo_form" model="ir.ui.view">
+        <field name="name">ordermemo.form</field>
+        <field name="model">ordermemo.rider</field>
+        <field name="arch" type="xml">
+            <form string="Order Memo">
+                <header>
+                    <button name="order_memo_request" type="object" string="Submit Memo" class="oe_highlight" attrs="{'invisible':['|',('state', 'not in', ('draft'))]}"/>
+                    <button name="order_memo_approve" type="object" string="Approve Request" class="oe_highlight" attrs="{'invisible':['|',('state', 'not in', ('Requested'))]}"/>
+                    <button name="order_memo_reject" type="object" string="Reject Request" class="oe_highlight" attrs="{'invisible':['|',('state', 'not in', ('Requested'))]}"/>
+                <field name="state" widget="statusbar" statusbar_visible="draft,Requested,Approved,Rejected"/>
+                </header>
+                <sheet>
+                <group>
+                <field name="date"/>
+                <field name="memo_no"/>
+                <field name="order_id"/>
+                <field name="memo_to"/>
+                </group>
+
+                    <group>
+                    <field name="memo"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                <field name="message_follower_ids" widget="mail_followers"/>
+                <field name="message_ids" widget="mail_thread"/>
+            </div>
+            </form>
+        </field>
+      </record>
 
 
     <!-- explicit list view definition -->

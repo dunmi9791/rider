@@ -22,5 +22,12 @@
     <field name="padding">6</field>
     <field name="company_id" eval="False"/>
 </record>
+        <record id="increment_memo_sequence" model="ir.sequence">
+    <field name="name">Memo Incrementation</field>
+    <field name="code">increment_memo</field>
+    <field name="prefix">Memo NO   </field>
+    <field name="padding">6</field>
+    <field name="company_id" eval="False"/>
+</record>
     </data>
 </odoo>

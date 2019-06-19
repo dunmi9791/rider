@@ -6,6 +6,7 @@ class OrderMemo(models.Model):
     _name = 'ordermemo.rider'
     _rec_name = 'name'
     _description = 'New Description'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char(string="Memo Subject", required=False,)
 
@@ -13,3 +14,21 @@ class OrderMemo(models.Model):
     memo = fields.Html(string="",  )
     order_id = fields.Many2one(comodel_name="order.rider", string="order", required=False, )
     memo_to = fields.Many2one(comodel_name="hr.employee", string="Memo to", )
+    state = fields.Selection([
+        ('draft', 'Draft'),
+        ('Requested', 'Requested'),
+        ('Approved', 'Approved'),
+        ('Rejected', 'Rejected')], 'Status', default='draft',
+        copy=False, readonly=True, required=True, track_visibility=True, trace_visibility='onchange', )
+    memo_no = fields.Char(string="Memo Number",
+                             default=lambda self: self.env['ir.sequence'].next_by_code('increment_memo'),
+                             requires=False, readonly=True, )
+
+
+
+
+    def _track_subtype(self, init_values):
+        if 'state' in init_values:
+            return 'mail.mt_comment'
+        return False
+
