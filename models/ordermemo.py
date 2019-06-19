@@ -9,4 +9,4 @@ class OrderMemo(models.Model):
 
     name = fields.Char(string="Memo Subject", required=False,)
     new_field = fields.HTML(string="",  )
-    new_field = fields.Date(string="", required=False, )
+    date = fields.Date(string="", required=False, )
