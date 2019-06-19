@@ -10,3 +10,4 @@ class OrderMemo(models.Model):
     name = fields.Char(string="Memo Subject", required=False,)
 
     date = fields.Date(string="", required=False, )
+    memo = fields.HTML(string="",  )
