@@ -23,7 +23,7 @@
 
     <record model="ir.actions.act_window" id="action_riders_ordermemo">
         <field name="name">Order Memo</field>
-        <field name="res_model">memo.rider</field>
+        <field name="res_model">ordermemo.rider</field>
         <field name="view_mode">tree,form,kanban</field>
     </record>
 
