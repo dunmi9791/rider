@@ -12,4 +12,3 @@ class OrderMemo(models.Model):
 
     date = fields.Date(string="Date", required=False, )
     memo_content = fields.Html(string="",)
-    memo_to = fields.Many2one(comodel_name="hr.employee", string="To", )
