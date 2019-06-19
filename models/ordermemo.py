@@ -11,3 +11,5 @@ class OrderMemo(models.Model):
 
     date = fields.Date(string="", required=False, )
     memo = fields.Html(string="",  )
+    order_id = fields.Many2one(comodel_name="order.rider", string="order", required=False, )
+    memo_to = fields.Many2one(comodel_name="hr.employee", string="Memo to", )
