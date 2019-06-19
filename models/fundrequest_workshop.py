@@ -6,6 +6,7 @@ from datetime import date
 
 class FundRequestWorkshop(models.Model):
     _name = 'fundrequestw.rider'
+    _rec_name = 'request_no'
     _inherit = ['mail.thread']
 
 
@@ -82,6 +83,7 @@ class FundrequestLine(models.Model):
 
 class PartsRequest(models.Model):
     _name = 'partsrequest.rider'
+    _rec_name = 'request_no'
     _description = 'Parts request'
     _inherit = ['mail.thread']
 
