@@ -4,13 +4,14 @@ from odoo import models, fields, api
 
 class Vehicle(models.Model):
     _name = 'vehicles.rider'
-    _rec_name = 'vehicle_registration'
+    _rec_name = 'chassis_no'
 
     vehicle_type = fields.Many2one(comodel_name="vehicletype.rider", string="Vehicle Type")
     vehicle_make = fields.Many2one(comodel_name="vehiclemake.rider", string="Vehicle Make")
     vehicle_model = fields.Many2one(comodel_name="vehiclemodel.rider", string="Vehicle Model")
     vehicle_registration = fields.Char()
     client_id = fields.Many2one(comodel_name="res.partner", string="Client", required=False, )
+    chassis_no = fields.Char(string="Chassis Number")
 
 
 
