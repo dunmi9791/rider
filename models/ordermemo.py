@@ -5,7 +5,7 @@ from odoo import models, fields, api
 class OrderMemo(models.Model):
     _name = 'ordermemo.rider'
     _rec_name = 'name'
-    _description = 'New Description'
+    _description = 'Order Memo'
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char(string="Memo Subject", required=False,)
