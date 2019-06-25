@@ -12,6 +12,7 @@ class Vehicle(models.Model):
     vehicle_registration = fields.Char()
     client_id = fields.Many2one(comodel_name="res.partner", string="Client", required=False, )
     chassis_no = fields.Char(string="Chassis Number")
+    jobcard_ids = fields.One2many(comodel_name="servicerequest.rider", inverse_name="vehicle_id", string="", required=False, )
 
 
 
