@@ -106,6 +106,10 @@ class PartsRequest(models.Model):
     part_qty = fields.Float(string="Quantity", required=False, )
     amount_total = fields.Float('Total', compute='_amount_total', store=True)
 
+    @api.multi
+    def workshop_parts_request(self):
+        self.state = 'Requested'
+
 
 class PartsrequestLine(models.Model):
     _name = 'partsrequest.partsline'
