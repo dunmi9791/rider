@@ -110,6 +110,14 @@ class PartsRequest(models.Model):
     def workshop_parts_request(self):
         self.state = 'Requested'
 
+    @api.multi
+    def workshop_parts_approve(self):
+        self.state = 'Approved'
+
+    @api.multi
+    def workshop_parts_reject(self):
+        self.state = 'Rejected'
+
 
 class PartsrequestLine(models.Model):
     _name = 'partsrequest.partsline'
