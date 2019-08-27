@@ -23,7 +23,7 @@ class ServiceRequest(models.Model):
                                      selection=[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5'), ],
                                      required=False, )
     interior_ta = fields.Selection(string="Interior Assessment",
-                                     selection=[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5'), ],
+                                     selection=[('1', '1. Very poor condition'), ('2', '2. poor condition'), ('3', '3.fair condition'), ('4', '4. good condition'), ('5', '5. Excellent condition'), ],
                                      required=False, )
     tyres_ta = fields.Selection(string="Tyres Assessment",
                                      selection=[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5'), ],
@@ -44,6 +44,7 @@ class ServiceRequest(models.Model):
     operations = fields.One2many(
         'jobcard.partsline', 'servicerequest_id', 'Parts',
         copy=True, readonly=True, states={'check-in': [('readonly', False)]})
+    odometer = fields.Char(string="Odometer Reading", required=False, )
 
 
 
