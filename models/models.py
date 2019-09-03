@@ -12,21 +12,19 @@ class ServiceRequest(models.Model):
     vehicle_id = fields.Many2one('vehicles.rider')
     checkin_date = fields.Datetime(string="Check-in Date/Time", required=False, )
     checkout_date = fields.Datetime(string="Check-out Date/Time", required=False, )
-    electrics_ta = fields.Selection(string="Electronic Assessment", selection=[('1', '1'), ('2', '2'),('3', '3'),('4', '4'), ('5', '5'), ], required=False, )
-    suspension_ta = fields.Selection(string="Suspension Assessment",
-                                     selection=[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5'), ],
+    electrics_ta = fields.Selection(string="Electronic Assessment", selection=[('1', '1. Very poor condition'), ('2', '2. poor condition'), ('3', '3.fair condition'), ('4', '4. good condition'), ('5', '5. Excellent condition'), ],
                                      required=False, )
-    engine_ta = fields.Selection(string="Engine Assessment",
-                                     selection=[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5'), ],
+    suspension_ta = fields.Selection(string="Suspension",selection=[('1', '1. Very poor condition'), ('2', '2. poor condition'), ('3', '3.fair condition'), ('4', '4. good condition'), ('5', '5. Excellent condition'), ],
                                      required=False, )
-    bodywork_ta = fields.Selection(string="Body Work Assessment",
-                                     selection=[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5'), ],
+    engine_ta = fields.Selection(string="Engine Assessment",selection=[('1', '1. Very poor condition'), ('2', '2. poor condition'), ('3', '3.fair condition'), ('4', '4. good condition'), ('5', '5. Excellent condition'), ],
                                      required=False, )
+    bodywork_ta = fields.Selection(string="Body Work Assessment",selection=[('1', '1. Very poor condition'), ('2', '2. poor condition'), ('3', '3.fair condition'), ('4', '4. good condition'), ('5', '5. Excellent condition'), ],
+                                        required = False, )
     interior_ta = fields.Selection(string="Interior Assessment",
                                      selection=[('1', '1. Very poor condition'), ('2', '2. poor condition'), ('3', '3.fair condition'), ('4', '4. good condition'), ('5', '5. Excellent condition'), ],
                                      required=False, )
     tyres_ta = fields.Selection(string="Tyres Assessment",
-                                     selection=[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5'), ],
+                                     selection=[('1', '1. Very poor condition'), ('2', '2. poor condition'), ('3', '3.fair condition'), ('4', '4. good condition'), ('5', '5. Excellent condition'), ],
                                      required=False, )
     service_type = fields.Selection(string="Serivice Type", selection=[('Planned', 'Planned'), ('Accident', 'Accident'),('Breakdown', 'Breakdown'), ('Technical Problem', 'Technical Problem'), ('Demand Service','Demand service'), ('Return Job', 'Return Job'), ], required=False, )
     checkin_comment = fields.Text(string="Check-in Comment", required=False, )
