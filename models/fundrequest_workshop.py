@@ -92,7 +92,7 @@ class PartsRequest(models.Model):
     request_no = fields.Char(string="Request Number",
                              default=lambda self: self.env['ir.sequence'].next_by_code('increment_parts_request'),
                              requires=False, readonly=True, )
-    programme_id = fields.Many2one(comodel_name="programme", string="Programme ID", required=False, readonly=True,
+    programme_id = fields.Many2one(comodel_name="programme.rider", string="Programme ID", required=False, readonly=True,
                                    states={'draft': [('readonly', False)]})
     jobcard_id = fields.Many2one(comodel_name="servicerequest.rider", string="Job Card ref", required=False,
                                  readonly=True, states={'draft': [('readonly', False)]})
@@ -150,6 +150,15 @@ class PartsrequestLine(models.Model):
     supplier2_id = fields.Many2one(comodel_name="res.partner", string="Supplier 2", required=False, )
     supplier3_id = fields.Many2one(comodel_name="res.partner", string="Supplier 3", required=False, )
     recommended = fields.Selection(string="Recommended Supplier", selection=[('supplier 1', 'supplier 1'), ('supplier 2', 'supplier 2'), ('supplier 3', 'supplier 3'), ], required=False, )
+
+
+class Programme(models.Model):
+    _name = 'programme.rider'
+    _rec_name = 'name'
+    _description = 'Programmes'
+
+    name = fields.Char(string="Programme")
+
 
 
 
