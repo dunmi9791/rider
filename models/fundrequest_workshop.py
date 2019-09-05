@@ -14,7 +14,7 @@ class FundRequestWorkshop(models.Model):
 
     date = fields.Date(string="Date", default=date.today(), required=False, readonly=True, states={'draft': [('readonly', False)]})
     request_no = fields.Char(string="Request Number", default=lambda self: self.env['ir.sequence'].next_by_code('increment_fund_request'), requires=False, readonly=True, trace_visibility='onchange',)
-    programme_id = fields.Many2one(comodel_name="programme", string="Programme ID", required=False, readonly=True, states={'draft': [('readonly', False)]})
+    programme_id = fields.Many2one(comodel_name="programme.rider", string="Programme ID", required=False, readonly=True, states={'draft': [('readonly', False)]})
     jobcard_id = fields.Many2one(comodel_name="servicerequest.rider", string="Job Card ref", required=False, readonly=True, states={'draft': [('readonly', False)]})
     state = fields.Selection(string="", selection=[('draft', 'draft'), ('Requested', 'Requested'), ('Approved', 'Approved'), ('Rejected', 'Rejected'),], required=False, copy=False, default='draft', readonly=True, track_visibility='onchange', )
     operations = fields.One2many(
