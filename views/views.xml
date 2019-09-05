@@ -37,6 +37,7 @@
                       <field name="checkout_date"/>
                     <field name="service_type"/>
                     <field name="checkin_comment"/>
+                      <field name="odometer"/>
                   </group>
                 <group>
                   <field name="spare_tyre"/>
