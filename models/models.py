@@ -47,6 +47,9 @@ class ServiceRequest(models.Model):
 
 
 
+
+
+
     @api.multi
     def technician_complete(self):
         self.state = 'Technician service completed'
@@ -100,6 +103,15 @@ class JobcardParts(models.Model):
         ('Approved', 'Approved'),
         ('Rejected', 'Rejected')], 'Status', default='draft',
         copy=False, readonly=True, required=True, )
+    price_subtotal = fields.Float('Subtotal', compute='_compute_price_subtotal', store=True, digits=0)
+
+    @api.one
+    @api.depends('cost', 'fundrequest_id', 'quantity', 'name', )
+    def _compute_price_subtotal(self):
+        self.price_subtotal = self.cost * self.quantity
+
+    quantity = fields.Float(string="Quantity", required=False, default=1.0, )
+    cost = fields.Float(string=" Unit Cost", required=False, )
 
 
 # class rider(models.Model):
