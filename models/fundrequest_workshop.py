@@ -18,12 +18,10 @@ class FundRequestWorkshop(models.Model):
     jobcard_id = fields.Many2one(comodel_name="servicerequest.rider", string="Job Card ref", required=False, readonly=True, states={'draft': [('readonly', False)]})
     state = fields.Selection(string="", selection=[('draft', 'draft'), ('Requested', 'Requested'), ('Approved', 'Approved'), ('Rejected', 'Rejected'),], required=False, copy=False, default='draft', readonly=True, track_visibility='onchange', )
     operations = fields.One2many(
-        'jobcard.partsline', 'servicerequest_id', 'Parts',
-        copy=True, readonly=True, states={'check-in': [('readonly', False)]}, related='jobcard_id.operations')
+        'fundrequest.partsline', 'fundrequest_id', 'Parts',
+        copy=True, readonly=True, states={'draft': [('readonly', False)]})
     part_qty = fields.Float(string="Quantity",  required=False, )
     amount_total = fields.Float('Total', compute='_amount_total', store=True)
-    cost = fields.Float(string=" Unit Cost", required=False, )
-    quantity = fields.Float(string="Quantity", required=False, default=1.0, )
 
 
 
