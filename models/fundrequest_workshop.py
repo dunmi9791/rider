@@ -22,6 +22,9 @@ class FundRequestWorkshop(models.Model):
         copy=True, readonly=True, states={'check-in': [('readonly', False)]}, related='jobcard_id.operations')
     part_qty = fields.Float(string="Quantity",  required=False, )
     amount_total = fields.Float('Total', compute='_amount_total', store=True)
+    cost = fields.Float(string=" Unit Cost", required=False, )
+    quantity = fields.Float(string="Quantity", required=False, default=1.0, )
+
 
 
 
