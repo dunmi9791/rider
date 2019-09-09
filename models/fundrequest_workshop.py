@@ -19,7 +19,7 @@ class FundRequestWorkshop(models.Model):
     state = fields.Selection(string="", selection=[('draft', 'draft'), ('Requested', 'Requested'), ('Approved', 'Approved'), ('Rejected', 'Rejected'),], required=False, copy=False, default='draft', readonly=True, track_visibility='onchange', )
     operations = fields.One2many(
         'fundrequest.partsline', 'fundrequest_id', 'Parts',
-        copy=True, readonly=True, states={'draft': [('readonly', False)]}, related='jobcard_id.operations')
+        copy=True, readonly=True, states={'draft': [('readonly', False)]},)
     part_qty = fields.Float(string="Quantity",  required=False, )
     amount_total = fields.Float('Total', compute='_amount_total', store=True)
 
