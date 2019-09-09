@@ -67,7 +67,7 @@ class FundrequestLine(models.Model):
     name = fields.Text(string='Description', required=False)
     fundrequest_id = fields.Many2one(comodel_name="fundrequestw.rider", index=True, ondelete='cascade')
     parts_id = fields.Many2one('product.product', string='Parts',
-                                 ondelete='restrict', index=True, related='fundrequest_id.jobcard_id.partsline_id.parts_id' )
+                                 ondelete='restrict', index=True, related='fundrequest_id.jobcard_id.operations' )
     state = fields.Selection([
         ('draft', 'Draft'),
         ('Requested', 'Requested'),
