@@ -106,7 +106,7 @@ class JobcardParts(models.Model):
         ('Approved', 'Approved'),
         ('Rejected', 'Rejected')], 'Status', default='draft',
         copy=False, readonly=True, required=True, )
-    fundrequest_id = fields.Many2one(comodel_name="fundrequestw.rider", index=True, ondelete='cascade')
+
 
 
 
