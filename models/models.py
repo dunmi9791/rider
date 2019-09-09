@@ -43,6 +43,7 @@ class ServiceRequest(models.Model):
         'jobcard.partsline', 'servicerequest_id', 'Parts',
         copy=True, readonly=True, states={'check-in': [('readonly', False)]})
     odometer = fields.Char(string="Odometer Reading", required=False, )
+    partsline_id = fields.Many2one(comodel_name="jobcard.partline", string="", required=False, )
 
 
 
