@@ -44,6 +44,8 @@ class ServiceRequest(models.Model):
         copy=True, readonly=True, states={'check-in': [('readonly', False)]})
     odometer = fields.Char(string="Odometer Reading", required=False, )
     partsline_id = fields.Many2one(comodel_name="jobcard.partline", string="", required=False, )
+    fundrequest_ids = fields.Many2many(comodel_name="fundrequestw.rider", relation="", column1="", column2="", string="Fund request",readonly=True )
+
 
 
 
@@ -104,6 +106,7 @@ class JobcardParts(models.Model):
         ('Approved', 'Approved'),
         ('Rejected', 'Rejected')], 'Status', default='draft',
         copy=False, readonly=True, required=True, )
+    fundrequest_id = fields.Many2one(comodel_name="fundrequestw.rider", index=True, ondelete='cascade')
 
 
 
