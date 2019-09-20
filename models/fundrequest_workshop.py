@@ -24,6 +24,26 @@ class FundRequestWorkshop(models.Model):
     amount_total = fields.Float('Total', compute='_amount_total', store=True)
 
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        result = super(FundRequestWorkshop, self).create(vals_list)
+        if result.jobcard_id:
+            parts_id = result.jobcard_id.id
+            parts = self.env['jobcard.partsline'].search([('servicerequest_id', '=', parts_id)])
+            for line in parts:
+                lines_dict = {
+                    'state': line.state,
+                    'parts_id': line.parts_id.id,
+                    'fundrequest_id': result.id,
+                }
+
+                self.env['fundrequest.partsline'].create(lines_dict)
+            return result
+
+
+
+
+
 
 
 
@@ -83,6 +103,10 @@ class FundrequestLine(models.Model):
 
     quantity = fields.Float(string="Quantity", required=False, default=1.0, )
     cost = fields.Float(string=" Unit Cost", required=False, )
+    jobcard_line_ids = fields.Many2many(comodel_name="jobcard.partsline",
+                                     relation="jobcard_line_fundrequest_rel",
+                                     column1="fundrequest_id", column2="servicerequest_id",
+                                     string="Job Card lines", readonly=True, copy=False )
 
 
 class PartsRequest(models.Model):
