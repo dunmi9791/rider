@@ -126,7 +126,7 @@
                     <field name="quantity"/>
                     <field name="cost" />
                     <field name="price_subtotal"/>
-                    <field name="fundrequest_id"/>
+
 
 
                 </tree>
@@ -251,7 +251,7 @@
 
                     <field name="parts_id" />
                     <field name="quantity"/>
-                    <field name="servicerequest_id"/>
+
 
 
                 </tree>
@@ -327,6 +327,32 @@
             </form>
         </field>
       </record>
+
+      <record id="view_fund_request_kanban" model="ir.ui.view">
+       <field name="name">fund request kanban view</field>
+        <field name="model">fundrequestw.rider</field>
+       <field name="arch" type="xml">
+          <kanban>
+              <field name="request_no"/>
+              <field name="jobcard_id"/>
+              <field name="date"/>
+
+              <templates>
+                 <t t-name="kanban-box">
+
+                     <div class="oe_kanban_card" t-attf-class="oe_kanban_global_click">
+                           <p><h1><field name="request_no"/></h1></p>
+                           <p><h4><field name="jobcard_id"/></h4></p>
+                           <p><field name="date"/></p>
+
+               </div>
+                    </t>
+       </templates>
+
+       </kanban>
+       </field>
+      </record>
+
 
 
     <!-- explicit list view definition -->
