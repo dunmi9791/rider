@@ -339,8 +339,8 @@
 
               <templates>
                  <t t-name="kanban-box">
+                     <div t-attf-class="oe_kanban_global_click">
 
-                     <div class="oe_kanban_card" t-attf-class="oe_kanban_global_click">
                            <p><h1><field name="request_no"/></h1></p>
                            <p><h4><field name="jobcard_id"/></h4></p>
                            <p><field name="date"/></p>
