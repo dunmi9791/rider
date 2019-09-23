@@ -30,8 +30,15 @@
     <record model="ir.actions.act_window" id="action_riders_fundrequest">
         <field name="name">Fund Request</field>
         <field name="res_model">fundrequestw.rider</field>
-        <field name="view_mode">tree,form,kanban</field>
+        <field name="view_mode">kanban,tree,form</field>
     </record>
+
+    <record model="ir.actions.act_window" id="action_riders_fundrequest_kanban">
+        <field name="name">Fund Request kanban</field>
+        <field name="res_model">fundrequestw.rider</field>
+        <field name="view_mode">kanban</field>
+    </record>
+
 
     <record model="ir.actions.act_window" id="action_riders_partsrequest">
         <field name="name">Parts Request</field>
