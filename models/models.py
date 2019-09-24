@@ -39,6 +39,7 @@ class ServiceRequest(models.Model):
     state = fields.Selection(string="", selection=[('check-in', 'check-in'), ('Tech Eval', 'Tech eval completed'),
                                                    ('Confirm', 'Confirmed'), ('parts release', 'parts released'),
                                                    ('quality check', 'quality checked'), ('Checked out', 'Checked out'),
+                                                   ('customer approve', 'Awaiting Customer Approval'),
                                                    ], default='check-in', required=False, track_visibility=True,
                              trace_visibility='onchange', )
     jobcard_no = fields.Char(string="Jobcard Number",
@@ -52,6 +53,8 @@ class ServiceRequest(models.Model):
     fundrequest_id = fields.Many2one('fundrequestw.rider', string="", required=False, )
     fundrequest_ids = fields.Many2many(comodel_name="fundrequestw.rider",string='Fund request', compute="_get_fundrequest", readonly=True, copy=False )
     parts_ids = fields.Integer(string="", required=False, compute="get_parts_id",)
+    workshop = fields.Selection(string="Workshop", selection=[('abuja', 'Abuja'), ('lagos', 'Lagos'),
+                                                      ('enugu', 'Enugu'), ('others', 'Others')], default='abuja', required=False, )
 
 
     @api.multi
@@ -66,6 +69,10 @@ class ServiceRequest(models.Model):
     @api.multi
     def technician_complete(self):
         self.state = 'Tech Eval'
+
+    @api.multi
+    def customer_approval(self):
+        self.state = 'customer approve'
 
     @api.multi
     def unitmanager_approve(self):
@@ -206,6 +213,13 @@ class JobcardParts(models.Model):
             'state': self.state,
         }
         return self.env['fundrequest.partsline'].create(lines_dict)
+
+class JobcardQuote(models.Model):
+    _inherit = 'sale.order'
+
+
+    jobcard_id = fields.Many2one(comodel_name="servicerequest.rider", string="Job Card", required=False, )
+
 
 
 

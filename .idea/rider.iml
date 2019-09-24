@@ -5,6 +5,7 @@
     <orderEntry type="jdk" jdkName="Python 3.7 (my-venv)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="odoo" />
+    <orderEntry type="module" module-name="employeebank" />
   </component>
   <component name="TestRunnerService">
     <option name="PROJECT_TEST_RUNNER" value="Unittests" />

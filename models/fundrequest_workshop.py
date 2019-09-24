@@ -24,6 +24,7 @@ class FundRequestWorkshop(models.Model):
     amount_total = fields.Float('Total', compute='_amount_total', store=True)
 
 
+
     @api.model_create_multi
     def create(self, vals_list):
         result = super(FundRequestWorkshop, self).create(vals_list)
