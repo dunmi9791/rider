@@ -14,6 +14,8 @@
                   <button name="quality_check" string="Quality Checked" class="oe_highlight" state="parts release" groups="rider.workshop_manager_group" type="object"/>
                   <button name="check_out" string="Check Out" class="oe_highlight" state="quality checked" groups="rider.technician_group" type="object"/>
                   <button name="customer_approval" string="Require Customer Approval" class="oe_highlight" state="quality checked" groups="rider.workshop_manager_group" type="object"/>
+                  <button name="cancel" string="Cancel" class="oe_highlight" state="quality checked" groups="rider.workshop_manager_group" type="object"/>
+
 
 
                   <field name="state" widget="statusbar" statusbar_visible="check-in,confirm,parts release,quality check,Checked out"/>

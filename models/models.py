@@ -4,6 +4,8 @@ from typing import List, Any
 from odoo import models, fields, api
 from datetime import datetime
 from datetime import date
+from odoo.exceptions import UserError
+from odoo.tools.translate import _
 
 class ServiceRequest(models.Model):
     _name = 'servicerequest.rider'
@@ -37,9 +39,10 @@ class ServiceRequest(models.Model):
     caution_triangle = fields.Boolean(string="Caution Triangle",  )
     fire_extinguisher = fields.Boolean(string="Fire Extinguisher",  )
     state = fields.Selection(string="", selection=[('check-in', 'check-in'), ('Tech Eval', 'Tech eval completed'),
+                                                   ('customer approve', 'Awaiting Customer Approval'),
                                                    ('Confirm', 'Confirmed'), ('parts release', 'parts released'),
                                                    ('quality check', 'quality checked'), ('Checked out', 'Checked out'),
-                                                   ('customer approve', 'Awaiting Customer Approval'),
+                                                   ('cancel', 'Canceled'),
                                                    ], default='check-in', required=False, track_visibility=True,
                              trace_visibility='onchange', )
     jobcard_no = fields.Char(string="Jobcard Number",
@@ -65,31 +68,61 @@ class ServiceRequest(models.Model):
         }
         return parts_ids
 
+    @api.model
+    def is_allowed_transition(self, old_state, new_state):
+        allowed = [('check-in', 'Tech Eval'),
+                   ('check-in', 'customer approve'),
+                   ('check-in', 'Confirm'),
+                   ('check-in', 'cancel'),
+                   ('Tech Eval', 'customer approve'),
+                   ('Tech Eval', 'Confirm'),
+                   ('Tech Eval', 'cancel'),
+                   ('customer approve', 'Confirm'),
+                   ('customer approve', 'cancel'),
+                   ('Confirm', 'parts release'),
+                   ('Confirm', 'cancel'),
+                   ('parts release', 'quality check'),
+                   ('quality check', 'Checked out')]
+        return (old_state, new_state) in allowed
 
     @api.multi
+    def change_state(self, new_state):
+        for job in self:
+            if job.is_allowed_transition(job.state, new_state):
+                job.state = new_state
+            else:
+                msg = _('Moving from %s to %s is not allowed') % (job.state, new_state)
+                raise UserError(msg)
+
+
+    @api.model
     def technician_complete(self):
-        self.state = 'Tech Eval'
+        self.change_state('Tech Eval')
 
-    @api.multi
+    @api.model
     def customer_approval(self):
-        self.state = 'customer approve'
+        self.change_state('customer approve')
 
-    @api.multi
+    @api.model
     def unitmanager_approve(self):
-        self.state = 'Confirm'
+        self.change_state('Confirm')
 
-    @api.multi
+    @api.model
     def parts_released(self):
-        self.state = 'parts release'
+        self.change_state('parts release')
 
 
-    @api.multi
+    @api.model
     def quality_check(self):
-        self.state = 'quality check'
+        self.change_state('quality check')
 
-    @api.multi
+    @api.model
     def check_out(self):
-        self.state = 'Checked out'
+        self.change_state('Checked out')
+
+    @api.model
+    def cancel(self):
+        self.change_state('cancel')
 
     def _track_subtype(self, init_values):
         # init_values contains the modified fields' values before the changes
@@ -217,9 +250,7 @@ class JobcardParts(models.Model):
 class JobcardQuote(models.Model):
     _inherit = 'sale.order'
 
-
     jobcard_id = fields.Many2one(comodel_name="servicerequest.rider", string="Job Card", required=False, )
-
 
 
 
