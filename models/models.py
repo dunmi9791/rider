@@ -68,7 +68,7 @@ class ServiceRequest(models.Model):
         }
         return parts_ids
 
-    @api.model
+    @api.multi
     def is_allowed_transition(self, old_state, new_state):
         allowed = [('check-in', 'Tech Eval'),
                    ('check-in', 'customer approve'),
@@ -95,32 +95,32 @@ class ServiceRequest(models.Model):
                 raise UserError(msg)
 
 
-    @api.model
+    @api.multi
     def technician_complete(self):
         self.change_state('Tech Eval')
 
-    @api.model
+    @api.multi
     def customer_approval(self):
         self.change_state('customer approve')
 
-    @api.model
+    @api.multi
     def unitmanager_approve(self):
         self.change_state('Confirm')
 
-    @api.model
+    @api.multi
     def parts_released(self):
         self.change_state('parts release')
 
 
-    @api.model
+    @api.multi
     def quality_check(self):
         self.change_state('quality check')
 
-    @api.model
+    @api.multi
     def check_out(self):
         self.change_state('Checked out')
 
-    @api.model
+    @api.multi
     def cancel(self):
         self.change_state('cancel')
 
