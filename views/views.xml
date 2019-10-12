@@ -8,62 +8,61 @@
           <form name="DLC Issues Form">
               <header>
 
-                  <button name="technician_complete" string="Technician check complete" class="oe_highlight" state="check-in" groups="rider.technician_group" type="object"/>
-                  <button name="unitmanager_approve" string="Confirm Jobcard" class="oe_highlight" state="Tech Eval" groups="rider.workshop_manager_group" type="object"/>
-                  <button name="parts_released" string="Parts released" class="oe_highlight" state="Confirm" groups="rider.store_group" type="object"/>
-                  <button name="quality_check" string="Quality Checked" class="oe_highlight" state="parts release" groups="rider.workshop_manager_group" type="object"/>
-                  <button name="check_out" string="Check Out" class="oe_highlight" state="quality checked" groups="rider.technician_group" type="object"/>
-                  <button name="customer_approval" string="Require Customer Approval" class="oe_highlight" state="quality checked" groups="rider.workshop_manager_group" type="object"/>
-                  <button name="cancel" string="Cancel" class="oe_highlight" state="quality checked" groups="rider.workshop_manager_group" type="object"/>
+                  <button name="technician_complete" string="Technician check complete" class="oe_highlight" states="check-in" groups="rider.technician_group" type="object"/>
+                  <button name="unitmanager_approve" string="Confirm Jobcard" class="oe_highlight" states="Tech Eval" groups="rider.workshop_manager_group" type="object"/>
+                  <button name="parts_released" string="Parts released" class="oe_highlight" states="Confirm" groups="rider.store_group" type="object"/>
+                  <button name="quality_check" string="Quality Checked" class="oe_highlight" states="parts release" groups="rider.workshop_manager_group" type="object"/>
+                  <button name="check_out" string="Check Out" class="oe_highlight" states="quality checked" groups="rider.technician_group" type="object"/>
+                  <button name="customer_approval" string="Require Customer Approval" class="oe_highlight" states="check-in" groups="rider.workshop_manager_group" type="object"/>
+                  <button name="cancel" string="Cancel" class="oe_highlight" states="quality checked" groups="rider.workshop_manager_group" type="object"/>
 
 
 
                   <field name="state" widget="statusbar" statusbar_visible="check-in,confirm,parts release,quality check,Checked out"/>
               </header>
     <sheet>
+
+        <div class="oe_title">
+            <h1>
+                <field name="jobcard_no"/>
+            </h1>
+        </div>
         <group>
-            <field name="workshop"/>
+                <group>
+                    <field name="vehicle_id" />
+
+                </group>
+                <group>
+                    <field name="workshop"/>
+                </group>
         </group>
-              <div class="oe_title">
-                  <label for="vehicle_id" class="oe_edit_only"/>
-                  <h1>
-                      <field name="vehicle_id" />
-
-                  </h1>
-              </div>
-              <div>
-                  <h1>
-                 <field name="jobcard_no"/>
-                  </h1>
-                  </div>
-
               <group>
                   <group>
                       <field name="checkin_date"/>
-                      <field name="checkout_date"/>
-                    <field name="service_type"/>
-                    <field name="checkin_comment"/>
+                      <field name="service_type"/>
+                      <field name="checkin_comment"/>
                       <field name="odometer"/>
                   </group>
+                  <group>
+                      <field name="spare_tyre"/>
+                      <field name="jack"/>
+                      <field name="wheel_spanner"/>
+                      <field name="tools"/>
+                      <field name="caution_triangle"/>
+                      <field name="fire_extinguisher"/>
+                  </group>
+              </group>
                 <group>
-                  <field name="spare_tyre"/>
-                  <field name="jack"/>
-                  <field name="wheel_spanner"/>
-                  <field name="tools"/>
-                  <field name="caution_triangle"/>
-                  <field name="fire_extinguisher"/>
-
-                </group>
                   <group>
                       <field name="electrics_ta"/>
                       <field name="suspension_ta"/>
                       <field name="engine_ta"/>
-                    <field name="bodywork_ta"/>
-                    <field name="interior_ta"/>
-                    <field name="tyres_ta"/>
-                    <field name="technical_comment"/>
+                      <field name="bodywork_ta"/>
+                      <field name="interior_ta"/>
+                      <field name="tyres_ta"/>
+                      <field name="technical_comment"/>
                   </group>
-              </group>
+                </group>
                    <notebook>
                     <page string="Parts Required/Used">
                         <field name="operations" >
@@ -74,10 +73,11 @@
                     </page>
                     </notebook>
             </sheet>
-              <div class="oe_chatter">
-                <field name="message_follower_ids" widget="mail_followers"/>
-                <field name="message_ids" widget="mail_thread"/>
-            </div>
+               <div class="oe_chatter">
+                 <field name="message_follower_ids" widget="mail_followers"/>
+                 <field name="message_ids" widget="mail_thread"/>
+               </div>
+
           </form>
 
         </field>
