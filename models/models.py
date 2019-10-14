@@ -12,12 +12,15 @@ class ServiceRequest(models.Model):
     _rec_name = 'jobcard_no'
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
-    vehicle_id = fields.Many2one('vehicles.rider', string='Chasis Number')
-    vehicle_reg_id = fields.Many2one('vehicles.rider', string='Registration Nember', readonly=True, required=True,
+    vehicle_id = fields.Many2one('vehicles.rider', string='Vehicle Chassis No.', required=True)
+    vehicle_reg_id = fields.Many2one('vehicles.rider', string='Registration Number', readonly=True,
                                           states={'check-in': [('readonly', False)], 'Tech Eval': [('readonly', False)],
                                                   'Confirm': [('readonly', False)]},
                                           help="Registration number.")
-    checkin_date = fields.Datetime(string="Check-in Date/Time", required=False, )
+    vehicle_reg = fields.Char(string='Registration Number', related='vehicle_id.vehicle_registration', readonly=True,
+
+                                          help="Registration number.")
+    checkin_date = fields.Datetime(string="Check-in Date/Time", required=False, default=datetime.now())
     checkout_date = fields.Datetime(string="Check-out Date/Time", required=False, )
     electrics_ta = fields.Selection(string="Electronic Assessment", selection=[('1', '1. Very poor condition'), ('2', '2. poor condition'), ('3', '3.fair condition'), ('4', '4. good condition'), ('5', '5. Excellent condition'), ],
                                      required=False, )
@@ -55,7 +58,7 @@ class ServiceRequest(models.Model):
     operations = fields.One2many(
         'jobcard.partsline', 'servicerequest_id', 'Parts',
         copy=True, readonly=True, states={'check-in': [('readonly', False)]})
-    odometer = fields.Char(string="Odometer Reading", required=False, )
+    odometer = fields.Char(string="Odometer Reading", required=True, )
     partsline_id = fields.Many2one(comodel_name="jobcard.partline", string="", required=False, )
     fundrequest_id = fields.Many2one('fundrequestw.rider', string="", required=False, )
     fundrequest_ids = fields.Many2many(comodel_name="fundrequestw.rider",string='Fund request', compute="_get_fundrequest", readonly=True, copy=False )

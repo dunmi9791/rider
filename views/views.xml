@@ -9,12 +9,12 @@
               <header>
 
                   <button name="technician_complete" string="Technician check complete" class="oe_highlight" states="check-in" groups="rider.technician_group" type="object"/>
-                  <button name="unitmanager_approve" string="Confirm Jobcard" class="oe_highlight" states="Tech Eval" groups="rider.workshop_manager_group" type="object"/>
+                  <button name="unitmanager_approve" string="Confirm Jobcard" class="oe_highlight" states="Tech Eval,customer approve" groups="rider.workshop_manager_group" type="object"/>
                   <button name="parts_released" string="Parts released" class="oe_highlight" states="Confirm" groups="rider.store_group" type="object"/>
                   <button name="quality_check" string="Quality Checked" class="oe_highlight" states="parts release" groups="rider.workshop_manager_group" type="object"/>
-                  <button name="check_out" string="Check Out" class="oe_highlight" states="quality checked" groups="rider.technician_group" type="object"/>
-                  <button name="customer_approval" string="Require Customer Approval" class="oe_highlight" states="check-in" groups="rider.workshop_manager_group" type="object"/>
-                  <button name="cancel" string="Cancel" class="oe_highlight" states="quality checked" groups="rider.workshop_manager_group" type="object"/>
+                  <button name="check_out" string="Check Out" class="oe_highlight" states="quality check" groups="rider.technician_group" type="object"/>
+                  <button name="customer_approval" string="Require Customer Approval" class="oe_highlight" states="check-in,Tech Eval" groups="rider.workshop_manager_group" type="object"/>
+                  <button name="cancel" string="Cancel" class="oe_highlight" states="quality checked,customer approve,check-in,Tech Eval" groups="rider.workshop_manager_group" type="object"/>
 
 
 
@@ -30,6 +30,7 @@
         <group>
                 <group>
                     <field name="vehicle_id" />
+                    <field name="vehicle_reg"/>
 
                 </group>
                 <group>
@@ -60,8 +61,10 @@
                       <field name="bodywork_ta"/>
                       <field name="interior_ta"/>
                       <field name="tyres_ta"/>
-                      <field name="technical_comment"/>
                   </group>
+                   <group>
+                        <field name="technical_comment"/>
+                   </group>
                 </group>
                    <notebook>
                     <page string="Parts Required/Used">
@@ -88,9 +91,10 @@
         <field name="arch" type="xml">
             <form string="Fund Request">
                 <header>
-                    <button name="workshop_fund_request" type="object" string="Request Fund" class="oe_highlight" attrs="{'invisible':['|',('state', 'not in', ('draft'))]}"/>
-                    <button name="workshop_fund_approve" type="object" string="Approve Request" class="oe_highlight" attrs="{'invisible':['|',('state', 'not in', ('Requested'))]}"/>
-                    <button name="workshop_fund_reject" type="object" string="Reject Request" class="oe_highlight" attrs="{'invisible':['|',('state', 'not in', ('Requested'))]}"/>
+                    <button name="workshop_fund_request" type="object" string="Request Fund" class="oe_highlight" states="draft"/>
+                    <button name="workshop_fund_approve" type="object" string="PD Approval" class="oe_highlight" states="Requested"/>
+                    <button name="workshop_fund_fin_approve" type="object" string="Fin Approval" class="oe_highlight" states="PD Approve"/>
+                    <button name="workshop_fund_reject" type="object" string="Reject Request" class="oe_highlight" states="Requested,PD Approve"/>
                 <field name="state" widget="statusbar" statusbar_visible="draft,Requested,Approved,Rejected"/>
                 </header>
                 <sheet>

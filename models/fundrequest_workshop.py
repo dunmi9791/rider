@@ -3,6 +3,8 @@
 from odoo import models, fields, api
 from datetime import datetime
 from datetime import date
+from odoo.exceptions import UserError
+from odoo.tools.translate import _
 
 class FundRequestWorkshop(models.Model):
     _name = 'fundrequestw.rider'
@@ -16,12 +18,31 @@ class FundRequestWorkshop(models.Model):
     request_no = fields.Char(string="Request Number", default=lambda self: self.env['ir.sequence'].next_by_code('increment_fund_request'), requires=False, readonly=True, trace_visibility='onchange',)
     programme_id = fields.Many2one(comodel_name="programme.rider", string="Programme ID", required=False, readonly=True, states={'draft': [('readonly', False)]})
     jobcard_id = fields.Many2one(comodel_name="servicerequest.rider", string="Job Card ref", required=False, readonly=True, states={'draft': [('readonly', False)]})
-    state = fields.Selection(string="", selection=[('draft', 'draft'), ('Requested', 'Requested'), ('Approved', 'Approved'), ('Rejected', 'Rejected'),], required=False, copy=False, default='draft', readonly=True, track_visibility='onchange', )
+    state = fields.Selection(string="", selection=[('draft', 'draft'), ('Requested', 'Requested'), ('PD Approve', 'PD Approval'), ('Fin Approve', 'Fin Approved'), ('Rejected', 'Rejected'),], required=False, copy=False, default='draft', readonly=True, track_visibility='onchange', )
     operations = fields.One2many(
         'fundrequest.partsline', 'fundrequest_id', 'Parts',
         copy=True, readonly=True, states={'draft': [('readonly', False)]},)
     part_qty = fields.Float(string="Quantity",  required=False, )
     amount_total = fields.Float('Total', compute='_amount_total', store=True)
+
+    @api.multi
+    def is_allowed_transition(self, old_state, new_state):
+        allowed = [('draft', 'Requested'),
+                   ('Requested', 'PD Approve'),
+                   ('Requested', 'Rejected'),
+                   ('PD Approve', 'Fin Approve'),
+                   ('PD Approve', 'Rejected'),
+                   ]
+        return (old_state, new_state) in allowed
+
+    @api.multi
+    def change_state(self, new_state):
+        for fund in self:
+            if fund.is_allowed_transition(fund.state, new_state):
+                fund.state = new_state
+            else:
+                msg = _('Moving from %s to %s is not allowed') % (fund.state, new_state)
+                raise UserError(msg)
 
 
 
@@ -35,6 +56,7 @@ class FundRequestWorkshop(models.Model):
                 lines_dict = {
                     'state': line.state,
                     'parts_id': line.parts_id.id,
+                    'quantity': line.quantity,
                     'fundrequest_id': result.id,
                 }
 
@@ -56,15 +78,19 @@ class FundRequestWorkshop(models.Model):
 
     @api.multi
     def workshop_fund_request(self):
-        self.state = 'Requested'
+        self.change_state('Requested')
 
     @api.multi
     def workshop_fund_approve(self):
-        self.state = 'Approved'
+        self.change_state('PD Approve')
+
+    @api.multi
+    def workshop_fund_fin_approve(self):
+        self.change_state('Fin Approve')
 
     @api.multi
     def workshop_fund_reject(self):
-        self.state = 'Rejected'
+        self.change_state('Rejected')
 
 
 class Parts(models.Model):
