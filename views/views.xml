@@ -92,7 +92,7 @@
             <form string="Fund Request">
                 <header>
                     <button name="workshop_fund_request" type="object" string="Request Fund" class="oe_highlight" states="draft"/>
-                    <button name="workshop_fund_approve" type="object" string="PD Approval" class="oe_highlight" states="Requested"/>
+                    <button name="workshop_fund_approve" type="object" string="PD Approval" class="oe_highlight" groups="rider.group_manager_group" states="Requested"/>
                     <button name="workshop_fund_fin_approve" type="object" string="Fin Approval" class="oe_highlight" states="PD Approve"/>
                     <button name="workshop_fund_reject" type="object" string="Reject Request" class="oe_highlight" states="Requested,PD Approve"/>
                 <field name="state" widget="statusbar" statusbar_visible="draft,Requested,Approved,Rejected"/>
