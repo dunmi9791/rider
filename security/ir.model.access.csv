@@ -23,7 +23,7 @@ access_rider_ordermemo3,rider.odermemo3,model_ordermemo_rider,rider.finance_grou
 access_rider_funrequestw,rider.fundrequestw,model_fundrequestw_rider,rider.store_group,1,1,1,0
 access_rider_funrequestw2,rider.fundrequestw2,model_fundrequestw_rider,rider.workshop_manager_group,1,1,1,0
 access_rider_funrequestw3,rider.fundrequestw3,model_fundrequestw_rider,rider.finance_group,1,1,1,0
-access_rider_funrequestw3,rider.fundrequestw3,model_fundrequestw_rider,rider.group_manager_group,1,1,1,1
+access_rider_funrequestw4,rider.fundrequestw4,model_fundrequestw_rider,rider.group_manager_group,1,1,1,1
 access_rider_parts,rider.parts,model_parts_rider,,1,1,1,1
 access_rider_partsline,rider.partsline,model_fundrequest_partsline,,1,1,1,1
 access_rider_partsrequest,rider.partsrequest,model_partsrequest_rider,,1,1,1,1
