@@ -135,6 +135,7 @@
                     <field name="parts_id" />
                     <field name="quantity"/>
                     <field name="cost" />
+                    <field name="source"/>
                     <field name="price_subtotal"/>
 
 

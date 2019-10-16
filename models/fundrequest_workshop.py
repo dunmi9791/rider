@@ -122,6 +122,9 @@ class FundrequestLine(models.Model):
         ('Rejected', 'Rejected')], 'Status', default='draft',
         copy=False, readonly=True, required=True, )
     price_subtotal = fields.Float('Subtotal', compute='_compute_price_subtotal', store=True, digits=0)
+    source = fields.Selection([
+        ('store', 'store'),
+        ('cash', 'cash')], string='Remark')
 
     @api.one
     @api.depends('cost', 'fundrequest_id', 'quantity', 'name', )

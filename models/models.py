@@ -57,7 +57,7 @@ class ServiceRequest(models.Model):
                              requires=False, readonly=True, )
     operations = fields.One2many(
         'jobcard.partsline', 'servicerequest_id', 'Parts',
-        copy=True, readonly=True, states={'check-in': [('readonly', False)]})
+        copy=True, readonly=True, states={'check-in': [('readonly', False)], 'Tech Eval': [('readonly', False)]})
     odometer = fields.Char(string="Odometer Reading", required=True, )
     partsline_id = fields.Many2one(comodel_name="jobcard.partline", string="", required=False, )
     fundrequest_id = fields.Many2one('fundrequestw.rider', string="", required=False, )
