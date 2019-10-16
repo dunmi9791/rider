@@ -33,7 +33,7 @@
     </record>
 
     <record id="finance_group" model="res.groups">
-        <field name="name">finanace</field>
+        <field name="name">finance</field>
         <field name="comment">Finance Manager Permission Group.</field>
         <field name="category_id" ref="rider.module_category_rider"/>
     </record>
