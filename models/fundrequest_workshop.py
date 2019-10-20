@@ -24,6 +24,9 @@ class FundRequestWorkshop(models.Model):
         copy=True, readonly=True, states={'draft': [('readonly', False)]},)
     part_qty = fields.Float(string="Quantity",  required=False, )
     amount_total = fields.Float('Total', compute='_amount_total', store=True)
+    client = fields.Many2one(string='Client', related='jobcard_id.client', readonly=True,
+
+                              help="Registration number.")
 
     @api.multi
     def is_allowed_transition(self, old_state, new_state):

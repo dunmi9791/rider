@@ -13,7 +13,8 @@ class OrderMemo(models.Model):
     date = fields.Date(string="", required=False, )
     memo = fields.Html(string="",  )
     order_id = fields.Many2one(comodel_name="order.rider", string="order", required=False, )
-    memo_to = fields.Many2one(comodel_name="hr.employee", string="Memo to", )
+    memo_to = fields.Many2one(comodel_name="res.users", string="Memo to", )
+    copy_to = fields.Many2many(comodel_name="res.users", string="Copy")
     state = fields.Selection([
         ('draft', 'Draft'),
         ('Requested', 'Requested'),

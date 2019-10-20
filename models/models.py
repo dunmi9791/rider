@@ -20,6 +20,9 @@ class ServiceRequest(models.Model):
     vehicle_reg = fields.Char(string='Registration Number', related='vehicle_id.vehicle_registration', readonly=True,
 
                                           help="Registration number.")
+    client = fields.Many2one(string='Client', related='vehicle_id.client_id', readonly=True,
+
+                              help="Registration number.")
     checkin_date = fields.Datetime(string="Check-in Date/Time", required=False, default=datetime.now())
     checkout_date = fields.Datetime(string="Check-out Date/Time", required=False, )
     electrics_ta = fields.Selection(string="Electronic Assessment", selection=[('1', '1. Very poor condition'), ('2', '2. poor condition'), ('3', '3.fair condition'), ('4', '4. good condition'), ('5', '5. Excellent condition'), ],

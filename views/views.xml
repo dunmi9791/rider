@@ -9,7 +9,7 @@
               <header>
 
                   <button name="technician_complete" string="Technician check complete" class="oe_highlight" states="check-in" groups="rider.technician_group" type="object"/>
-                  <button name="unitmanager_approve" string="Confirm Jobcard" class="oe_highlight" states="Tech Eval,customer approve" groups="rider.workshop_manager_group" type="object"/>
+                  <button name="unitmanager_approve" string="Confirm Jobcard" class="oe_highlight" states="check-in,Tech Eval,customer approve" groups="rider.workshop_manager_group" type="object"/>
                   <button name="parts_released" string="Parts released" class="oe_highlight" states="Confirm" groups="rider.store_group" type="object"/>
                   <button name="quality_check" string="Quality Checked" class="oe_highlight" states="parts release" groups="rider.workshop_manager_group" type="object"/>
                   <button name="check_out" string="Check Out" class="oe_highlight" states="quality check" groups="rider.technician_group" type="object"/>
@@ -31,6 +31,7 @@
                 <group>
                     <field name="vehicle_id" />
                     <field name="vehicle_reg"/>
+                    <field name="client"/>
 
                 </group>
                 <group>
@@ -92,8 +93,8 @@
             <form string="Fund Request">
                 <header>
                     <button name="workshop_fund_request" type="object" string="Request Fund" class="oe_highlight" states="draft"/>
-                    <button name="workshop_fund_approve" type="object" string="PD Approval" class="oe_highlight" groups="rider.group_manager_group" states="Requested"/>
-                    <button name="workshop_fund_fin_approve" type="object" string="Fin Approval" class="oe_highlight" groups="rider.finance_group" states="PD Approve"/>
+                    <button name="workshop_fund_approve" type="object" string="Operational Approval" class="oe_highlight" groups="rider.group_manager_group" states="Requested"/>
+                    <button name="workshop_fund_fin_approve" type="object" string="Financial Approval" class="oe_highlight" groups="rider.finance_group" states="PD Approve"/>
                     <button name="workshop_fund_reject" type="object" string="Reject Request" class="oe_highlight" states="Requested,PD Approve"/>
                 <field name="state" widget="statusbar" statusbar_visible="draft,Requested,Approved,Rejected"/>
                 </header>
@@ -101,7 +102,7 @@
                 <group>
                 <field name="date"/>
                 <field name="request_no"/>
-                <field name="programme_id"/>
+                <field name="client"/>
                 <field name="jobcard_id"/>
                 </group>
 
@@ -281,11 +282,18 @@
                 </header>
                 <sheet>
                 <group>
-                    <field name="name"/>
-                <field name="date"/>
-                <field name="memo_no"/>
+                    <group>
+                     <field name="memo_no"/>
+                     <field name="name"/>
+                     <field name="date"/>
+                    </group>
+                    <group>
+
                 <field name="order_id"/>
                 <field name="memo_to"/>
+                    <field name="copy_to" widget="many2many_tags"
+    options="{'no_create_edit': True}"/>
+                        </group>
                 </group>
 
                     <group>
@@ -363,6 +371,75 @@
        </kanban>
        </field>
       </record>
+      <record id="view_riders_cashrequisition_form" model="ir.ui.view">
+        <field name="name">view.riders.cash.form</field>
+        <field name="model">cashrequisition.rider</field>
+        <field name="arch" type="xml">
+          <form name="Cash Requisition Form">
+              <header>
+
+                  <button name="authorise" string="Authorise" class="oe_highlight" states="Requested" groups="rider.finance_group" type="object"/>
+                  <button name="process" string="Process" class="oe_highlight" states="Authorised" groups="rider.finance_group" type="object"/>
+                  <button name="receive" string="Receive" class="oe_highlight" states="Processed" groups="rider.finance_group" type="object"/>
+                  <button name="cancel" string="Cancel" class="oe_highlight"  type="object"/>
+
+
+
+                  <field name="state" widget="statusbar" statusbar_visible="Requested,Authorised,Processed"/>
+              </header>
+    <sheet>
+
+        <div class="oe_title">
+            <h1>
+                <field name="cash_no"/>
+            </h1>
+        </div>
+        <group>
+                <group>
+                    <field name="date" />
+                    <field name="ref"/>
+
+                </group>
+                <group>
+                    <field name="payable"/>
+                </group>
+        </group>
+              <group>
+                  <group>
+                      <field name="amount_figures"/>
+                  </group>
+                  <group>
+                      <field name="amount_words"/>
+                  </group>
+              </group>
+                <group>
+                  <field name="details"/>
+                </group>
+
+            </sheet>
+               <div class="oe_chatter">
+                 <field name="message_follower_ids" widget="mail_followers"/>
+                 <field name="message_ids" widget="mail_thread"/>
+               </div>
+
+          </form>
+
+        </field>
+      </record>
+      <record id="view_cash_tree" model="ir.ui.view">
+            <field name="name">cashrequest.tree</field>
+            <field name="model">cashrequisition.rider</field>
+            <field name="arch" type="xml">
+                <tree string="Parts Line" >
+
+                    <field name="date" />
+                    <field name="amount_figures"/>
+                    <field name="payable"/>
+                    <field name="state" />
+
+                </tree>
+            </field>
+        </record>
 
 
 
