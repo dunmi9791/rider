@@ -9,7 +9,7 @@ from odoo.tools.translate import _
 class FundRequestWorkshop(models.Model):
     _name = 'fundrequestw.rider'
     _rec_name = 'request_no'
-    _inherit = ['mail.thread']
+    _inherit = ['mail.thread', 'mail.activity.mixin']
 
 
     _description = 'Fund request workshop'
