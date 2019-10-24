@@ -9,7 +9,7 @@ from datetime import date
 class CashRequisition(models.Model):
     _name = 'cashrequisition.rider'
     _description = 'cash requisition'
-    _inherit = ['mail.thread']
+    _inherit = ['mail.thread', 'mail.activity.mixin']
 
     date = fields.Date(string="Date", required=False, default=date.today(),)
     amount_words = fields.Char(string="Amount in Words", required=False, )
