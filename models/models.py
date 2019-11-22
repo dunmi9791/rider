@@ -11,6 +11,7 @@ class ServiceRequest(models.Model):
     _name = 'servicerequest.rider'
     _rec_name = 'jobcard_no'
     _inherit = ['mail.thread', 'mail.activity.mixin']
+    _order = "checkin_date desc, id desc"
 
     vehicle_id = fields.Many2one('vehicles.rider', string='Vehicle Chassis No.', required=True)
     vehicle_reg_id = fields.Many2one('vehicles.rider', string='Registration Number', readonly=True,
