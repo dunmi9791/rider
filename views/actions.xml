@@ -46,6 +46,12 @@
         <field name="view_mode">tree,form,kanban</field>
     </record>
 
+    <record model="ir.actions.act_window" id="action_riders_expenserequest">
+        <field name="name">Expense Request</field>
+        <field name="res_model">expense.rider</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+
 
 
 
@@ -76,6 +82,12 @@
               sequence="3" />
      <menuitem name="Cash Requisition" id="riders_finance_cashrequisition_menu" parent="riders_finance_menu"
               sequence="7" action="action_riders_cashrequisition"/>
+
+    <menuitem name="General" id="riders_general_menu" parent="riders_root_menu"
+              sequence="2" />
+    <menuitem name="Expense Requisition" id="riders_expense_cashrequisition_menu" parent="riders_general_menu"
+              sequence="8" action="action_riders_expenserequest"/>
+
 
 
 </odoo>
