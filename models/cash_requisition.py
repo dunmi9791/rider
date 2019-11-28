@@ -71,16 +71,31 @@ class ExpenseRequest(models.Model):
     expenses = fields.One2many(
         'exprequest.expline', 'exprequest_id', 'Expenses',
         copy=True, readonly=True, states={'draft': [('readonly', False)]}, )
-    amount_total = fields.Float('Total', compute='_amount_total', store=True)
+    expended = fields.One2many(
+        'expended.expline', 'expended_id', 'Expenses',
+        copy=True, readonly=True, states={'disburse': [('readonly', False)]},)
+    amount_total = fields.Float('Total Requested/Approved', compute='_amount_total', store=True)
     state = fields.Selection(string="",
                              selection=[('draft', 'draft'), ('Requested', 'Requested'), ('Unit Head Approve', 'Unit Approval'),
                                         ('Fin Approve', 'Fin Approved'), ('disburse', 'disbursed'), ('reconcile', 'reconciled'), ('Rejected', 'Rejected'), ], required=False,
                              copy=False, default='draft', readonly=True, track_visibility='onchange', )
+    expended_total = fields.Float('Total Spent', compute='_expended_total')
+    balance = fields.Float('Amount Reimbursed/Returned', compute='_balance')
 
     @api.one
     @api.depends('expenses.price_subtotal', )
     def _amount_total(self):
         self.amount_total = sum(expense.price_subtotal for expense in self.expenses)
+
+
+    @api.one
+    @api.depends('expenses.price_subtotal', )
+    def _expended_total(self):
+        self.expended_total = sum(expend.amount for expend in self.expended)
+
+    @api.one
+    def _balance(self):
+        self.balance = self.amount_total - self.expended_total
 
     @api.multi
     def is_allowed_transition(self, old_state, new_state):
@@ -155,6 +170,20 @@ class ExpenseItem(models.Model):
     _description = 'Items'
 
     name = fields.Char(string="Item")
+
+class Expended(models.Model):
+    _name = 'expended.expline'
+
+    _description = 'Actual expense'
+
+    name = fields.Char()
+    expended_id = fields.Many2one(comodel_name="expense.rider", index=True, ondelete="cascade")
+    item_id = fields.Many2one(comodel_name="expense.item", string="Item", ondelete="restrict", index=True)
+    remark = fields.Char(string="Remark")
+    amount = fields.Float(string="Amount Spent", required=False, )
+    receipt = fields.Binary(string="Receipt",)
+
+
 
 
 

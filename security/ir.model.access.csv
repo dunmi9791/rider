@@ -36,4 +36,5 @@ access_rider_programme,rider.programme,model_programme_rider,,1,1,1,1
 access_rider_expense,rider.expense,model_expense_rider,,1,1,1,1
 access_rider_expenseline,rider.expenseline,model_exprequest_expline,,1,1,1,1
 access_rider_expenseitem,rider.expenseitem,model_expense_item,,1,1,1,1
+access_rider_expended,rider.expended,model_expended_expline,,1,1,1,1
 

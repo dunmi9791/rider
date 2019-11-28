@@ -464,6 +464,7 @@
     options="{'no_create_edit': True}"/>
              <field name="subject"/>
              <field name="request_from"/>
+             <field name="balance"/>
          </group>
 
 
@@ -475,9 +476,17 @@
 
 
              </page>
+                 <page string="Reconciliation">
+                     <field name="expended">
+
+                     </field>
+                 </page>
              </notebook>
              <group>
              <field name="amount_total"/>
+                 </group>
+             <group>
+                 <field name="expended_total"/>
              </group>
          </sheet>
          <div class="oe_chatter">
@@ -498,6 +507,23 @@
                     <field name="cost"/>
                     <field name="quantity"/>
                     <field name="price_subtotal"/>
+
+
+
+                </tree>
+            </field>
+        </record>
+      <record id="view_expendedline_tree" model="ir.ui.view">
+            <field name="name">expendedline.tree</field>
+            <field name="model">expended.expline</field>
+            <field name="arch" type="xml">
+                <tree string="Expended Line" create="true" delete="true" editable="bottom">
+
+                    <field name="item_id" />
+                    <field name="remark"/>
+                    <field name="amount"/>
+                    <field name="receipt"/>
+
 
 
 
