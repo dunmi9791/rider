@@ -522,7 +522,7 @@
                     <field name="item_id" />
                     <field name="remark"/>
                     <field name="amount"/>
-                    <field name="receipt"/>
+                    <field name="receipt" filename="name" widget='binary'/>
 
 
 
