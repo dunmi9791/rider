@@ -64,7 +64,7 @@ class ExpenseRequest(models.Model):
                           default=lambda self: self.env['ir.sequence'].next_by_code('increment_expense'),
                           requires=False, readonly=True, )
     date = fields.Date(string="Date", required=False, default=date.today(), )
-    memo_to = fields.Many2one(comodel_name="res.users", string="TO")
+    memo_to = fields.Many2one(comodel_name="res.users", string="TO", domain=lambda self: [( "groups_id", "=", self.env.ref( "rider.group_manager_group" ).id )])
     copy_to = fields.Many2many(comodel_name="res.users", string="CC")
     subject = fields.Char(string="Subject", required=False, )
     request_from = fields.Many2one(comodel_name="res.users", string="From", readonly=True, default=lambda self: self.env.user)
