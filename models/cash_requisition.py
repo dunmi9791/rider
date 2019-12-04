@@ -136,6 +136,10 @@ class ExpenseRequest(models.Model):
         self.change_state('Rejected')
 
     @api.multi
+    def expensefin_reject(self):
+        self.change_state('Rejected')
+
+    @api.multi
     def expense_disburse(self):
         self.change_state('disburse')
 
