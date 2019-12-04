@@ -67,7 +67,7 @@ class ExpenseRequest(models.Model):
     memo_to = fields.Many2one(comodel_name="res.users", string="TO", )
     copy_to = fields.Many2many(comodel_name="res.users", string="CC")
     subject = fields.Char(string="Subject", required=False, )
-    request_from = fields.Many2one(comodel_name="res.users", string="From")
+    request_from = fields.Many2one(comodel_name="res.users", string="From", readonly=True, default=lambda self: self.env.user)
     expenses = fields.One2many(
         'exprequest.expline', 'exprequest_id', 'Expenses',
         copy=True, readonly=True, states={'draft': [('readonly', False)]}, )
