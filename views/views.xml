@@ -459,7 +459,7 @@
          <group>
          <field name="date"/>
          <field name="exp_no"/>
-         <field name="memo_to" groups="rider.group_manager_group"/>
+         <field name="memo_to"/>
          <field name="copy_to" widget="many2many_tags"
     options="{'no_create_edit': True}"/>
              <field name="subject"/>
