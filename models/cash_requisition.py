@@ -82,6 +82,7 @@ class ExpenseRequest(models.Model):
     expended_total = fields.Float('Total Spent', compute='_expended_total')
     balance = fields.Float('Amount Reimbursed/Returned', compute='_balance')
 
+
     @api.one
     @api.depends('expenses.price_subtotal', )
     def _amount_total(self):
