@@ -147,6 +147,19 @@ class ExpenseRequest(models.Model):
     def expense_reconcile(self):
         self.change_state('reconcile')
 
+    @api.model
+    def create(self, vals):
+        res = super(ExpenseRequest, self).create(vals)
+        for rec in res:
+            if rec.copy_to:
+                partner_ids = []
+                for copy in rec.copy_to:
+                    if copy.partner_id and copy.partner_id.email:
+                        partner_ids.append(copy.partner_id.id)
+                if partner_ids:
+                    rec.message_subscribe(partner_ids, None)
+        return res
+
 
 
 

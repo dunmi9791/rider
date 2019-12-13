@@ -448,7 +448,7 @@
      <form string="Expense Request">
          <header>
              <button name="expense_request" type="object" string="Request Expense" class="oe_highlight" states="draft"/>
-             <button name="unit_expense_approve" type="object" string="Unit Approval" class="oe_highlight" groups="rider.group_manager_group" states="Requested"/>
+             <button name="unit_expense_approve" type="object" string="Unit Approval" class="oe_highlight" groups="rider.group_manager_group, group_approverequest_group" states="Requested"/>
              <button name="expense_fin_approve" type="object" string="Financial Approval" class="oe_highlight" groups="rider.finance_group" states="Unit Head Approve"/>
              <button name="expensefin_reject" type="object" string="Reject Request" class="oe_highlight" groups="rider.finance_group" states="Unit Head Approve"/>
              <button name="expense_reject" type="object" string="Reject Request" class="oe_highlight" states="Requested" groups="rider.group_manager_group"/>
