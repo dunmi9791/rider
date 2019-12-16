@@ -24,8 +24,8 @@
 
     # always loaded
     'data': [
-        'views/views.xml',
         'data/groups.xml',
+        'views/views.xml',
         'data/subtypes.xml',
         'views/templates.xml',
         'views/actions.xml',
