@@ -513,14 +513,19 @@
 
                   <sheet>
                       <group>
+                          <group>
                           <field name="date"/>
                           <field name="exp_no"/>
                       <field name="memo_to"/>
                      <field name="copy_to" widget="many2many_tags"
                           options="{'no_create_edit': True}"/>
+                          <field name="department"/>
+                              </group>
+                          <group>
                      <field name="subject"/>
                      <field name="request_from"/>
                       <field name="balance"/>
+                              </group>
 
                       </group>
 

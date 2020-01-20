@@ -31,6 +31,7 @@ access_rider_programme,rider.programme,model_programme_rider,,1,1,1,1
 access_rider_expense,rider.expense,model_expense_rider,rider.group_approve_exp_group,1,1,1,1
 access_rider_expense2,rider.expense2,model_expense_rider,rider.group_user_exp_group,1,1,1,1
 access_rider_expenseline,rider.expenseline,model_exprequest_expline,,1,1,1,1
-access_rider_expenseitem,rider.expenseitem,model_expense_item,,1,1,1,1
+access_rider_expenseitem,rider.expenseitem,model_expense_item,,1,0,0,0
+access_rider_expenseitem2,rider.expenseitem2,model_expense_item,rider.group_edit_item_group,1,1,1,1
 access_rider_expended,rider.expended,model_expended_expline,,1,1,1,1
 

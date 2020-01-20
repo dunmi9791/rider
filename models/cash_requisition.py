@@ -81,6 +81,9 @@ class ExpenseRequest(models.Model):
                              copy=False, default='draft', readonly=True, track_visibility='onchange', )
     expended_total = fields.Float('Total Spent', compute='_expended_total')
     balance = fields.Float('Amount Reimbursed/Returned', compute='_balance')
+    department = fields.Selection(string="Department",
+                                  selection=[('sampletransport', 'Sample Transport'), ('supplychain', 'Supply Chain'), ('finance', 'Finance'),
+                                             ('humanresource', 'Human Resource'), ('operations', 'Operations'), ('admin', 'Admin'),], required=True,)
 
 
     @api.one
@@ -171,7 +174,7 @@ class ExpenserequestLine(models.Model):
 
     name = fields.Char()
     exprequest_id = fields.Many2one(comodel_name="expense.rider", index=True, ondelete="cascade")
-    item_id = fields.Many2one(comodel_name="expense.item", string="Item", ondelete="restrict", index=True)
+    item_id = fields.Many2one(comodel_name="expense.item", string="Item", required=True, ondelete="restrict", index=True)
     description = fields.Char(string="Description")
     quantity = fields.Float(string="Quantity", required=False, default=1.0, )
     cost = fields.Float(string=" Unit Cost", required=False, )
