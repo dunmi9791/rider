@@ -485,6 +485,7 @@
 
                     <field name="date" />
                     <field name="exp_no" />
+                    <field name="department" />
                     <field name="amount_total"/>
                     <field name="subject"/>
                     <field name="state" />
