@@ -527,7 +527,7 @@
                      <field name="subject"/>
                      <field name="request_from"/>
                       <field name="balance"/>
-                              <field name="mode_of_disburse"/>
+                              <field name="mode_of_disburse" groups="rider.finance_group"/>
                               </group>
 
                       </group>
