@@ -86,7 +86,7 @@ class ExpenseRequest(models.Model):
     department = fields.Selection(string="Department",
                                   selection=[('sampletransport', 'Sample Transport'), ('supplychain', 'Supply Chain'), ('finance', 'Finance'),
                                              ('humanresource', 'Human Resource'), ('operations', 'Operations'), ('admin', 'Admin'),], required=True,)
-    mode_of_disburse = fields.Selection(string="Mode of Disbursement", selection=[('cash', 'Cash'), ('transfer', 'Transfer'),],
+    mode_of_disburse = fields.Selection(string="Mode of Disbursement", selection=[('cash', 'Cash'), ('transfer', 'Transfer'), ('it', 'IT'),],
                                         states={'Fin Approve': [('required', True)]})
 
 
