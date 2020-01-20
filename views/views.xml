@@ -398,6 +398,7 @@
                 <group>
                     <field name="date" />
                     <field name="ref"/>
+                    <field name="ref2"/>
 
                 </group>
                 <group>
@@ -525,6 +526,7 @@
                      <field name="subject"/>
                      <field name="request_from"/>
                       <field name="balance"/>
+                              <field name="mode_of_disburse"/>
                               </group>
 
                       </group>

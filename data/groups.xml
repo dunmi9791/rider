@@ -69,6 +69,11 @@
         <field name="comment">Edit Item Permission Group.</field>
         <field name="category_id" ref="rider.module_category_rider"/>
     </record>
+    <record id="group_read_exp_group" model="res.groups">
+        <field name="name">Can Read cash expense</field>
+        <field name="comment">Read expense Permission Group.</field>
+        <field name="category_id" ref="rider.module_category_rider"/>
+    </record>
 
 </data>
 </odoo>

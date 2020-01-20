@@ -16,6 +16,8 @@ class CashRequisition(models.Model):
     amount_figures = fields.Float(string="Amount in Figures",  required=False, )
     payable = fields.Many2one(string="Payable to", comodel_name="res.users", required=False, )
     ref = fields.Many2one(string="Reference Document", comodel_name="fundrequestw.rider",  ondelete='restrict', required=False,)
+    ref2 = fields.Many2one(string="Reference Document exp", comodel_name="expense.rider", ondelete='restrict',
+                          required=False, )
     details = fields.Text(string="Details", required=False, )
     cash_no = fields.Char(string="Cash Requisition No.", default=lambda self: self.env['ir.sequence'].next_by_code('increment_cash_request'), requires=False, readonly=True, trace_visibility='onchange',)
     state = fields.Selection(string="", selection=[('Requested', 'Requested'), ('Authorised', 'Authorised'), ('Processed', 'Processed'), ('Received', 'Received'), ('Canceled', 'Canceled'), ], required=False, default='Requested', track_visibility='onchange', )
@@ -84,6 +86,8 @@ class ExpenseRequest(models.Model):
     department = fields.Selection(string="Department",
                                   selection=[('sampletransport', 'Sample Transport'), ('supplychain', 'Supply Chain'), ('finance', 'Finance'),
                                              ('humanresource', 'Human Resource'), ('operations', 'Operations'), ('admin', 'Admin'),], required=True,)
+    mode_of_disburse = fields.Selection(string="Mode of Disbursement", selection=[('cash', 'Cash'), ('transfer', 'Transfer'),],
+                                        states={'Fin Approve': [('required', True)]})
 
 
     @api.one
