@@ -79,13 +79,13 @@ class ExpenseRequest(models.Model):
     amount_total = fields.Float('Total Requested/Approved', compute='_amount_total', store=True)
     state = fields.Selection(string="",
                              selection=[('draft', 'draft'), ('Requested', 'Requested'), ('Unit Head Approve', 'Unit Approval'),
-                                        ('Fin Approve', 'Fin Approved'), ('disburse', 'disbursed'), ('reconcile', 'reconciled'), ('Rejected', 'Rejected'), ], required=False,
+                                        ('Fin Approve', 'Fin Approved'), ('requirecd', 'Awaiting CD Approval'), ('cdapprove', 'CD Approved'), ('disburse', 'disbursed'), ('reconcile', 'reconciled'), ('Rejected', 'Rejected'), ], required=False,
                              copy=False, default='draft', readonly=True, track_visibility='onchange', )
     expended_total = fields.Float('Total Spent', compute='_expended_total')
     balance = fields.Float('Amount Reimbursed/Returned', compute='_balance')
     department = fields.Selection(string="Department",
                                   selection=[('sampletransport', 'Sample Transport'), ('supplychain', 'Supply Chain'), ('finance', 'Finance'),
-                                             ('humanresource', 'Human Resource'), ('operations', 'Operations'), ('admin', 'Admin'), ('it', 'IT'),], required=True,)
+                                             ('humanresource', 'Human Resource'), ('workshop', 'Workshop'), ('admin', 'Admin'), ('it', 'IT'),], required=True,)
     mode_of_disburse = fields.Selection(string="Mode of Disbursement", selection=[('cash', 'Cash'), ('transfer', 'Transfer'),],
                                         states={'Fin Approve': [('required', True)]})
 
@@ -114,6 +114,10 @@ class ExpenseRequest(models.Model):
                    ('Unit Head Approve', 'Rejected'),
                    ('Fin Approve', 'Rejected'),
                    ('Fin Approve', 'disburse'),
+                   ('Fin Approve', 'requirecd'),
+                   ('requirecd', 'cdapprove'),
+                   ('requirecd', 'Rejected'),
+                   ('cdapprove', 'disburse'),
                    ('disburse', 'reconcile'),
                    ]
         return (old_state, new_state) in allowed
@@ -154,6 +158,14 @@ class ExpenseRequest(models.Model):
     @api.multi
     def expense_reconcile(self):
         self.change_state('reconcile')
+
+    @api.multi
+    def require_cd(self):
+        self.change_state('requirecd')
+
+    @api.multi
+    def cd_approve(self):
+        self.change_state('cdapprove')
 
     @api.model
     def create(self, vals):

@@ -74,6 +74,17 @@
         <field name="comment">Read expense Permission Group.</field>
         <field name="category_id" ref="rider.module_category_rider"/>
     </record>
+    <record id="cd_group" model="res.groups">
+        <field name="name">Country Director</field>
+        <field name="comment">Country Director Permission Group.</field>
+        <field name="category_id" ref="rider.module_category_rider"/>
+    </record>
+
+    <record id="finance_officer_group" model="res.groups">
+        <field name="name">finance officer</field>
+        <field name="comment">Finance Officer Permission Group.</field>
+        <field name="category_id" ref="rider.module_category_rider"/>
+    </record>
 
 </data>
 </odoo>
