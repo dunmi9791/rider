@@ -96,6 +96,11 @@
                     <button name="workshop_fund_approve" type="object" string="Operational Approval" class="oe_highlight" groups="rider.group_manager_group" states="Requested"/>
                     <button name="workshop_fund_fin_approve" type="object" string="Financial Approval" class="oe_highlight" groups="rider.finance_group" states="PD Approve"/>
                     <button name="workshop_fund_reject" type="object" string="Reject Request" class="oe_highlight" states="Requested,PD Approve"/>
+                    <button name="require_cd" type="object" string="Require CD Approval" class="oe_highlight" states="Fin Approve" groups="rider.finance_group"/>
+                  <button name="cd_approve" type="object" string="Approve" class="oe_highlight" states="requirecd" groups="rider.cd_group"/>
+                     <button name="process" string="Process" class="oe_highlight" states="cdapprove" groups="rider.finance_group" type="object"/>
+                    <button name="process" string="Process" class="oe_highlight" states="Fin Approve" groups="rider.finance_group" type="object"/>
+
                 <field name="state" widget="statusbar" statusbar_visible="draft,Requested,Approved,Rejected"/>
                 </header>
                 <sheet>
