@@ -208,6 +208,11 @@ class ExpenseItem(models.Model):
 
     name = fields.Char(string="Item")
 
+
+    _sql_constraints = [
+        ('name_unique', 'unique(name)', 'Item already exist')
+    ]
+
 class Expended(models.Model):
     _name = 'expended.expline'
 
