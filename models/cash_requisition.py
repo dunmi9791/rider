@@ -65,10 +65,10 @@ class ExpenseRequest(models.Model):
     exp_no = fields.Char(string="Expense Number",
                           default=lambda self: self.env['ir.sequence'].next_by_code('increment_expense'),
                           requires=False, readonly=True, )
-    date = fields.Date(string="Date", required=False, default=date.today(), )
+    date = fields.Date(string="Date", required=False, default=date.today(), readonly=True, states={'draft': [('readonly', False)]}, )
     memo_to = fields.Many2one(comodel_name="res.users", string="TO", domain=lambda self: [( "groups_id", "=", self.env.ref( "rider.group_approverequest_group" ).id )])
     copy_to = fields.Many2many(comodel_name="res.users", string="CC")
-    subject = fields.Char(string="Subject", required=False, )
+    subject = fields.Char(string="Subject", required=False, readonly=True, states={'draft': [('readonly', False)]},)
     request_from = fields.Many2one(comodel_name="res.users", string="From", readonly=True, default=lambda self: self.env.user)
     expenses = fields.One2many(
         'exprequest.expline', 'exprequest_id', 'Expenses',
@@ -85,7 +85,8 @@ class ExpenseRequest(models.Model):
     balance = fields.Float('Amount Reimbursed/Returned', compute='_balance')
     department = fields.Selection(string="Department",
                                   selection=[('sampletransport', 'Sample Transport'), ('supplychain', 'Supply Chain'), ('finance', 'Finance'),
-                                             ('humanresource', 'Human Resource'), ('workshop', 'Workshop'), ('admin', 'Admin'), ('it', 'IT'),], required=True,)
+                                             ('humanresource', 'Human Resource'), ('workshop', 'Workshop'), ('admin', 'Admin'), ('it', 'IT'),], required=True,
+                                  readonly=True, states={'draft': [('readonly', False)]},)
     mode_of_disburse = fields.Selection(string="Mode of Disbursement", selection=[('cash', 'Cash'), ('transfer', 'Transfer'),],
                                         states={'Fin Approve': [('required', True)]})
 
@@ -110,6 +111,7 @@ class ExpenseRequest(models.Model):
         allowed = [('draft', 'Requested'),
                    ('Requested', 'Unit Head Approve'),
                    ('Requested', 'Rejected'),
+                   ('Requested', 'draft'),
                    ('Unit Head Approve', 'Fin Approve'),
                    ('Unit Head Approve', 'Rejected'),
                    ('Fin Approve', 'Rejected'),
@@ -166,6 +168,10 @@ class ExpenseRequest(models.Model):
     @api.multi
     def cd_approve(self):
         self.change_state('cdapprove')
+
+    @api.multi
+    def reset_draft(self):
+        self.change_state('draft')
 
     @api.model
     def create(self, vals):
