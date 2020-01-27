@@ -90,6 +90,15 @@ class ExpenseRequest(models.Model):
     mode_of_disburse = fields.Selection(string="Mode of Disbursement", selection=[('cash', 'Cash'), ('transfer', 'Transfer'),],
                                         states={'Fin Approve': [('required', True)]})
 
+    @api.model
+    def create(self, vals):
+        res = super(ExpenseRequest, self).create(vals)
+        if res.copy_to:
+            for copy in res.copy_to:
+                vals['message_follower_ids'] += self.env['mail.followers']._add_follower_command(self._name, [], {copy.id}, {})[
+        0]
+                return res
+
 
     @api.one
     @api.depends('expenses.price_subtotal', )
