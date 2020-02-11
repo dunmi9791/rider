@@ -57,7 +57,7 @@ class ServiceRequest(models.Model):
                                                    ], default='check-in', required=False, track_visibility=True,
                              trace_visibility='onchange', )
     jobcard_no = fields.Char(string="Jobcard Number",
-                             default=lambda self: self.env['ir.sequence'].next_by_code('increment_jobcard'),
+                             default=lambda self: _('New'),
                              requires=False, readonly=True, )
     operations = fields.One2many(
         'jobcard.partsline', 'servicerequest_id', 'Parts',
@@ -165,6 +165,12 @@ class ServiceRequest(models.Model):
         else:
             return super(ServiceRequest, self).write(vals)
 
+    @api.model
+    def create(self, vals):
+        if vals.get('jobcard_no', _('New')) == _('New'):
+            vals['jobcard_no'] = self.env['ir.sequence'].next_by_code('increment_jobcard') or _('New')
+        result = super(ServiceRequest, self).create(vals)
+        return result
 
 
 

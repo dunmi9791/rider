@@ -19,7 +19,7 @@ class CashRequisition(models.Model):
     ref2 = fields.Many2one(string="Reference Document exp", comodel_name="expense.rider", ondelete='restrict',
                           required=False, )
     details = fields.Text(string="Details", required=False, )
-    cash_no = fields.Char(string="Cash Requisition No.", default=lambda self: self.env['ir.sequence'].next_by_code('increment_cash_request'), requires=False, readonly=True, trace_visibility='onchange',)
+    cash_no = fields.Char(string="Cash Requisition No.", default=lambda self: _('New'), requires=False, readonly=True, trace_visibility='onchange',)
     state = fields.Selection(string="", selection=[('Requested', 'Requested'), ('Authorised', 'Authorised'), ('Processed', 'Processed'), ('Received', 'Received'), ('Canceled', 'Canceled'), ], required=False, default='Requested', track_visibility='onchange', )
 
     @api.multi
@@ -56,6 +56,15 @@ class CashRequisition(models.Model):
     def cancel(self):
         self.change_state('Canceled')
 
+
+
+    @api.model
+    def create(self, vals):
+        if vals.get('cash_no', _('New')) == _('New'):
+            vals['cash_no'] = self.env['ir.sequence'].next_by_code('increment_cash_request') or _('New')
+        result = super(CashRequisition, self).create(vals)
+        return result
+
 class ExpenseRequest(models.Model):
     _name = 'expense.rider'
     _rec_name = 'exp_no'
@@ -63,8 +72,8 @@ class ExpenseRequest(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     exp_no = fields.Char(string="Expense Number",
-                          default=lambda self: self.env['ir.sequence'].next_by_code('increment_expense'),
-                          requires=False, readonly=True, )
+                         default=lambda self: _('New'),
+                         requires=False, readonly=True, )
     date = fields.Date(string="Date", required=False, default=date.today(), readonly=True, states={'draft': [('readonly', False)]}, )
     memo_to = fields.Many2one(comodel_name="res.users", string="TO", domain=lambda self: [( "groups_id", "=", self.env.ref( "rider.group_approverequest_group" ).id )])
     copy_to = fields.Many2many(comodel_name="res.users", string="CC")
@@ -184,16 +193,18 @@ class ExpenseRequest(models.Model):
 
     @api.model
     def create(self, vals):
-        res = super(ExpenseRequest, self).create(vals)
-        for rec in res:
-            if rec.copy_to:
-                partner_ids = []
-                for copy in rec.copy_to:
-                    if copy.partner_id and copy.partner_id.email:
-                        partner_ids.append(copy.partner_id.id)
-                if partner_ids:
-                    rec.message_subscribe(partner_ids, None)
-        return res
+        if vals.get('exp_no', _('New')) == _('New'):
+            vals['exp_no'] = self.env['ir.sequence'].next_by_code('increment_expense') or _('New')
+            res = super(ExpenseRequest, self).create(vals)
+            for rec in res:
+                if rec.copy_to:
+                    partner_ids = []
+                    for copy in rec.copy_to:
+                        if copy.partner_id and copy.partner_id.email:
+                            partner_ids.append(copy.partner_id.id)
+                    if partner_ids:
+                        rec.message_subscribe(partner_ids, None)
+            return res
 
 
 

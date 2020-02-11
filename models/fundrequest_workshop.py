@@ -15,7 +15,8 @@ class FundRequestWorkshop(models.Model):
     _description = 'Fund request workshop'
 
     date = fields.Date(string="Date", default=date.today(), required=False, readonly=True, states={'draft': [('readonly', False)]})
-    request_no = fields.Char(string="Request Number", default=lambda self: self.env['ir.sequence'].next_by_code('increment_fund_request'), requires=False, readonly=True, trace_visibility='onchange',)
+    request_no = fields.Char(string="Request Number", default=lambda self: _('New'), requires=False, readonly=True,
+                             trace_visibility='onchange',)
     programme_id = fields.Many2one(comodel_name="programme.rider", string="Programme ID", required=False, readonly=True, states={'draft': [('readonly', False)]})
     jobcard_id = fields.Many2one(comodel_name="servicerequest.rider", string="Job Card ref", required=False, readonly=True, states={'draft': [('readonly', False)]})
     state = fields.Selection(string="", selection=[('draft', 'draft'), ('Requested', 'Requested'), ('PD Approve', 'PD Approval'), ('Fin Approve', 'Fin Approved'),('requirecd', 'Awaiting CD Approval'),
@@ -53,7 +54,6 @@ class FundRequestWorkshop(models.Model):
                 raise UserError(msg)
 
 
-
     @api.model_create_multi
     def create(self, vals_list):
         result = super(FundRequestWorkshop, self).create(vals_list)
@@ -70,6 +70,13 @@ class FundRequestWorkshop(models.Model):
 
                 self.env['fundrequest.partsline'].create(lines_dict)
             return result
+
+    @api.model
+    def create(self, vals):
+        if vals.get('request_no', _('New')) == _('New'):
+            vals['request_no'] = self.env['ir.sequence'].next_by_code('increment_fund_request') or _('New')
+        result = super(FundRequestWorkshop, self).create(vals)
+        return result
 
 
 
