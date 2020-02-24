@@ -88,7 +88,10 @@ class ExpenseRequest(models.Model):
     amount_total = fields.Float('Total Requested/Approved', compute='_amount_total', store=True)
     state = fields.Selection(string="",
                              selection=[('draft', 'draft'), ('Requested', 'Requested'), ('Unit Head Approve', 'Unit Approval'),
-                                        ('Fin Approve', 'Fin Approved'), ('requirecd', 'Awaiting CD Approval'), ('cdapprove', 'CD Approved'), ('disburse', 'disbursed'), ('reconcile', 'reconciled'), ('Rejected', 'Rejected'), ], required=False,
+                                        ('Fin Approve', 'Fin Approved'), ('requirecd', 'Awaiting CD Approval'),
+                                        ('cdapprove', 'CD Approved'), ('disburse', 'disbursed'),
+                                        ('reconcile', 'Submitted for reconciliation'), ('Rejected', 'Rejected'),
+                                        ('fin reconcile', 'Reconciled')], required=False,
                              copy=False, default='draft', readonly=True, track_visibility='onchange', )
     expended_total = fields.Float('Total Spent', compute='_expended_total')
     balance = fields.Float('Amount Reimbursed/Returned', compute='_balance')
@@ -139,6 +142,8 @@ class ExpenseRequest(models.Model):
                    ('requirecd', 'Rejected'),
                    ('cdapprove', 'disburse'),
                    ('disburse', 'reconcile'),
+                   ('reconcile', 'fin reconcile'),
+                   ('reconcile', 'disburse'),
                    ]
         return (old_state, new_state) in allowed
 
@@ -190,6 +195,14 @@ class ExpenseRequest(models.Model):
     @api.multi
     def reset_draft(self):
         self.change_state('draft')
+
+    @api.multi
+    def fin_reconcile(self):
+        self.change_state('fin reconcile')
+
+    @api.multi
+    def reject_reconcile(self):
+        self.change_state('disburse')
 
     @api.model
     def create(self, vals):
