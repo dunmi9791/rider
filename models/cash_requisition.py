@@ -234,6 +234,7 @@ class ExpenserequestLine(models.Model):
     quantity = fields.Float(string="Quantity", required=False, default=1.0, )
     cost = fields.Float(string=" Unit Cost", required=False, )
     price_subtotal = fields.Float('Subtotal', compute='_compute_price_subtotal', store=True, digits=0)
+    date = fields.Date(string="Date", required=False, related='exprequest_id.date')
 
     @api.one
     @api.depends('cost', 'exprequest_id', 'quantity', 'name', )

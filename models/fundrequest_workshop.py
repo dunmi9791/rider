@@ -108,6 +108,10 @@ class FundRequestWorkshop(models.Model):
         self.change_state('Rejected')
 
     @api.multi
+    def workshop2_fund_reject(self):
+        self.change_state('Rejected')
+
+    @api.multi
     def require_cd(self):
         self.change_state('requirecd')
 
