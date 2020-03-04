@@ -15,17 +15,17 @@
         <field name="view_mode">tree,form,kanban</field>
     </record>
 
-    <record model="ir.actions.act_window" id="action_riders_order">
-        <field name="name">Orders</field>
-        <field name="res_model">order.rider</field>
-        <field name="view_mode">tree,form,kanban</field>
-    </record>
+<!--    <record model="ir.actions.act_window" id="action_riders_order">-->
+<!--        <field name="name">Orders</field>-->
+<!--        <field name="res_model">order.rider</field>-->
+<!--        <field name="view_mode">tree,form,kanban</field>-->
+<!--    </record>-->
 
-    <record model="ir.actions.act_window" id="action_riders_ordermemo">
-        <field name="name">Order Memo</field>
-        <field name="res_model">ordermemo.rider</field>
-        <field name="view_mode">tree,form,kanban</field>
-    </record>
+<!--    <record model="ir.actions.act_window" id="action_riders_ordermemo">-->
+<!--        <field name="name">Order Memo</field>-->
+<!--        <field name="res_model">ordermemo.rider</field>-->
+<!--        <field name="view_mode">tree,form,kanban</field>-->
+<!--    </record>-->
 
     <record model="ir.actions.act_window" id="action_riders_fundrequest">
         <field name="name">Fund Request</field>
@@ -40,11 +40,11 @@
     </record>
 
 
-    <record model="ir.actions.act_window" id="action_riders_partsrequest">
-        <field name="name">Parts Request</field>
-        <field name="res_model">partsrequest.rider</field>
-        <field name="view_mode">tree,form,kanban</field>
-    </record>
+<!--    <record model="ir.actions.act_window" id="action_riders_partsrequest">-->
+<!--        <field name="name">Parts Request</field>-->
+<!--        <field name="res_model">partsrequest.rider</field>-->
+<!--        <field name="view_mode">tree,form,kanban</field>-->
+<!--    </record>-->
 
     <record model="ir.actions.act_window" id="action_riders_expenserequest">
         <field name="name">Expense Request</field>
@@ -55,6 +55,11 @@
     <record model="ir.actions.act_window" id="action_riders_expenserequest_items">
         <field name="name">Items Request</field>
         <field name="res_model">exprequest.expline</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record model="ir.actions.act_window" id="action_riders_expense_classification">
+        <field name="name">expense classification</field>
+        <field name="res_model">fund.classification</field>
         <field name="view_mode">tree,form</field>
     </record>
 
@@ -71,30 +76,32 @@
     <menuitem name="Fund Request" id="riders_workshop_fundrequest_menu" parent="riders_workshop_menu"
               sequence="7" action="action_riders_fundrequest"/>
 
-    <menuitem name="Parts Request" id="riders_workshop_partsrequest_menu" parent="riders_workshop_menu"
-              sequence="8" action="action_riders_partsrequest"/>
+<!--    <menuitem name="Parts Request" id="riders_workshop_partsrequest_menu" parent="riders_workshop_menu"-->
+<!--              sequence="8" action="action_riders_partsrequest"/>-->
 
 
-    <menuitem name="Supply Chain Management" id="riders_supply_menu" parent="riders_root_menu"
-              sequence="2" />
+<!--    <menuitem name="Supply Chain Management" id="riders_supply_menu" parent="riders_root_menu"-->
+<!--              sequence="2" />-->
 
-     <menuitem name="Orders" id="riders_supply_order_menu" parent="riders_supply_menu"
-              sequence="6" action="action_riders_order"/>
+<!--     <menuitem name="Orders" id="riders_supply_order_menu" parent="riders_supply_menu"-->
+<!--              sequence="6" action="action_riders_order"/>-->
 
-     <menuitem name="Order Memo" id="riders_supply_ordermemo_menu" parent="riders_supply_menu"
-              sequence="8" action="action_riders_ordermemo"/>
+<!--     <menuitem name="Order Memo" id="riders_supply_ordermemo_menu" parent="riders_supply_menu"-->
+<!--              sequence="8" action="action_riders_ordermemo"/>-->
 
     <menuitem name="Finance" id="riders_finance_menu" parent="riders_root_menu"
               sequence="3" />
      <menuitem name="Cash Requisition" id="riders_finance_cashrequisition_menu" parent="riders_finance_menu"
               sequence="7" action="action_riders_cashrequisition"/>
+    <menuitem name="Expense Classification" id="riders_finance_expclassification_menu" parent="riders_finance_menu"
+              sequence="8" action="action_riders_expense_classification"/>
 
     <menuitem name="General" id="riders_general_menu" parent="riders_root_menu"
               sequence="2" />
     <menuitem name="Expense Requisition" id="riders_expense_cashrequisition_menu" parent="riders_general_menu"
               sequence="8" action="action_riders_expenserequest"/>
-    <menuitem name="Items Requisition" id="riders_expense_itemsrequisition_menu" parent="riders_general_menu"
-              sequence="9" action="action_riders_expenserequest_items"/>
+    <menuitem name="Items Requisition" id="riders_expense_itemsrequisition_menu" parent="riders_finance_menu"
+              sequence="9" action="action_riders_expenserequest_items" groups="rider.finance_group"/>
 
 
 

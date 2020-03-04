@@ -29,6 +29,7 @@ class FundRequestWorkshop(models.Model):
     client = fields.Many2one(string='Client', related='jobcard_id.client', readonly=True,
 
                               help="Registration number.")
+    classification = fields.Many2one(string="Expense Classification", comodel_name="fund.classification")
 
     @api.multi
     def is_allowed_transition(self, old_state, new_state):
@@ -55,8 +56,8 @@ class FundRequestWorkshop(models.Model):
 
 
     @api.model_create_multi
-    def create(self, vals_list):
-        result = super(FundRequestWorkshop, self).create(vals_list)
+    def create(self, vals):
+        result = super(FundRequestWorkshop, self).create(vals)
         if result.jobcard_id:
             parts_id = result.jobcard_id.id
             parts = self.env['jobcard.partsline'].search([('servicerequest_id', '=', parts_id)])
@@ -69,14 +70,10 @@ class FundRequestWorkshop(models.Model):
                 }
 
                 self.env['fundrequest.partsline'].create(lines_dict)
+                if vals.get('request_no', _('New')) == _('New'):
+                    vals['request_no'] = self.env['ir.sequence'].next_by_code('increment_fund_request') or _('New')
             return result
 
-    @api.model
-    def create(self, vals):
-        if vals.get('request_no', _('New')) == _('New'):
-            vals['request_no'] = self.env['ir.sequence'].next_by_code('increment_fund_request') or _('New')
-        result = super(FundRequestWorkshop, self).create(vals)
-        return result
 
 
 

@@ -65,6 +65,18 @@ class CashRequisition(models.Model):
         result = super(CashRequisition, self).create(vals)
         return result
 
+class FundClassification(models.Model):
+    _name = 'fund.classification'
+    _rec_name = 'name'
+    _description = 'Fund and expense classification'
+
+    name = fields.Char()
+
+    _sql_constraints = [
+        ('name_uniq', 'unique (name)', "Classification name already exists !"),
+    ]
+
+
 class ExpenseRequest(models.Model):
     _name = 'expense.rider'
     _rec_name = 'exp_no'
@@ -101,6 +113,7 @@ class ExpenseRequest(models.Model):
                                   readonly=True, states={'draft': [('readonly', False)]},)
     mode_of_disburse = fields.Selection(string="Mode of Disbursement", selection=[('cash', 'Cash'), ('transfer', 'Transfer'),],
                                         states={'Fin Approve': [('required', True)]})
+    classification = fields.Many2one(string="Expense Classification", comodel_name="fund.classification")
 
     @api.model
     def create(self, vals):
@@ -247,6 +260,7 @@ class ExpenseItem(models.Model):
     _description = 'Items'
 
     name = fields.Char(string="Item")
+    active = fields.Boolean('active', default=True)
 
 
     _sql_constraints = [

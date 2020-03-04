@@ -110,6 +110,7 @@
                 <field name="request_no"/>
                 <field name="client"/>
                 <field name="jobcard_id"/>
+                    <field name="classification" groups="rider.finance_group"/>
                 </group>
 
 
@@ -539,6 +540,7 @@
                      <field name="request_from"/>
                       <field name="balance"/>
                               <field name="mode_of_disburse" groups="rider.finance_group"/>
+                              <field name="classification" groups="rider.finance_group"/>
                               </group>
 
                       </group>
@@ -571,7 +573,7 @@
           </field>
       </record>
       <record id="view_expenseitems_tree" model="ir.ui.view">
-            <field name="name">expenserequest.tree</field>
+            <field name="name">expenseitem.tree</field>
             <field name="model">exprequest.expline</field>
             <field name="arch" type="xml">
                 <tree string="Parts Line" >
@@ -582,11 +584,32 @@
                     <field name="description"/>
                     <field name="quantity"/>
                     <field name="cost" />
-                    <field name="price_subtotal" />
+                    <field name="price_subtotal" sum="Total" widget="monetary"/>
 
                 </tree>
             </field>
         </record>
+      <record id="expense_item_form" model="ir.ui.view">
+          <field name="name">expense.item.form</field>
+          <field name="model">expense.item</field>
+          <field name="arch" type="xml">
+              <form string="Items">
+                  <header>
+
+                  </header>
+                  <sheet>
+                      <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object" groups="hr.group_hr_user" class="oe_stat_button" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
+                            </button>
+                        </div>
+                      <group>
+                          <field name="name"/>
+                      </group>
+                  </sheet>
+              </form>
+          </field>
+      </record>
 
 
 
