@@ -150,15 +150,25 @@ class ServiceRequest(models.Model):
             return 'mail.mt_comment'
         return False
 
-
     @api.multi
     def write(self, vals):
         if vals.get('state'):
             if vals.get('state') == 'Confirm':
+                lines = []
+                for line in self.operations:
+                    fund_line = {
+                        'parts_id': line.parts_id.id,
+                        'quantity': line.quantity,
+                    }
+
+                    lines.append((0, 0, fund_line))
                 fund_dict = {
-                    'jobcard_id': self.id,
-                }
-                self.env['fundrequestw.rider'].create(fund_dict)
+                        'jobcard_id': self.id,
+                        'operations': lines,
+                    }
+                record = self.env['fundrequestw.rider']
+                record.create(fund_dict)
+
                 return super(ServiceRequest, self).write(vals)
             else:
                 return super(ServiceRequest, self).write(vals)

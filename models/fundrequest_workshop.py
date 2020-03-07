@@ -55,24 +55,31 @@ class FundRequestWorkshop(models.Model):
                 raise UserError(msg)
 
 
-    @api.model_create_multi
-    def create(self, vals):
-        result = super(FundRequestWorkshop, self).create(vals)
-        if result.jobcard_id:
-            parts_id = result.jobcard_id.id
-            parts = self.env['jobcard.partsline'].search([('servicerequest_id', '=', parts_id)])
-            for line in parts:
-                lines_dict = {
-                    'state': line.state,
-                    'parts_id': line.parts_id.id,
-                    'quantity': line.quantity,
-                    'fundrequest_id': result.id,
-                }
+    # @api.model_create_multi
+    # def create(self, vals):
+    #     result = super(FundRequestWorkshop, self).create(vals)
+    #     if result.jobcard_id:
+    #         parts_id = result.jobcard_id.id
+    #         parts = self.env['jobcard.partsline'].search([('servicerequest_id', '=', parts_id)])
+    #         for line in parts:
+    #             lines_dict = {
+    #                 'state': line.state,
+    #                 'parts_id': line.parts_id.id,
+    #                 'quantity': line.quantity,
+    #                 'fundrequest_id': result.id,
+    #             }
+    #
+    #             self.env['fundrequest.partsline'].create(lines_dict)
+    #             if vals.get('request_no', _('New')) == _('New'):
+    #                 vals['request_no'] = self.env['ir.sequence'].next_by_code('increment_fund_request') or _('New')
+    #         return result
 
-                self.env['fundrequest.partsline'].create(lines_dict)
-                if vals.get('request_no', _('New')) == _('New'):
-                    vals['request_no'] = self.env['ir.sequence'].next_by_code('increment_fund_request') or _('New')
-            return result
+    @api.model
+    def create(self, vals):
+        if vals.get('request_no', _('New')) == _('New'):
+            vals['request_no'] = self.env['ir.sequence'].next_by_code('increment_fund_request') or _('New')
+        result = super(FundRequestWorkshop, self).create(vals)
+        return result
 
 
 
@@ -159,7 +166,7 @@ class FundrequestLine(models.Model):
     def _compute_price_subtotal(self):
         self.price_subtotal = self.cost * self.quantity
 
-    quantity = fields.Float(string="Quantity", required=False, default=1.0, )
+    quantity = fields.Integer(string="Quantity", required=False, default=1.0, )
     cost = fields.Float(string=" Unit Cost", required=False, )
     jobcard_line_ids = fields.Many2many(comodel_name="jobcard.partsline",
                                      relation="jobcard_line_fundrequest_rel",
