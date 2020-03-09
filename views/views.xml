@@ -162,6 +162,7 @@
                     <field name="request_no"/>
                     <field name="jobcard_id" />
                     <field name="amount_total"/>
+                    <field name="state"/>
 
 
                 </tree>
