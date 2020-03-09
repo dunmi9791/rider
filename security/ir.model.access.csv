@@ -38,5 +38,5 @@ access_rider_expenseline,rider.expenseline,model_exprequest_expline,,1,1,1,1
 access_rider_expenseitem,rider.expenseitem,model_expense_item,,1,0,0,0
 access_rider_expenseitem2,rider.expenseitem2,model_expense_item,rider.group_edit_item_group,1,1,1,1
 access_rider_expended,rider.expended,model_expended_expline,,1,1,1,1
-access_rider_classification,rider.classification,model_fund_classification,finance_officer_group,1,1,1,1
+access_rider_classification,rider.classification,model_fund_classification,rider.finance_group,1,1,1,1
 
