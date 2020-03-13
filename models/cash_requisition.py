@@ -114,6 +114,7 @@ class ExpenseRequest(models.Model):
     mode_of_disburse = fields.Selection(string="Mode of Disbursement", selection=[('cash', 'Cash'), ('transfer', 'Transfer'),],
                                         states={'Fin Approve': [('required', True)]})
     classification = fields.Many2one(string="Expense Classification", comodel_name="fund.classification")
+    flag = fields.Boolean(string="", )
 
     @api.model
     def create(self, vals):
@@ -278,6 +279,35 @@ class Expended(models.Model):
     remark = fields.Char(string="Remark")
     amount = fields.Float(string="Amount Spent", required=False, )
     receipt = fields.Binary(string="Receipt",)
+
+
+class ExpenseRequestFlag(models.TransientModel):
+    """
+    This wizard will flag expense request to attend to later
+    """
+
+    _name = "expense.request.flag"
+    _description = "Flag selected expense request"
+
+    @api.multi
+    def expense_flag(self):
+        context = dict(self._context or {})
+        active_ids = context.get('active_ids', []) or []
+
+        for record in self.env['expense.rider'].browse(active_ids):
+            record.flag = True
+
+        return {'type': 'ir.actions.act_window_close'}
+
+    @api.multi
+    def expense_unflag(self):
+        context = dict(self._context or {})
+        active_ids = context.get('active_ids', []) or []
+
+        for record in self.env['expense.rider'].browse(active_ids):
+            record.flag = False
+
+        return {'type': 'ir.actions.act_window_close'}
 
 
 

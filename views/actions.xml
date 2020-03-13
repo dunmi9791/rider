@@ -8,6 +8,22 @@
         <field name="res_model">servicerequest.rider</field>
         <field name="view_mode">tree,form,kanban</field>
     </record>
+    <!-- <record id="action_flag_expense" model="ir.actions.act_window">
+            <field name="name">Flag</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.employee</field>
+            <field name="domain">['|', ('id','in',active_ids), ('parent_id', 'in', active_ids)]</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_partner_tree2"/>
+            <field name="binding_model_id" ref="hr.model_hr_employee"/>
+        </record>-->
+    <act_window id="action_expense_flag"
+            multi="True"
+            key2="client_action_multi" name="Flag Expense Requests"
+            res_model="expense.request.flag" src_model="expense.rider"
+            view_mode="form" target="new" view_type="form" />
+
 
      <record model="ir.actions.act_window" id="action_riders_cashrequisition">
         <field name="name">Cash Requitision</field>

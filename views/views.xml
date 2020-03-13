@@ -489,7 +489,7 @@
             <field name="name">expenserequest.tree</field>
             <field name="model">expense.rider</field>
             <field name="arch" type="xml">
-                <tree string="Parts Line" >
+                <tree string="Parts Line" decoration-danger="flag==True">
 
                     <field name="date" />
                     <field name="exp_no" />
@@ -497,6 +497,7 @@
                     <field name="amount_total"/>
                     <field name="subject"/>
                     <field name="state" />
+                    <field name="flag" invisible="1"/>
 
                 </tree>
             </field>
@@ -611,6 +612,23 @@
               </form>
           </field>
       </record>
+      <record id="expense_flag_view" model="ir.ui.view">
+            <field name="name">expense.flag.form</field>
+            <field name="model">expense.request.flag</field>
+            <field name="arch" type="xml">
+                <form string="Flag Expenses">
+                    <p class="oe_grey">
+                        Flag or Unflag the selected request with the Buttons
+                    </p>
+                    <footer>
+                        <button string="Flag Expenses" name="expense_flag" type="object" default_focus="1" class="btn-primary"/>
+                        <button string="UnFlag Expenses" name="expense_unflag" type="object" default_focus="1" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
 
 
 
