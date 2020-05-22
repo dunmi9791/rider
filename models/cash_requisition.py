@@ -109,8 +109,7 @@ class ExpenseRequest(models.Model):
     balance = fields.Float('Amount Reimbursed/Returned', compute='_balance')
     department = fields.Selection(string="Department",
                                   selection=[('sampletransport', 'Sample Transport'), ('supplychain', 'Supply Chain'), ('finance', 'Finance'),
-                                             ('humanresource', 'Human Resource'), ('workshop', 'Workshop'), ('admin', 'Admin'), ('it', 'IT'),], required=True,
-                                  readonly=True, states={'draft': [('readonly', False)]},)
+                                             ('humanresource', 'Human Resource'), ('workshop', 'Workshop'), ('admin', 'Admin'), ('it', 'IT'),], required=True,)
     mode_of_disburse = fields.Selection(string="Mode of Disbursement", selection=[('cash', 'Cash'), ('transfer', 'Transfer'),],
                                         states={'Fin Approve': [('required', True)]})
     classification = fields.Many2one(string="Expense Classification", comodel_name="fund.classification")
