@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-    <menuitem name="Riders E-forms" id="riders_root_menu"/>
+    <menuitem name="Riders E-forms" id="riders_root_menu" web_icon="rider,static/src/img/icon.png"/>
 
     <record model="ir.actions.act_window" id="action_riders_jobcards">
         <field name="name">Job Cards</field>
