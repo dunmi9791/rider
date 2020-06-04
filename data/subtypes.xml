@@ -8,5 +8,17 @@
     <field name="default" eval="True"/>
     <field name="description">Parts Approved!</field>
 </record>
+    <record id="exp_flag_change" model="mail.message.subtype">
+    <field name="name">expense flagged</field>
+    <field name="res_model">business.trip</field>
+    <field name="default" eval="True"/>
+    <field name="description">Expense was Flagged!</field>
+</record>
+    <record id="exp_flag_unchange" model="mail.message.subtype">
+    <field name="name">expense unflagged</field>
+    <field name="res_model">business.trip</field>
+    <field name="default" eval="True"/>
+    <field name="description">Expense was UnFlagged!</field>
+</record>
 </data>
 </odoo>

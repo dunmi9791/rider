@@ -113,7 +113,7 @@ class ExpenseRequest(models.Model):
     mode_of_disburse = fields.Selection(string="Mode of Disbursement", selection=[('cash', 'Cash'), ('transfer', 'Transfer'),],
                                         states={'Fin Approve': [('required', True)]})
     classification = fields.Many2one(string="Expense Classification", comodel_name="fund.classification")
-    flag = fields.Boolean(string="", )
+    flag = fields.Boolean(string="", track_visibility='onchange')
 
     @api.model
     def create(self, vals):
@@ -124,6 +124,17 @@ class ExpenseRequest(models.Model):
         0]
                 return res
 
+    def _track_subtype(self, init_values):
+        # init_values contains the modified fields' values before the changes
+        #
+        # the applied values can be accessed on the record as they are already
+        # in cache
+        self.ensure_one()
+        if 'flag' in init_values and self.flag is True:
+            return 'rider.exp_flag_change'  # Full external id
+        elif 'flag' in init_values and self.flag is False:
+            return 'rider.exp_flag_unchange'
+        return super(ExpenseRequest, self)._track_subtype(init_values)
 
     @api.one
     @api.depends('expenses.price_subtotal', )
