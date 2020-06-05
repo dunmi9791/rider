@@ -124,6 +124,26 @@ class ExpenseRequest(models.Model):
         0]
                 return res
 
+    @api.multi
+    def write(self, vals):
+        if vals.get('state'):
+            if vals.get('state') == 'disburse':
+                lines = []
+                for line in self.expenses:
+                    exp_line = {
+                        'item_id': line.item_id.id,
+                        'expended_id': self.id,
+
+                    }
+                    record = self.env['expended.expline']
+                    record.create(exp_line)
+
+                return super(ExpenseRequest, self).write(vals)
+            else:
+                return super(ExpenseRequest, self).write(vals)
+        else:
+            return super(ExpenseRequest, self).write(vals)
+
     def _track_subtype(self, init_values):
         # init_values contains the modified fields' values before the changes
         #
