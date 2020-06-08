@@ -103,6 +103,7 @@ class ExpenseRequest(models.Model):
                                         ('Fin Approve', 'Fin Approved'), ('requirecd', 'Awaiting CD Approval'),
                                         ('cdapprove', 'CD Approved'), ('disburse', 'disbursed'),
                                         ('reconcile', 'Submitted for reconciliation'), ('Rejected', 'Rejected'),
+                                        ('unit_reconcile', 'Unit Reconciled'),
                                         ('fin reconcile', 'Reconciled')], required=False,
                              copy=False, default='draft', readonly=True, track_visibility='onchange', )
     expended_total = fields.Float('Total Spent', compute='_expended_total')
@@ -186,8 +187,10 @@ class ExpenseRequest(models.Model):
                    ('requirecd', 'Rejected'),
                    ('cdapprove', 'disburse'),
                    ('disburse', 'reconcile'),
-                   ('reconcile', 'fin reconcile'),
+                   ('reconcile', 'unit_reconcile'),
+                   ('unit_reconcile', 'fin reconcile'),
                    ('reconcile', 'disburse'),
+                   ('unit_reconcile', 'disburse'),
                    ]
         return (old_state, new_state) in allowed
 
@@ -243,6 +246,10 @@ class ExpenseRequest(models.Model):
     @api.multi
     def fin_reconcile(self):
         self.change_state('fin reconcile')
+
+    @api.multi
+    def unit_reconcile(self):
+        self.change_state('unit_reconcile')
 
     @api.multi
     def reject_reconcile(self):
