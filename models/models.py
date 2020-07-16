@@ -7,6 +7,7 @@ from datetime import date
 from odoo.exceptions import UserError
 from odoo.tools.translate import _
 
+
 class ServiceRequest(models.Model):
     _name = 'servicerequest.rider'
     _rec_name = 'jobcard_no'

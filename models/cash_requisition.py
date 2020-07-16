@@ -115,6 +115,8 @@ class ExpenseRequest(models.Model):
                                         states={'Fin Approve': [('required', True)]})
     classification = fields.Many2one(string="Expense Classification", comodel_name="fund.classification")
     flag = fields.Boolean(string="", track_visibility='onchange')
+    partner_id = fields.Many2one('res.partner', string='Receiving Vendor', track_visibility='onchange', readonly=True,
+                                 states={'draft': [('readonly', False)]},)
 
     @api.model
     def create(self, vals):
@@ -253,6 +255,10 @@ class ExpenseRequest(models.Model):
 
     @api.multi
     def reject_reconcile(self):
+        self.change_state('disburse')
+
+    @api.multi
+    def reject_reconcile_unit(self):
         self.change_state('disburse')
 
     @api.model
