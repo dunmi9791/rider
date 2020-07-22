@@ -26,9 +26,8 @@ class FundRequestWorkshop(models.Model):
         copy=True, readonly=True, states={'draft': [('readonly', False)]},)
     part_qty = fields.Float(string="Quantity",  required=False, )
     amount_total = fields.Float('Total', compute='_amount_total', store=True)
-    client = fields.Many2one(string='Client', related='jobcard_id.client', readonly=True,
-
-                              help="Registration number.")
+    client = fields.Many2one(string='Client', related='jobcard_id.client', readonly=True, store=True,
+                             help="Registration number.")
     classification = fields.Many2one(string="Expense Classification", comodel_name="fund.classification")
 
     @api.multi
