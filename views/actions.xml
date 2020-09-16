@@ -8,6 +8,19 @@
         <field name="res_model">servicerequest.rider</field>
         <field name="view_mode">tree,form,kanban</field>
     </record>
+        <record id="open_jobcard_quotations" model="ir.actions.act_window">
+        <field name="name">Quotations</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('jobcard_id','=',active_id)]</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+
+          </p>
+        </field>
+    </record>
     <!-- <record id="action_flag_expense" model="ir.actions.act_window">
             <field name="name">Flag</field>
             <field name="type">ir.actions.act_window</field>
@@ -78,6 +91,16 @@
         <field name="res_model">fund.classification</field>
         <field name="view_mode">tree,form</field>
     </record>
+    <record model="ir.actions.act_window" id="action_riders_custom_order">
+        <field name="name">custom order</field>
+        <field name="res_model">custom.order</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record model="ir.actions.act_window" id="action_riders_sample_transport">
+        <field name="name">sample transport</field>
+        <field name="res_model">sample.transport</field>
+        <field name="view_mode">tree,form</field>
+    </record>
 
 
 
@@ -85,6 +108,10 @@
 
     <menuitem name="Workshop " id="riders_workshop_menu" parent="riders_root_menu"
               sequence="1" />
+    <menuitem name="Sample Transport" id="riders_sample_transport_menu" parent="riders_root_menu"
+              sequence="5" />
+    <menuitem name="Sample Deliveries" id="riders_sample_deliveries_menu" parent="riders_sample_transport_menu"
+              sequence="6" action="action_riders_sample_transport"/>
 
     <menuitem name="Job Cards" id="riders_workshop_jobcard_menu" parent="riders_workshop_menu"
               sequence="6" action="action_riders_jobcards"/>
@@ -118,6 +145,8 @@
               sequence="8" action="action_riders_expenserequest"/>
     <menuitem name="Items Requisition" id="riders_expense_itemsrequisition_menu" parent="riders_finance_menu"
               sequence="9" action="action_riders_expenserequest_items" groups="rider.finance_group"/>
+    <menuitem name="Custom Order" id="riders_custom_order_menu" parent="riders_finance_menu"
+              sequence="10" action="action_riders_custom_order" groups="rider.finance_group"/>
 
 
 

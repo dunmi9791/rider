@@ -11,8 +11,9 @@ class Vehicle(models.Model):
     vehicle_make = fields.Many2one(comodel_name="vehiclemake.rider", string="Vehicle Make")
     vehicle_model = fields.Many2one(comodel_name="vehiclemodel.rider", string="Vehicle Model")
     vehicle_registration = fields.Char()
-    client_id = fields.Many2one(comodel_name="res.partner", string="Client", required=False, )
-    chassis_no = fields.Char(string="Chassis Number")
+    client_id = fields.Many2one(comodel_name="res.partner", string="Client", required=False,
+                                track_visibility=True, trace_visibility='onchange', )
+    chassis_no = fields.Char(string="Chassis Number", track_visibility=True, trace_visibility='onchange',)
     jobcard_ids = fields.One2many(comodel_name="servicerequest.rider", inverse_name="vehicle_id", string="", required=False, )
 
 

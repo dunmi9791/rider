@@ -22,6 +22,13 @@
     <field name="padding">6</field>
     <field name="company_id" eval="False"/>
 </record>
+        <record id="increment_proforma_sequence" model="ir.sequence">
+    <field name="name">Proforma Incrementation</field>
+    <field name="code">increment_proforma</field>
+    <field name="prefix">Proforma </field>
+    <field name="padding">3</field>
+    <field name="company_id" eval="False"/>
+</record>
         <record id="increment_memo_sequence" model="ir.sequence">
     <field name="name">Memo Incrementation</field>
     <field name="code">increment_memo</field>

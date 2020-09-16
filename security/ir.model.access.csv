@@ -39,4 +39,9 @@ access_rider_expenseitem,rider.expenseitem,model_expense_item,,1,0,0,0
 access_rider_expenseitem2,rider.expenseitem2,model_expense_item,rider.group_edit_item_group,1,1,1,1
 access_rider_expended,rider.expended,model_expended_expline,,1,1,1,1
 access_rider_classification,rider.classification,model_fund_classification,rider.finance_group,1,1,1,1
+access_rider_customorder,rider.customorder,model_custom_order,,1,1,1,1
+access_rider_customorderline,rider.customorderline,model_custom_order_line,,1,1,1,1
+access_rider_sampletransport,rider.sampletransport,model_sample_transport,,1,1,1,1
+access_rider_sampledeliveries,rider.sampledeliveries,model_sample_deliveries,,1,1,1,1
+access_rider_clientcontract,rider.clientcontract,model_client_contract,,1,1,1,1
 

@@ -14,11 +14,13 @@ class ServiceRequest(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _order = "checkin_date desc, id desc"
 
-    vehicle_id = fields.Many2one('vehicles.rider', string='Vehicle Chassis No.', required=True)
+    vehicle_id = fields.Many2one('vehicles.rider', string='Vehicle Chassis No.',
+                                 required=True, track_visibility=True, trace_visibility='onchange', readonly=True,
+                                 states={'check-in': [('readonly', False)], 'Tech Eval': [('readonly', False)]})
     vehicle_reg_id = fields.Many2one('vehicles.rider', string='Registration Number', readonly=True,
-                                          states={'check-in': [('readonly', False)], 'Tech Eval': [('readonly', False)],
-                                                  'Confirm': [('readonly', False)]},
-                                          help="Registration number.")
+                                     states={'check-in': [('readonly', False)], 'Tech Eval': [('readonly', False)],
+                                              'Confirm': [('readonly', False)]},
+                                     help="Registration number.")
     vehicle_reg = fields.Char(string='Registration Number', related='vehicle_id.vehicle_registration', readonly=True,
 
                                           help="Registration number.")
@@ -69,6 +71,14 @@ class ServiceRequest(models.Model):
     parts_ids = fields.Integer(string="", required=False, compute="get_parts_id",)
     workshop = fields.Selection(string="Workshop", selection=[('abuja', 'Abuja'), ('lagos', 'Lagos'),
                                                       ('enugu', 'Enugu'), ('others', 'Others')], default='abuja', required=False, )
+    quotation_count = fields.Integer(string="Loans", compute='get_quotation_count', )
+    sale_obj = fields.Many2one('sale.order', invisible=1)
+    invoice_status = fields.Selection([
+        ('upselling', 'Upselling Opportunity'),
+        ('invoiced', 'Fully Invoiced'),
+        ('to invoice', 'To Invoice'),
+        ('no', 'Nothing to Invoice')
+    ], string='Invoice Status', invisible=1, )
 
 
     @api.multi
@@ -116,6 +126,20 @@ class ServiceRequest(models.Model):
 
     @api.multi
     def unitmanager_approve(self):
+        sale_obj = self.env['sale.order'].create({'partner_id': self.client.id,
+                                                  'partner_invoice_id': self.client.id,
+                                                  'partner_shipping_id': self.client.id,
+                                                  'jobcard_id': self.id})
+        lines = []
+        for line in self.operations:
+            val = {'product_id': line.parts_id.id,
+                   'product_uom_qty': line.quantity,
+                   'order_id': sale_obj.id
+                                            }
+            lines.append(val)
+
+        self.sale_obj = sale_obj
+        self.env['sale.order.line'].create(lines)
         self.change_state('Confirm')
 
     @api.multi
@@ -129,6 +153,9 @@ class ServiceRequest(models.Model):
 
     @api.multi
     def check_out(self):
+        if self.sale_obj.state in ['draft', 'sent']:
+            self.sale_obj.action_confirm()
+        self.invoice_status = self.sale_obj.invoice_status
         self.change_state('Checked out')
 
     @api.multi
@@ -174,6 +201,10 @@ class ServiceRequest(models.Model):
                 return super(ServiceRequest, self).write(vals)
         else:
             return super(ServiceRequest, self).write(vals)
+
+    def get_quotation_count(self):
+        count = self.env['sale.order'].search_count([('jobcard_id', '=', self.id)])
+        self.quotation_count = count
 
     @api.model
     def create(self, vals):
@@ -274,16 +305,174 @@ class JobcardParts(models.Model):
         }
         return self.env['fundrequest.partsline'].create(lines_dict)
 
+
 class JobcardQuote(models.Model):
     _inherit = 'sale.order'
 
     jobcard_id = fields.Many2one(comodel_name="servicerequest.rider", string="Job Card", required=False, )
 
 
+class CustomInvoice(models.Model):
+    _name = 'custom.invoice'
+    _inherit = ['account.invoice']
+    _rec_name = 'name'
+    _description = 'Custom Invoice'
+
+    name = fields.Char()
 
 
+class CustomOrder(models.Model):
+    _name = 'custom.order'
+    _inherit = ['sale.order']
+    _rec_name = 'name'
+    _description = 'Custom Order'
+
+    name = fields.Char()
+    order_line = fields.One2many('custom.order.line', 'order_id', string='Order Lines',
+                                 states={'cancel': [('readonly', True)], 'done': [('readonly', True)]}, copy=True,
+                                 auto_join=True)
 
 
+class CustomOrderLine(models.Model):
+    _name = 'custom.order.line'
+    _inherit = ['sale.order.line']
+    _rec_name = 'name'
+    _description = 'Custom Order Line'
+
+    name = fields.Char()
+    order_id = fields.Many2one('custom.order', string='Order Reference', required=True, ondelete='cascade', index=True,
+                               copy=False)
+
+
+class SampleQuote(models.Model):
+    _inherit = 'sale.order.line'
+
+    pcr_code = fields.Text(string="PCR Code", required=False, related="product_id.description" )
+
+
+class SampleProduct(models.Model):
+    _inherit = 'product.template'
+
+    pcr_code = fields.Char(string="PCR Code", required=False,)
+
+
+class SampleTransport(models.Model):
+    _name = 'sample.transport'
+    _rec_name = 'name'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
+    _description = 'Sample Transport Orders'
+
+    name = fields.Char(string="Proforma Number ",
+                       default=lambda self: _('New'),
+                       requires=False, readonly=True,)
+    sample_deliveries = fields.One2many('sample.deliveries', 'order_id', 'Deliveries', required=False)
+    template_id = fields.Many2one(comodel_name="sale.order.template", string="Template")
+    state = fields.Selection(string="", selection=[('draft', 'Draft'), ('confirm', 'Confirmed'), ],
+                             required=False, default='draft',  track_visibility=True,
+                             trace_visibility='onchange',)
+    client_id = fields.Many2one(comodel_name="res.partner", string="Client", required=False, )
+    date = fields.Date(string="Date", required=False, )
+    start_date = fields.Date(string="Start Date",)
+    end_date = fields.Date(string="End Date",)
+    sale_obj = fields.Many2one('sale.order', invisible=1)
+
+    @api.onchange('template_id')
+    def _onchange_service(self):
+        for rec in self:
+            lines = [(5, 0, 0)]
+            for line in self.template_id.sale_order_template_line_ids:
+                val =(0, 0, {
+                    'product_id': line.product_id.id,
+                    'quantity': 0
+                })
+                lines.append(val)
+            rec.sample_deliveries = lines
+
+    @api.model
+    def create(self, vals):
+        if vals.get('name', _('New')) == _('New'):
+            vals['name'] = self.env['ir.sequence'].next_by_code('increment_proforma') or _('New')
+        result = super(SampleTransport, self).create(vals)
+        return result
+
+    @api.multi
+    def is_allowed_transition(self, old_state, new_state):
+        allowed = [('draft', 'confirm'),
+                   ]
+        return (old_state, new_state) in allowed
+
+    @api.multi
+    def change_state(self, new_state):
+        for sample in self:
+            if sample.is_allowed_transition(sample.state, new_state):
+                sample.state = new_state
+            else:
+                msg = _('Moving from %s to %s is not allowed') % (sample.state, new_state)
+                raise UserError(msg)
+
+    @api.multi
+    def confirm(self):
+        sale_obj = self.env['sale.order'].create({'partner_id': self.client_id.id,
+                                                  'partner_invoice_id': self.client_id.id,
+                                                  'partner_shipping_id': self.client_id.id,
+                                                  'delivery_id': self.id})
+
+        lines = []
+        for line in self.sample_deliveries:
+            val = {'product_id': line.product_id.id,
+                   'product_uom_qty': line.quantity,
+                   'order_id': sale_obj.id
+                   }
+            lines.append(val)
+
+        self.sale_obj = sale_obj
+        self.env['sale.order.line'].create(lines)
+
+        self.change_state('confirm')
+
+
+class SampleDeliveries(models.Model):
+    _name = 'sample.deliveries'
+    _rec_name = 'name'
+    _description = 'Sample Deliveries Frequency'
+
+    name = fields.Char()
+    order_id = fields.Many2one(comodel_name="sample.transport", string="", required=False, )
+    product_id = fields.Many2one(comodel_name="product.product", string="PCR Lab")
+    quantity = fields.Float(string="Frequency")
+
+
+class ClientContract(models.Model):
+    _name = 'client.contract'
+    _rec_name = 'sub_contract_no'
+    _description = 'Contracts'
+
+    name = fields.Char()
+    client_id = fields.Many2one(comodel_name="res.partner", string="Client", required=False, )
+    sub_contract_no = fields.Char(string="Subcontract Number")
+    total_obligated = fields.Float(string="Total Obligated Amount",  required=False, )
+    total_spent = fields.Float(string="Total spent through previous invoice", compute="_previous_spent")
+    balance = fields.Float(string="Total Remaining", compute="_balance")
+    invoice_ids = fields.One2many(comodel_name="account.invoice", inverse_name="contract_id", string="", required=False, )
+
+
+    @api.one
+    @api.depends('invoice_ids')
+    def _previous_spent(self):
+        self.total_spent = sum(invoice.amount_total for invoice in self.invoice_ids)
+
+    def _balance(self):
+        self.balance = self.total_obligated - self.total_spent
+
+
+class AccountInvoice(models.Model):
+    _inherit = 'account.invoice'
+
+    contract_id = fields.Many2one(comodel_name="client.contract", string="Contract", required=False, )
+    total_obligated = fields.Float(string="Total Obligated Amount", required=False,
+                                   related="contract_id.total_obligated" )
+    total_spent = fields.Float(string="Total spent through previous invoice", related="contract_id.total_spent")
+    balance = fields.Float(string="Total Remaining", related="contract_id.balance")
 
 
 
