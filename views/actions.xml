@@ -59,7 +59,12 @@
     <record model="ir.actions.act_window" id="action_riders_fundrequest">
         <field name="name">Fund Request</field>
         <field name="res_model">fundrequestw.rider</field>
-        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_mode">kanban,tree,form,pivot</field>
+    </record>
+    <record model="ir.actions.act_window" id="action_riders_fundrequest_analysis">
+        <field name="name">Fund Request Analysis</field>
+        <field name="res_model">fundrequest.partsline</field>
+        <field name="view_mode">pivot</field>
     </record>
 
     <record model="ir.actions.act_window" id="action_riders_fundrequest_kanban">
@@ -91,11 +96,7 @@
         <field name="res_model">fund.classification</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <record model="ir.actions.act_window" id="action_riders_custom_order">
-        <field name="name">custom order</field>
-        <field name="res_model">custom.order</field>
-        <field name="view_mode">tree,form</field>
-    </record>
+
     <record model="ir.actions.act_window" id="action_riders_sample_transport">
         <field name="name">sample transport</field>
         <field name="res_model">sample.transport</field>
@@ -145,8 +146,9 @@
               sequence="8" action="action_riders_expenserequest"/>
     <menuitem name="Items Requisition" id="riders_expense_itemsrequisition_menu" parent="riders_finance_menu"
               sequence="9" action="action_riders_expenserequest_items" groups="rider.finance_group"/>
-    <menuitem name="Custom Order" id="riders_custom_order_menu" parent="riders_finance_menu"
-              sequence="10" action="action_riders_custom_order" groups="rider.finance_group"/>
+    <menuitem name="Items Analysis" id="riders_funrequest_analysis_menu" parent="riders_finance_menu"
+              sequence="10" action="action_riders_fundrequest_analysis" groups="rider.finance_group"/>
+
 
 
 

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <report
+            id="sample_transport_invoice_print"
+            string="Sample Transport Order"
+            model="sale.order"
+            report_type="qweb-pdf"
+            file="rider.report_sampletransport"
+            name="rider.report_sampletransport"/>
+        <report
+            id="supply_chain_invoice_print"
+            string="Supply Chain Order"
+            model="sale.order"
+            report_type="qweb-pdf"
+            file="rider.report_supplychain"
+            name="rider.report_supplychain"/>
+        <report
+            id="workshop_invoice_print"
+            string="Workshop Order"
+            model="sale.order"
+            report_type="qweb-pdf"
+            file="rider.report_workshop"
+            name="rider.report_workshop"/>
+        <report
+            id="sample_transport_invoice"
+            string="Sample Transport Invoice"
+            model="account.invoice"
+            report_type="qweb-pdf"
+            file="rider.report_sampletransport_invoice"
+            name="rider.report_sampletransport_invoice"/>
+        <report
+            id="supply_chain_invoice"
+            string="Supply Chain Invoice"
+            model="account.invoice"
+            report_type="qweb-pdf"
+            file="rider.report_supplychain_invoice"
+            name="rider.report_supplychain_invoice"/>
+
+
+    </data>
+</odoo>

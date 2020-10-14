@@ -20,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'mail', 'sale_management'],
+    'depends': ['base', 'mail', 'sale_management', 'account'],
 
     # always loaded
     'data': [
@@ -31,6 +31,8 @@
         'data/subtypes.xml',
         'views/templates.xml',
         'data/automation.xml',
+        'report/report.xml',
+        'report/report_template.xml',
         'security/ir.model.access.csv',
 
     ],

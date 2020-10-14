@@ -171,6 +171,8 @@ class FundrequestLine(models.Model):
                                      relation="jobcard_line_fundrequest_rel",
                                      column1="fundrequest_id", column2="servicerequest_id",
                                      string="Job Card lines", readonly=True, copy=False )
+    client = fields.Many2one(string='Client', related='fundrequest_id.client', readonly=True, store=True,
+                             help="Registration number.")
 
 
 class PartsRequest(models.Model):

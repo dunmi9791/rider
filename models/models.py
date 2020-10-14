@@ -310,50 +310,14 @@ class JobcardQuote(models.Model):
     _inherit = 'sale.order'
 
     jobcard_id = fields.Many2one(comodel_name="servicerequest.rider", string="Job Card", required=False, )
+    total_sites = fields.Float(string="Total Sites", compute="_total_sites")
+    order_no = fields.Char(string="Order Number", required=False, )
+    sample_type = fields.Char(string="Sample Type", )
 
-
-class CustomInvoice(models.Model):
-    _name = 'custom.invoice'
-    _inherit = ['account.invoice']
-    _rec_name = 'name'
-    _description = 'Custom Invoice'
-
-    name = fields.Char()
-
-
-class CustomOrder(models.Model):
-    _name = 'custom.order'
-    _inherit = ['sale.order']
-    _rec_name = 'name'
-    _description = 'Custom Order'
-
-    name = fields.Char()
-    order_line = fields.One2many('custom.order.line', 'order_id', string='Order Lines',
-                                 states={'cancel': [('readonly', True)], 'done': [('readonly', True)]}, copy=True,
-                                 auto_join=True)
-
-
-class CustomOrderLine(models.Model):
-    _name = 'custom.order.line'
-    _inherit = ['sale.order.line']
-    _rec_name = 'name'
-    _description = 'Custom Order Line'
-
-    name = fields.Char()
-    order_id = fields.Many2one('custom.order', string='Order Reference', required=True, ondelete='cascade', index=True,
-                               copy=False)
-
-
-class SampleQuote(models.Model):
-    _inherit = 'sale.order.line'
-
-    pcr_code = fields.Text(string="PCR Code", required=False, related="product_id.description" )
-
-
-class SampleProduct(models.Model):
-    _inherit = 'product.template'
-
-    pcr_code = fields.Char(string="PCR Code", required=False,)
+    @api.one
+    @api.depends('order_line.no_sites', )
+    def _total_sites(self):
+        self.total_sites = sum(site.no_sites for site in self.order_line)
 
 
 class SampleTransport(models.Model):
@@ -471,8 +435,74 @@ class AccountInvoice(models.Model):
     contract_id = fields.Many2one(comodel_name="client.contract", string="Contract", required=False, )
     total_obligated = fields.Float(string="Total Obligated Amount", required=False,
                                    related="contract_id.total_obligated" )
-    total_spent = fields.Float(string="Total spent through previous invoice", related="contract_id.total_spent")
-    balance = fields.Float(string="Total Remaining", related="contract_id.balance")
+    total_spent = fields.Float(string="Total spent ", related="contract_id.total_spent", store=True)
+    total_less_current = fields.Float(string="Total spent through previous invoice",
+                                      compute="_spent_through", store=True)
+    balance = fields.Float(string="Total Remaining", related="contract_id.balance", store=True)
+    order_no = fields.Char(string="Order Number", required=False, )
+    sample_type = fields.Char(string="Sample Type",)
+    total_sites = fields.Float(string="Total Sites", compute="_total_sites")
+
+    @api.one
+    @api.depends('invoice_line_ids.no_sites', )
+    def _total_sites(self):
+        self.total_sites = sum(site.no_sites for site in self.order_line)
+
+    @api.one
+    @api.depends('amount_total')
+    def _spent_through(self):
+        self.total_less_current = self.total_spent - self.amount_total
+
+
+class SaleOrderLine(models.Model):
+    _inherit = 'sale.order.line'
+
+    no_sites = fields.Float(string="Number of Sites",  required=False, )
+
+    @api.multi
+    def _prepare_invoice_line(self, qty):
+        """
+        Prepare the dict of values to create the new invoice line for a sales order line.
+
+        :param qty: float quantity to invoice
+        """
+        self.ensure_one()
+        res = {}
+        product = self.product_id.with_context(force_company=self.company_id.id)
+        account = product.property_account_income_id or product.categ_id.property_account_income_categ_id
+
+        if not account and self.product_id:
+            raise UserError(
+                _('Please define income account for this product: "%s" (id:%d) - or for its category: "%s".') %
+                (self.product_id.name, self.product_id.id, self.product_id.categ_id.name))
+
+        fpos = self.order_id.fiscal_position_id or self.order_id.partner_id.property_account_position_id
+        if fpos and account:
+            account = fpos.map_account(account)
+
+        res = {
+            'name': self.name,
+            'sequence': self.sequence,
+            'origin': self.order_id.name,
+            'account_id': account.id,
+            'price_unit': self.price_unit,
+            'quantity': qty,
+            'discount': self.discount,
+            'uom_id': self.product_uom.id,
+            'product_id': self.product_id.id or False,
+            'invoice_line_tax_ids': [(6, 0, self.tax_id.ids)],
+            'account_analytic_id': self.order_id.analytic_account_id.id,
+            'analytic_tag_ids': [(6, 0, self.analytic_tag_ids.ids)],
+            'display_type': self.display_type,
+            'no_sites': self.no_sites,
+        }
+        return res
+
+
+class InvoiceOrderLine(models.Model):
+    _inherit = 'account.invoice.line'
+
+    no_sites = fields.Float(string="Number of Sites", required=False, )
 
 
 
