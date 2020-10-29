@@ -38,6 +38,14 @@
             file="rider.report_supplychain_invoice"
             name="rider.report_supplychain_invoice"/>
 
+        <report
+            id="workshop_invoice"
+            string="Workshop Invoice"
+            model="account.invoice"
+            report_type="qweb-pdf"
+            file="rider.report_workshop_invoice"
+            name="rider.report_workshop_invoice"/>
+
 
     </data>
 </odoo>
