@@ -158,7 +158,7 @@ class FundrequestLine(models.Model):
     price_subtotal = fields.Float('Subtotal', compute='_compute_price_subtotal', store=True, digits=0)
     source = fields.Selection([
         ('store', 'store'),
-        ('cash', 'cash'), ('transfer', 'Transfer')], string='Remark')
+        ('cash', 'cash'), ('transfer', 'Transfer')], string='Remark', required=True,)
 
     @api.one
     @api.depends('cost', 'fundrequest_id', 'quantity', 'name', )
