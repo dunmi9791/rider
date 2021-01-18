@@ -29,6 +29,9 @@ class FundRequestWorkshop(models.Model):
     client = fields.Many2one(string='Client', related='jobcard_id.client', readonly=True, store=True,
                              help="Registration number.")
     classification = fields.Many2one(string="Expense Classification", comodel_name="fund.classification")
+    debit_account_id = fields.Many2one(string="Debit account", comodel_name='account.account')
+    credit_account_id = fields.Many2one(string='Credit Account', comodel_name='account.account')
+    journal_id = fields.Many2one(string='Journal', comodel_name='account.journal')
 
     @api.multi
     def is_allowed_transition(self, old_state, new_state):
@@ -124,6 +127,32 @@ class FundRequestWorkshop(models.Model):
 
     @api.multi
     def process(self):
+        credit_vals = []
+        for credit_val in self.operations:
+            val = {
+                'name': credit_val.parts_id.name,
+                'credit': abs(credit_val.price_subtotal),
+                'debit': 0.0,
+                'account_id': self.credit_account_id.id,
+                'partner_id': credit_val.vendor_id.id,
+                # 'tax_line_id': adjustment_type == 'debit' and self.tax_id.id or False,
+        }
+            credit_vals.append(val)
+        debit_vals = {
+            'name': self.request_no,
+            'credit': 0.0,
+            'debit': abs(self.amount_total),
+            'account_id': self.debit_account_id.id,
+            # 'tax_line_id': adjustment_type == 'credit' and self.tax_id.id or False,
+        }
+        vals = {
+            'journal_id': self.journal_id.id,
+            'date': self.date,
+            'ref': self.request_no,
+            'state': 'draft',
+            'line_ids': [(0, 0, debit_vals), credit_vals]
+        }
+        move = self.env['account.move'].create(vals)
         self.change_state('process')
 
 
@@ -156,10 +185,11 @@ class FundrequestLine(models.Model):
         ('Rejected', 'Rejected')], 'Status', default='draft',
         copy=False, readonly=True, required=True, )
     price_subtotal = fields.Float('Subtotal', compute='_compute_price_subtotal', store=True, digits=0)
+    account_id = fields.Many2one('account.account', string='Account', ondelete='restrict', index=True)
     source = fields.Selection([
         ('store', 'store'),
         ('cash', 'cash'), ('transfer', 'Transfer')], string='Remark', required=True,)
-
+    vendor_id = fields.Many2one('res.partner', string='Vendor',)
     @api.one
     @api.depends('cost', 'fundrequest_id', 'quantity', 'name', )
     def _compute_price_subtotal(self):

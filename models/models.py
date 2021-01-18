@@ -489,7 +489,11 @@ class AccountInvoice(models.Model):
     @api.one
     @api.depends('invoice_line_ids.no_sites', )
     def _total_sites(self):
-        self.total_sites = sum(site.no_sites for site in self.order_line)
+        for sites in self.invoice_line_ids:
+            if sites.no_sites:
+                self.total_sites = sum(site.no_sites for site in self.order_line)
+            else:
+                pass
 
     @api.one
     @api.depends('amount_total')
