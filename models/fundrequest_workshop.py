@@ -40,6 +40,7 @@ class FundRequestWorkshop(models.Model):
                    ('Requested', 'Rejected'),
                    ('PD Approve', 'Fin Approve'),
                    ('Fin Approve', 'process'),
+                   ('process', 'process'),
                    ('Fin Approve', 'requirecd'),
                    ('requirecd', 'cdapprove'),
                    ('cdapprove', 'process'),
@@ -127,33 +128,24 @@ class FundRequestWorkshop(models.Model):
 
     @api.multi
     def process(self):
-        credit_vals = []
-        for credit_val in self.operations:
-            val = {
-                'name': credit_val.parts_id.name,
-                'credit': abs(credit_val.price_subtotal),
-                'debit': 0.0,
-                'account_id': self.credit_account_id.id,
-                'partner_id': credit_val.vendor_id.id,
-                # 'tax_line_id': adjustment_type == 'debit' and self.tax_id.id or False,
-        }
-            credit_vals.append(val)
-        debit_vals = {
-            'name': self.request_no,
-            'credit': 0.0,
-            'debit': abs(self.amount_total),
-            'account_id': self.debit_account_id.id,
-            # 'tax_line_id': adjustment_type == 'credit' and self.tax_id.id or False,
-        }
-        vals = {
-            'journal_id': self.journal_id.id,
-            'date': self.date,
-            'ref': self.request_no,
-            'state': 'draft',
-            'line_ids': [(0, 0, debit_vals), credit_vals]
-        }
-        move = self.env['account.move'].create(vals)
-        self.change_state('process')
+        inv_line_obj = self.env['account.invoice']
+        for bill_val in self.operations:
+            bill_details = []
+            bill_detail = {
+                'type': 'in_invoice',
+                'partner_id': bill_val.vendor_id.id,
+                'reference': self.request_no,
+                'origin': self.request_no,
+                'invoice_line_ids': [(0, 0, {'product_id': bill_val.parts_id.id,
+                                            'name': bill_val.parts_id.name,
+                                            'account_id': bill_val.account_id.id,
+                                            'quantity': bill_val.quantity,
+                                            'price_unit':bill_val.cost,})]
+            }
+            bill_details.append(bill_detail)
+            inv_line_obj.create(bill_details)
+
+            self.change_state('process')
 
 
 class Parts(models.Model):
