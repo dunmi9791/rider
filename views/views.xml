@@ -111,6 +111,7 @@
                 <field name="state" widget="statusbar" statusbar_visible="draft,Requested,Approved,Rejected"/>
                 </header>
                 <sheet>
+                    <group>
                 <group>
                 <field name="date"/>
                 <field name="request_no"/>
@@ -118,11 +119,10 @@
                 <field name="jobcard_id"/>
                     <field name="classification" groups="rider.finance_group"/>
                 </group>
-                   <!-- <group>
-                        <field name="journal_id" groups="rider.finance_group"/>
-                        <field name="credit_account_id" groups="rider.finance_group"/>
-                        <field name="debit_account_id" groups="rider.finance_group"/>
-                    </group>-->
+                    <group>
+                        <field name="account_id" groups="rider.finance_group"/>
+                    </group>
+                    </group>
 
 
                     <notebook>
@@ -155,7 +155,6 @@
                     <field name="quantity"/>
                     <field name="cost" />
                     <field name="source"/>
-                    <field name="account_id"/>
                     <field name="vendor_id"/>
                     <field name="price_subtotal"/>
 

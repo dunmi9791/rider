@@ -29,9 +29,10 @@ class FundRequestWorkshop(models.Model):
     client = fields.Many2one(string='Client', related='jobcard_id.client', readonly=True, store=True,
                              help="Registration number.")
     classification = fields.Many2one(string="Expense Classification", comodel_name="fund.classification")
-    debit_account_id = fields.Many2one(string="Debit account", comodel_name='account.account')
-    credit_account_id = fields.Many2one(string='Credit Account', comodel_name='account.account')
+    account_id = fields.Many2one(string="Debit Account", comodel_name='account.account')
     journal_id = fields.Many2one(string='Journal', comodel_name='account.journal')
+    company_id = fields.Many2one('res.company', string='Company', required=True, readonly=True,
+                                 default=lambda self: self.env.user.company_id)
 
     @api.multi
     def is_allowed_transition(self, old_state, new_state):
@@ -128,6 +129,8 @@ class FundRequestWorkshop(models.Model):
 
     @api.multi
     def process(self):
+        if not self.account_id:
+            raise UserError(_('You Have to enter Account to post request'))
         inv_line_obj = self.env['account.invoice']
         for bill_val in self.operations:
             bill_details = []
@@ -138,7 +141,7 @@ class FundRequestWorkshop(models.Model):
                 'origin': self.request_no,
                 'invoice_line_ids': [(0, 0, {'product_id': bill_val.parts_id.id,
                                             'name': bill_val.parts_id.name,
-                                            'account_id': bill_val.account_id.id,
+                                            'account_id': self.account_id.id,
                                             'quantity': bill_val.quantity,
                                             'price_unit':bill_val.cost,})]
             }
@@ -181,7 +184,7 @@ class FundrequestLine(models.Model):
     source = fields.Selection([
         ('store', 'store'),
         ('cash', 'cash'), ('transfer', 'Transfer')], string='Remark', required=True,)
-    vendor_id = fields.Many2one('res.partner', string='Vendor',)
+    vendor_id = fields.Many2one('res.partner', string='Vendor', required=True,)
     @api.one
     @api.depends('cost', 'fundrequest_id', 'quantity', 'name', )
     def _compute_price_subtotal(self):

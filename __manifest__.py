@@ -34,6 +34,7 @@
         'report/report.xml',
         'report/report_template.xml',
         'security/ir.model.access.csv',
+        'security/record_rules.xml',
 
     ],
     # only loaded in demonstration mode

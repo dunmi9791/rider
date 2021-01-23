@@ -1,0 +1,33 @@
+<odoo>
+    <record id="jobcards_company_rule" model="ir.rule">
+        <field name="name">Jobcards multi-company</field>
+        <field name="model_id" ref="model_servicerequest_rider"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+    </record>
+    <record id="fundrequest_company_rule" model="ir.rule">
+        <field name="name">Fund Request multi-company</field>
+        <field name="model_id" ref="model_fundrequestw_rider"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+    </record>
+    <record id="expense_company_rule" model="ir.rule">
+        <field name="name">Expense multi-company</field>
+        <field name="model_id" ref="model_expense_rider"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+    </record>
+    <record id="cashrequisition_company_rule" model="ir.rule">
+        <field name="name">CashRequisition multi-company</field>
+        <field name="model_id" ref="model_cashrequisition_rider"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+    </record>
+    <record id="sampletransport_company_rule" model="ir.rule">
+        <field name="name">SampleTransport multi-company</field>
+        <field name="model_id" ref="model_sample_transport"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+    </record>
+
+</odoo>

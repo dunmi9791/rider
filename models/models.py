@@ -79,7 +79,8 @@ class ServiceRequest(models.Model):
         ('to invoice', 'To Invoice'),
         ('no', 'Nothing to Invoice')
     ], string='Invoice Status', invisible=1, )
-
+    company_id = fields.Many2one('res.company', string='Company', required=True, readonly=True,
+                                 default=lambda self: self.env.user.company_id)
 
     @api.multi
     def get_parts_id(self):
@@ -378,6 +379,8 @@ class SampleTransport(models.Model):
     start_date = fields.Date(string="Start Date",)
     end_date = fields.Date(string="End Date",)
     sale_obj = fields.Many2one('sale.order', invisible=1)
+    company_id = fields.Many2one('res.company', string='Company', required=True, readonly=True,
+                                 default=lambda self: self.env.user.company_id)
 
     @api.onchange('template_id')
     def _onchange_service(self):

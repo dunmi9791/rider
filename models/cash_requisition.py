@@ -21,6 +21,8 @@ class CashRequisition(models.Model):
     details = fields.Text(string="Details", required=False, )
     cash_no = fields.Char(string="Cash Requisition No.", default=lambda self: _('New'), requires=False, readonly=True, trace_visibility='onchange',)
     state = fields.Selection(string="", selection=[('Requested', 'Requested'), ('Authorised', 'Authorised'), ('Processed', 'Processed'), ('Received', 'Received'), ('Canceled', 'Canceled'), ], required=False, default='Requested', track_visibility='onchange', )
+    company_id = fields.Many2one('res.company', string='Company', required=True, readonly=True,
+                                 default=lambda self: self.env.user.company_id)
 
     @api.multi
     def is_allowed_transition(self, old_state, new_state):
@@ -117,6 +119,8 @@ class ExpenseRequest(models.Model):
     flag = fields.Boolean(string="", track_visibility='onchange')
     partner_id = fields.Many2one('res.partner', string='Receiving Vendor', track_visibility='onchange', readonly=True,
                                  states={'draft': [('readonly', False)]},)
+    company_id = fields.Many2one('res.company', string='Company', required=True, readonly=True,
+                                 default=lambda self: self.env.user.company_id)
 
     @api.model
     def create(self, vals):
