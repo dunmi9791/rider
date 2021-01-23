@@ -557,6 +557,7 @@
                       <field name="balance"/>
                               <field name="mode_of_disburse" groups="rider.finance_group"/>
                               <field name="classification" groups="rider.finance_group"/>
+                              <field name="account_id" groups="rider.finance_group"/>
                               </group>
                           <group>
                               <field string="Receiving Vendor" name="partner_id" widget="res_partner_many2one"

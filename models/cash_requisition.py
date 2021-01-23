@@ -118,9 +118,11 @@ class ExpenseRequest(models.Model):
     classification = fields.Many2one(string="Expense Classification", comodel_name="fund.classification")
     flag = fields.Boolean(string="", track_visibility='onchange')
     partner_id = fields.Many2one('res.partner', string='Receiving Vendor', track_visibility='onchange', readonly=True,
-                                 states={'draft': [('readonly', False)]},)
+                                 states={'draft': [('readonly', False)], 'Fin Approve': [('readonly', False)]},)
     company_id = fields.Many2one('res.company', string='Company', required=True, readonly=True,
                                  default=lambda self: self.env.user.company_id)
+    account_id = fields.Many2one(string="Debit Account", comodel_name='account.account')
+    inv_obj = fields.Many2one('account.invoice', invisible=1)
 
     @api.model
     def create(self, vals):
@@ -193,6 +195,7 @@ class ExpenseRequest(models.Model):
                    ('requirecd', 'Rejected'),
                    ('cdapprove', 'disburse'),
                    ('disburse', 'reconcile'),
+                   ('disburse', 'disburse'),
                    ('reconcile', 'unit_reconcile'),
                    ('unit_reconcile', 'fin reconcile'),
                    ('reconcile', 'disburse'),
@@ -231,6 +234,30 @@ class ExpenseRequest(models.Model):
 
     @api.multi
     def expense_disburse(self):
+        if not self.account_id:
+            raise UserError(_('You Have to enter Account to post request'))
+        if not self.partner_id:
+            raise UserError(_('You Have to enter receiving vendor to post request'))
+
+        inv_line_obj = self.env['account.invoice'].create({
+            'type': 'in_invoice',
+            'partner_id': self.partner_id.id,
+            'reference': self.subject,
+            'origin': self.exp_no,
+
+        })
+        self.inv_obj = inv_line_obj
+
+        for expense_val in self.expenses:
+            expense_details = []
+            exp_detail = {'name': expense_val.item_id.name,
+                          'account_id': self.account_id.id,
+                          'quantity': expense_val.quantity,
+                          'price_unit': expense_val.cost,
+                          'invoice_id': self.inv_obj.id, }
+            expense_details.append(exp_detail)
+            self.env['account.invoice.line'].create(expense_details)
+
         self.change_state('disburse')
 
     @api.multi
@@ -279,8 +306,6 @@ class ExpenseRequest(models.Model):
                     if partner_ids:
                         rec.message_subscribe(partner_ids, None)
             return res
-
-
 
 
 class ExpenserequestLine(models.Model):
