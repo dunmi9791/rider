@@ -184,7 +184,7 @@ class FundrequestLine(models.Model):
     source = fields.Selection([
         ('store', 'store'),
         ('cash', 'cash'), ('transfer', 'Transfer')], string='Remark', required=False,)
-    vendor_id = fields.Many2one('res.partner', string='Vendor', required=True,)
+    vendor_id = fields.Many2one('res.partner', string='Vendor', required=False,)
     @api.one
     @api.depends('cost', 'fundrequest_id', 'quantity', 'name', )
     def _compute_price_subtotal(self):
