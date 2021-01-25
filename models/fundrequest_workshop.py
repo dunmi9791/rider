@@ -183,7 +183,7 @@ class FundrequestLine(models.Model):
     account_id = fields.Many2one('account.account', string='Account', ondelete='restrict', index=True)
     source = fields.Selection([
         ('store', 'store'),
-        ('cash', 'cash'), ('transfer', 'Transfer')], string='Remark', required=True,)
+        ('cash', 'cash'), ('transfer', 'Transfer')], string='Remark', required=False,)
     vendor_id = fields.Many2one('res.partner', string='Vendor', required=True,)
     @api.one
     @api.depends('cost', 'fundrequest_id', 'quantity', 'name', )
