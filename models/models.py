@@ -575,7 +575,6 @@ class SaleOrder(models.Model):
         self.ensure_one()
         company_id = self.company_id.id
         partner_id = self.partner_id
-        name = partner_id.name
         if partner_id.is_own_journal:
             journal_id = partner_id.journal_id.id
         else:
