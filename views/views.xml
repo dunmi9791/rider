@@ -718,6 +718,20 @@
 <!--        </xpath>-->
     </field>
 </record>
+      <record model="ir.ui.view" id="res_partner_form_inherit">
+    <field name="name">res.partner.form.inherit1</field>
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="base.view_partner_form"/>
+    <field name="arch" type="xml">
+        <xpath expr="/form/sheet/notebook/page/group[@name='container_row_2']" position="inside">
+            <group string="Journal Information">
+                <field name="is_own_journal"/>
+                <field name="journal_id"/>
+            </group>
+        </xpath>
+
+    </field>
+</record>
 
 
 
