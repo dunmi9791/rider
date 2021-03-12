@@ -33,6 +33,7 @@ class FundRequestWorkshop(models.Model):
     journal_id = fields.Many2one(string='Journal', comodel_name='account.journal')
     company_id = fields.Many2one('res.company', string='Company', required=True, readonly=True,
                                  default=lambda self: self.env.user.company_id)
+    active = fields.Boolean(default=True)
 
     @api.multi
     def is_allowed_transition(self, old_state, new_state):
