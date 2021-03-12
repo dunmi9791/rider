@@ -24,6 +24,12 @@ class ServiceRequest(models.Model):
     vehicle_reg = fields.Char(string='Registration Number', related='vehicle_id.vehicle_registration', readonly=True,
 
                                           help="Registration number.")
+    vehicle_make = fields.Many2one(string='Make', related='vehicle_id.vehicle_make', readonly=True,
+
+                              help="Registration number.")
+    vehicle_model = fields.Many2one(string='Model', related='vehicle_id.vehicle_model', readonly=True,
+
+                              help="Registration number.")
     client = fields.Many2one(string='Client', related='vehicle_id.client_id', readonly=True, store=True,
                              help="Registration number.")
     checkin_date = fields.Datetime(string="Check-in Date/Time", required=False, default=datetime.now())
@@ -359,6 +365,8 @@ class JobcardQuote(models.Model):
             'chassis_no': self.jobcard_id.vehicle_id.chassis_no,
             'odometer': self.jobcard_id.odometer,
             'jobcard': self.jobcard_id.jobcard_no,
+            'vehicle_make': self.jobcard_id.vehicle_id.vehicle_make.name,
+            'vehicle_model': self.jobcard_id.vehicle_id.vehicle_model.name,
             'transaction_ids': [(6, 0, self.transaction_ids.ids)],
         })
         return invoice_vals
@@ -492,6 +500,8 @@ class AccountInvoice(models.Model):
     chassis_no = fields.Char(string="Chassis Number")
     odometer = fields.Char(string="Odometer Reading",)
     jobcard = fields.Char(string='Jobcard')
+    vehicle_make = fields.Char(string='Vehicle Make')
+    vehicle_model = fields.Char(string='Vehicle Model')
 
     @api.one
     @api.depends('invoice_line_ids.no_sites', )

@@ -503,6 +503,12 @@
                         <div t-if="doc.jobcard_id" class="col-auto mw-100 mb-2">
                             <strong>Vehicle:</strong>
                             <p class="m-0" t-field="doc.jobcard_id.vehicle_reg"/>
+                            <p class="m-0" t-field="doc.jobcard_id.vehicle_make"/>
+                            <p class="m-0" t-field="doc.jobcard_id.vehicle_model"/>
+                        </div>
+                        <div t-if="doc.jobcard_id" class="col-auto mw-100 mb-2">
+                            <strong>Millage:</strong>
+                            <p class="m-0" t-field="doc.jobcard_id.odometer"/>
                         </div>
                         <div name="payment_term" t-if="doc.payment_term_id" class="col-auto mw-100 mb-2">
                             <strong>Payment Terms:</strong>
@@ -1146,6 +1152,11 @@
                             <strong>Vehicle:</strong>
                             <p class="m-0" t-field="o.vehicle_no"/>
                             <p class="m-0" t-field="o.chassis_no"/>
+                            <p class="m-0" t-field="o.vehicle_make"/>
+                            <p class="m-0" t-field="o.vehicle_model"/>
+                        </div>
+                        <div class="col-auto mw-100 mb-2" t-if="o.jobcard" name="customer_code2">
+                            <strong>Millage:</strong>
                             <p class="m-0" t-field="o.odometer"/>
                         </div>
 <!--                        <div name="reference" class="col-auto mw-100 mb-2" t-if="o.reference">-->
