@@ -5,7 +5,7 @@
         <field name="name">view.riders.jobcard.form</field>
         <field name="model">servicerequest.rider</field>
         <field name="arch" type="xml">
-          <form name="DLC Issues Form">
+          <form name="DLC Issues Form" duplicate="0">
               <header>
 
                   <button name="technician_complete" string="Technician check complete" class="oe_highlight" states="check-in" groups="rider.technician_group" type="object"/>
@@ -96,7 +96,7 @@
         <field name="name">fundrequest.form</field>
         <field name="model">fundrequestw.rider</field>
         <field name="arch" type="xml">
-            <form string="Fund Request">
+            <form string="Fund Request" duplicate="0">
                 <header>
                     <button name="workshop_fund_request" type="object" string="Request Fund" class="oe_highlight" states="draft"/>
                     <button name="workshop_fund_approve" type="object" string="Operational Approval" class="oe_highlight" groups="rider.group_manager_group" states="Requested"/>
@@ -524,7 +524,7 @@
           <field name="name">expenserequest.form</field>
           <field name="model">expense.rider</field>
           <field name="arch" type="xml">
-              <form string="expense request">
+              <form string="expense request" duplicate="0">
                   <header>
                   <button name="expense_request" type="object" string="Request Expense" class="oe_highlight" states="draft"/>
                   <button name="reset_draft" type="object" string="Reset to draft" class="oe_highlight" states="Requested"/>
