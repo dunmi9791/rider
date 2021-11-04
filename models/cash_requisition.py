@@ -124,6 +124,9 @@ class ExpenseRequest(models.Model):
                                  default=lambda self: self.env.user.company_id)
     account_id = fields.Many2one(string="Debit Account", comodel_name='account.account')
     inv_obj = fields.Many2one('account.invoice', invisible=1)
+    balanced = fields.Boolean(
+        string='Balanced', 
+        required=False)
 
     @api.model
     def create(self, vals):
@@ -279,6 +282,11 @@ class ExpenseRequest(models.Model):
 
     @api.multi
     def fin_reconcile(self):
+        if self.balance != 0 and self.balanced is False:
+            raise UserError(_('You Have not balanced the reconciliation difference'))
+        else:
+            if self.balance != 0 and self.balanced is True:
+                pass
         self.change_state('fin reconcile')
 
     @api.multi

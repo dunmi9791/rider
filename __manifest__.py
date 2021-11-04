@@ -20,11 +20,12 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'mail', 'sale_management', 'account'],
+    'depends': ['base', 'mail', 'sale_management', 'account', 'hr'],
 
     # always loaded
     'data': [
         'data/groups.xml',
+        'wizard/reconcile.xml',
         'views/actions.xml',
         'views/views.xml',
         'views/custom.xml',

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="reconcile_expense_form" model="ir.ui.view">
+         <field name="name">reconcile.expense.wizard</field>
+         <field name="model">reconcile.expense</field>
+         <field name="arch" type="xml">
+            <form string="Reconcile Expense">
+                <group>
+                    <field name="expense_id"/>
+                    <field name="date"/>
+                    <field name="balance_amount" widget="monetary"/>
+                    <field name="mode"/>
+                    <field name="mode_ref" attrs="{'required':[('mode','in', ('cheque', 'transfer'))]}" />
+                </group>
+                <footer>
+
+                    <button name="reconcile_balance" string="Reconcile Balance" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+         </field>
+     </record>
+
+        <record id="reconcile_expense_wizard" model="ir.actions.act_window">
+        <field name="name">Reconcile expense</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">reconcile.expense</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="reconcile_expense_form"/>
+        <field name="target">new</field>
+    </record>
+
+    </data>
+</odoo>
