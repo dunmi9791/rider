@@ -11,8 +11,9 @@
                     <field name="expense_id"/>
                     <field name="date"/>
                     <field name="balance_amount" widget="monetary"/>
-                    <field name="mode"/>
-                    <field name="mode_ref" attrs="{'required':[('mode','in', ('cheque', 'transfer'))]}" />
+                    <field name="journal_id" domain="[('type', 'in', ('bank', 'cash'))]" options="{'no_create': True}"/>
+<!--                    <field name="mode"/>-->
+<!--                    <field name="mode_ref" attrs="{'required':[('mode','in', ('cheque', 'transfer'))]}" />-->
                 </group>
                 <footer>
 

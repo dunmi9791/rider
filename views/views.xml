@@ -538,6 +538,8 @@
                   <button name="expense_reconcile" type="object" string="Submit for reconciliation" class="oe_highlight" states="disburse"/>
                       <button name="fin_reconcile" type="object" string="Accept reconciliation" class="oe_highlight" states="unit_reconcile" groups="rider.finance_group"/>
                       <button name="%(rider.reconcile_expense_wizard)d" context="{'default_expense_id': active_id,}" type="action" string="Balance" class="oe_highlight" states="unit_reconcile"/>
+<!--                      <button name="%(account.action_account_payments)d" context="{'default_communication': exp_no,}" type="action" string="Balance" class="oe_highlight" states="unit_reconcile"/>-->
+
                       <button name="unit_reconcile" type="object" string="Confirm reconciliation" class="oe_highlight" states="reconcile" groups="rider.group_manager_group"/>
                       <button name="reject_reconcile" type="object" string="Reject reconciliation" class="oe_highlight" states="unit_reconcile" groups="rider.finance_group"/>
                       <button name="reject_reconcile_unit" type="object" string="Reject reconciliation" class="oe_highlight" states="reconcile" groups="rider.group_manager_group"/>
