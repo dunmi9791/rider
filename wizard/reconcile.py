@@ -22,29 +22,16 @@ class ReconcileExpense(models.TransientModel):
     date = fields.Date(string="Date", required=False, default=date.today())
     reconcile_obj = fields.Many2one('account.move', invisible=1)
 
-    def reconcile_balance(self):
-        # reconcile = self.env['account.move'].create({'ref': self.expense_id.exp_no,
-        #                                              'journal_id': self.journal_id.id,
-        #                                              'date': self.date,
-        #                                              })
-        # self.reconcile_obj = reconcile
-        # self.env['account.move.line'].create[({
-        #     'move_id': self.reconcile_obj.id,
-        #     'account_id': self.expense_id.account_id.id,
-        #     'partner_id': self.partner_id.id,
-        #     'name': 'Reconciliation',
-        #     'credit': self.balance_amount,
-        # }),({
-        #     'move_id': self.reconcile_obj.id,
-        #     'account_id': self.journal_id.default_debit_account_id.id,
-        #     # 'partner_id': self.partner_id.id,
-        #     # 'name': 'Reconciliation',
-        #     # 'debit': self.balance_amount,
-        # })]
-        # self.env['account.move.line'].create
 
-        move = {
-            'ref': self.expense_id.exp_no,
+    def reconcile_balance(self):
+        if self.balance_amount > 0:
+            self.reconcile_balance_credit()
+        elif self.balance_amount < 0:
+            self.reconcile_balance_debit()
+
+
+    def reconcile_balance_credit(self):
+        move ={'ref': self.expense_id.exp_no,
             'journal_id': self.journal_id.id,
             'date': self.date,
 
@@ -56,12 +43,37 @@ class ReconcileExpense(models.TransientModel):
 
             }), (0, 0, {
                 'account_id': self.journal_id.default_debit_account_id.id,
-                'partner_id': self.partner_id.id,
+                'partner_id': self.expense_id.partner_id.id,
                 'name': 'Reconciliation',
                 'debit': self.balance_amount,
-            })]
-        }
+            })]}
         reconcile_obj = self.env['account.move'].create(move)
         reconcile_obj.post()
-
         self.expense_id.balanced = True
+        self.expense_id.fin_reconcile()
+
+    def reconcile_balance_debit(self):
+        move = {'ref': self.expense_id.exp_no,
+                'journal_id': self.journal_id.id,
+                'date': self.date,
+
+                'line_ids': [(0, 0, {
+                    'account_id': self.expense_id.account_id.id,
+                    'partner_id': self.expense_id.partner_id.id,
+                    'name': 'Reconciliation',
+                    'debit': abs(self.balance_amount),
+
+                }), (0, 0, {
+                    'account_id': self.journal_id.default_debit_account_id.id,
+                    'partner_id': self.expense_id.partner_id.id,
+                    'name': 'Reconciliation',
+                    'credit': abs(self.balance_amount),
+                })]}
+        reconcile_obj = self.env['account.move'].create(move)
+        reconcile_obj.post()
+        self.expense_id.balanced = True
+        self.expense_id.fin_reconcile()
+
+
+
+
