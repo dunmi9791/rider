@@ -83,7 +83,7 @@
     <record model="ir.actions.act_window" id="action_riders_expenserequest">
         <field name="name">Expense Request</field>
         <field name="res_model">expense.rider</field>
-        <field name="view_mode">tree,form,kanban</field>
+        <field name="view_mode">tree,form,kanban,pivot</field>
     </record>
 
     <record model="ir.actions.act_window" id="action_riders_expenserequest_items">
