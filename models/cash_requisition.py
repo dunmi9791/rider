@@ -88,7 +88,7 @@ class ExpenseRequest(models.Model):
     exp_no = fields.Char(string="Expense Number",
                          default=lambda self: _('New'),
                          requires=False, readonly=True, )
-    date = fields.Date(string="Date", required=False, default=date.today(), readonly=True, states={'draft': [('readonly', False)]}, )
+    date = fields.Date(string="Date", required=True, readonly=True, states={'draft': [('readonly', False)]}, )
     memo_to = fields.Many2one(comodel_name="res.users", string="TO", required=True,
                               domain=lambda self: [( "groups_id", "=", self.env.ref( "rider.group_approverequest_group" ).id )])
     copy_to = fields.Many2many(comodel_name="res.users", string="CC")
