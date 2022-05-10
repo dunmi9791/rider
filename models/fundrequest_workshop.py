@@ -14,7 +14,7 @@ class FundRequestWorkshop(models.Model):
 
     _description = 'Fund request workshop'
 
-    date = fields.Date(string="Date", default=date.today(), required=False, readonly=True, states={'draft': [('readonly', False)]})
+    date = fields.Date(string="Date", required=False, readonly=True, states={'draft': [('readonly', False)]})
     request_no = fields.Char(string="Request Number", default=lambda self: _('New'), requires=False, readonly=True,
                              trace_visibility='onchange',)
     programme_id = fields.Many2one(comodel_name="programme.rider", string="Programme ID", required=False, readonly=True, states={'draft': [('readonly', False)]})
