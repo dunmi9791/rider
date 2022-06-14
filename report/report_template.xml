@@ -503,12 +503,12 @@
                         <div t-if="doc.jobcard_id" class="col-auto mw-100 mb-2">
                             <strong>Vehicle:</strong>
                             <p class="m-0" t-field="doc.jobcard_id.vehicle_reg"/>
-                            <p class="m-0" t-field="doc.jobcard_id.vehicle_make"/>
-                            <p class="m-0" t-field="doc.jobcard_id.vehicle_model"/>
+                            <p class="m-0" t-field="doc.jobcard_id.vehicle_id.vehicle_full_name"/>
+<!--                            <p class="m-0" t-field="doc.jobcard_id.vehicle_model"/>-->
                         </div>
                         <div t-if="doc.jobcard_id" class="col-auto mw-100 mb-2">
                             <strong>Millage:</strong>
-                            <p class="m-0" t-field="doc.jobcard_id.odometer"/>
+                            <p class="m-0" t-field="doc.jobcard_id.odometers"/>
                         </div>
                         <div name="payment_term" t-if="doc.payment_term_id" class="col-auto mw-100 mb-2">
                             <strong>Payment Terms:</strong>

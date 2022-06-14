@@ -17,7 +17,7 @@ class Vehicle(models.Model):
     chassis_no = fields.Char(string="Chassis Number", track_visibility=True, trace_visibility='onchange',)
     jobcard_ids = fields.One2many(comodel_name="servicerequest.rider", inverse_name="vehicle_id", string="", required=False, )
     millage_ids = fields.One2many(comodel_name="vehicle.millage", inverse_name="vehicle_id", string="Millage")
-    vehicle_full_name = fields.Char(string="Vehicle", compute="_vehicle_name",)
+    vehicle_full_name = fields.Char(string="Vehicle", compute="_vehicle_name", store=True)
 
     @api.one
     @api.depends('vehicle_make', 'vehicle_model', 'vehicle_year')
