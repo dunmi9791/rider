@@ -70,7 +70,7 @@ class ServiceRequest(models.Model):
     operations = fields.One2many(
         'jobcard.partsline', 'servicerequest_id', 'Parts',
         copy=True, readonly=True, states={'check-in': [('readonly', False)], 'Tech Eval': [('readonly', False)]})
-    odometer = fields.Char(string="Odometer Reading", required=True, )
+    odometers = fields.Char(string="Odometer Reading", required=True, )
     partsline_id = fields.Many2one(comodel_name="jobcard.partline", string="", required=False, )
     fundrequest_id = fields.Many2one('fundrequestw.rider', string="", required=False, )
     fundrequest_ids = fields.Many2many(comodel_name="fundrequestw.rider",string='Fund request', compute="_get_fundrequest", readonly=True, copy=False )
@@ -95,6 +95,17 @@ class ServiceRequest(models.Model):
             'operations': [(0, 0, {parts}), (0, 0, {parts}), ...],
         }
         return parts_ids
+
+    @api.multi
+    def odometer(self):
+        millage = self.env['vehicle.millage']
+        for record in self:
+            items = {
+                                    'date': record.checkin_date,
+                                    'millage': record.odometers,
+                                    'vehicle_id': record.vehicle_id.id,
+                                }
+            millage.create(items)
 
     @api.multi
     def is_allowed_transition(self, old_state, new_state):
@@ -204,6 +215,8 @@ class ServiceRequest(models.Model):
                 record.create(fund_dict)
 
                 return super(ServiceRequest, self).write(vals)
+
+
             else:
                 return super(ServiceRequest, self).write(vals)
         else:
@@ -217,8 +230,48 @@ class ServiceRequest(models.Model):
     def create(self, vals):
         if vals.get('jobcard_no', _('New')) == _('New'):
             vals['jobcard_no'] = self.env['ir.sequence'].next_by_code('increment_jobcard') or _('New')
+
         result = super(ServiceRequest, self).create(vals)
+        for record in result:
+            if record.odometers:
+                millage = self.env['vehicle.millage']
+                items = {
+                    'date': record.checkin_date,
+                    'millage': record.odometers,
+                    'vehicle_id': record.vehicle_id.id,
+                }
+                millage.create(items)
         return result
+
+    # @api.model
+    # def create(self, vals):
+    #     if vals.get('odometers'):
+    #         millage = self.env['vehicle.millage']
+    #         for record in self:
+    #             items = {
+    #                 'date': record.checkin_date,
+    #                 'millage': record.odometers,
+    #                 'vehicle_id': record.vehicle_id.id,
+    #             }
+    #             millage.create(items)
+    #             result = super(ServiceRequest, self).create(vals)
+    #             return result
+
+    # @api.model
+    # def create(self, vals):
+    #     if vals.get('odometer'):
+    #         for record in self:
+    #             millage = self.env['vehicle.millage']
+    #             items = {
+    #                 'date': record.checkin_date,
+    #                 'millage': record.odometer,
+    #                 'vehicle_id': record.vehicle_id,
+    #             }
+    #             millage.create(items)
+    #
+    #     result = super(ServiceRequest, self).create(vals)
+    #     return result
+
 
 
 

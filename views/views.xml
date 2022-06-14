@@ -13,6 +13,7 @@
                   <button name="parts_released" string="Parts released" class="oe_highlight" states="Confirm" groups="rider.store_group" type="object"/>
                   <button name="quality_check" string="Quality Checked" class="oe_highlight" states="parts release" groups="rider.workshop_manager_group" type="object"/>
                   <button name="check_out" string="Check Out" class="oe_highlight" states="quality check" groups="rider.technician_group" type="object"/>
+                  <button name="odometer" string="odometer" class="oe_highlight"  groups="rider.technician_group" type="object"/>
                   <button name="customer_approval" string="Require Customer Approval" class="oe_highlight" states="check-in,Tech Eval" groups="rider.workshop_manager_group" type="object"/>
                   <button name="cancel" string="Cancel" class="oe_highlight" states="quality checked,customer approve,check-in,Tech Eval" groups="rider.workshop_manager_group" type="object"/>
 
@@ -49,7 +50,7 @@
                       <field name="checkin_date"/>
                       <field name="service_type"/>
                       <field name="checkin_comment"/>
-                      <field name="odometer"/>
+                      <field name="odometers"/>
                   </group>
                   <group>
                       <field name="spare_tyre"/>
@@ -341,15 +342,18 @@
 
                 </header>
                 <sheet>
-                <group>
-                <field name="vehicle_registration"/>
-                <field name="client_id"/>
-                <field name="chassis_no"/>
-                 </group>
                     <group>
-                        <field name="vehicle_type"/>
-                        <field name="vehicle_make"/>
-                        <field name="vehicle_model"/>
+                        <group>
+                            <field name="client_id"/>
+                            <field name="chassis_no"/>
+                            <field name="vehicle_registration"/>
+                         </group>
+                            <group>
+                                <field name="vehicle_type"/>
+                                <field name="vehicle_make"/>
+                                <field name="vehicle_model"/>
+                                <field name="vehicle_year"/>
+                            </group>
                     </group>
 
 
@@ -357,10 +361,12 @@
                     <page string="Job Cards">
                         <field name="jobcard_ids" >
                         </field>
-
-
-
                     </page>
+                        <page string="Millage History">
+                            <field name="millage_ids">
+
+                            </field>
+                        </page>
                     </notebook>
 
                 </sheet>
@@ -740,6 +746,27 @@
 
     </field>
 </record>
+      <record id="vehicle_view_tree" model="ir.ui.view">
+          <field name="name">vehicle_view_tree</field>
+          <field name="model">vehicles.rider</field>
+          <field name="arch" type="xml">
+              <tree string="vehicle_tree">
+                  <field name="vehicle_full_name"/>
+                  <field name="client_id"/>
+                  <field name="chassis_no"/>
+              </tree>
+          </field>
+      </record>
+      <record id="millage_view_tree" model="ir.ui.view">
+          <field name="name">millage_view_tree</field>
+          <field name="model">vehicle.millage</field>
+          <field name="arch" type="xml">
+              <tree string="millage_tree">
+                  <field name="date"/>
+                  <field name="millage"/>
+              </tree>
+          </field>
+      </record>
 
 
 

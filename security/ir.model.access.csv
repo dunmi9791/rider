@@ -42,4 +42,5 @@ access_rider_classification,rider.classification,model_fund_classification,rider
 access_rider_sampletransport,rider.sampletransport,model_sample_transport,,1,1,1,1
 access_rider_sampledeliveries,rider.sampledeliveries,model_sample_deliveries,,1,1,1,1
 access_rider_clientcontract,rider.clientcontract,model_client_contract,,1,1,1,1
+access_rider_millage,rider.millage,model_vehicle_millage,,1,1,1,1
 
