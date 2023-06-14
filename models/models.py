@@ -32,7 +32,7 @@ class ServiceRequest(models.Model):
                               help="Registration number.")
     client = fields.Many2one(string='Client', related='vehicle_id.client_id', readonly=True, store=True,
                              help="Registration number.")
-    checkin_date = fields.Datetime(string="Check-in Date/Time", required=True, )
+    checkin_date = fields.Datetime(string="Check-in Date/Time", required=False, )
     checkout_date = fields.Datetime(string="Check-out Date/Time", required=False, )
     electrics_ta = fields.Selection(string="Electronic Assessment", selection=[('1', '1. Very poor condition'), ('2', '2. poor condition'), ('3', '3.fair condition'), ('4', '4. good condition'), ('5', '5. Excellent condition'), ],
                                      required=False, )
@@ -70,7 +70,7 @@ class ServiceRequest(models.Model):
     operations = fields.One2many(
         'jobcard.partsline', 'servicerequest_id', 'Parts',
         copy=True, readonly=True, states={'check-in': [('readonly', False)], 'Tech Eval': [('readonly', False)]})
-    odometers = fields.Char(string="Odometer Reading", required=True, )
+    odometers = fields.Char(string="Odometer Reading", required=False, )
     partsline_id = fields.Many2one(comodel_name="jobcard.partline", string="", required=False, )
     fundrequest_id = fields.Many2one('fundrequestw.rider', string="", required=False, )
     fundrequest_ids = fields.Many2many(comodel_name="fundrequestw.rider",string='Fund request', compute="_get_fundrequest", readonly=True, copy=False )
@@ -87,6 +87,11 @@ class ServiceRequest(models.Model):
     ], string='Invoice Status', invisible=1, )
     company_id = fields.Many2one('res.company', string='Company', required=True, readonly=True,
                                  default=lambda self: self.env.user.company_id)
+    checkin_ids = fields.One2many(
+        comodel_name='vehicle.checkin',
+        inverse_name='jobcard_id',
+        string='Checkin_ids',
+        required=False)
 
     @api.multi
     def get_parts_id(self):

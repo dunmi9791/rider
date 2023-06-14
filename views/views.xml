@@ -13,7 +13,9 @@
                   <button name="parts_released" string="Parts released" class="oe_highlight" states="Confirm" groups="rider.store_group" type="object"/>
                   <button name="quality_check" string="Quality Checked" class="oe_highlight" states="parts release" groups="rider.workshop_manager_group" type="object"/>
                   <button name="check_out" string="Check Out" class="oe_highlight" states="quality check" groups="rider.technician_group" type="object"/>
-                  <button name="odometer" string="odometer" class="oe_highlight"  groups="rider.technician_group" type="object"/>
+<!--                  <button name="odometer" string="odometer" class="oe_highlight"  groups="rider.technician_group" type="object"/>-->
+                  <button name="%(action_rider_vehicle_checkin_wizard)d" class="oe_highlight" string="Checkin Vehicle" type="action" states="check-in" context="{'default_vehicle_id': vehicle_id,
+                  'default_jobcard_id': active_id,}"/>
                   <button name="customer_approval" string="Require Customer Approval" class="oe_highlight" states="check-in,Tech Eval" groups="rider.workshop_manager_group" type="object"/>
                   <button name="cancel" string="Cancel" class="oe_highlight" states="quality checked,customer approve,check-in,Tech Eval" groups="rider.workshop_manager_group" type="object"/>
 
@@ -47,10 +49,10 @@
         </group>
               <group>
                   <group>
-                      <field name="checkin_date"/>
+<!--                      <field name="checkin_date"/>-->
                       <field name="service_type"/>
                       <field name="checkin_comment"/>
-                      <field name="odometers"/>
+<!--                      <field name="odometers"/>-->
                   </group>
                   <group>
                       <field name="spare_tyre"/>
@@ -82,6 +84,15 @@
 
 
                     </page>
+                       <page string="Checkins">
+                           <field name="checkin_ids" >
+                               <tree string="Checkins">
+                                   <field name="checkin_date"/>
+                                   <field name="millage"/>
+                                   <field name="driver_id"/>
+                               </tree>
+                           </field>
+                       </page>
                     </notebook>
             </sheet>
                <div class="oe_chatter">

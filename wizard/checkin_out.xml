@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+         <record model="ir.ui.view" id="vehicle_checkin_wizard_form">
+            <field name="name">vehicle.checkin.wizard.form</field>
+            <field name="model">riders.checkin.vehicle</field>
+            <field name="arch" type="xml">
+                <form string="Vehicle Check in">
+                    <group>
+                        <field name="vehicle_id"/>
+                        <field name="driver_id"/>
+                    </group>
+                    <group>
+                        <field name="checkin_date"/>
+                        <field name="millage"/>
+                        <field name="jack" widget="boolean_toggle"/>
+                        <field name="spare_tyre" widget="boolean_toggle"/>
+                        <field name="fire_extinguisher" widget="boolean_toggle"/>
+                        <field name="first_aid_kit" widget="boolean_toggle"/>
+                        <field name="wheel_spanner" widget="boolean_toggle"/>
+                        <field name="triangle" widget="boolean_toggle"/>
+                        <field name="tools" widget="boolean_toggle"/>
+                        <field name="others"/>
+                    </group>
+
+
+
+        <footer>
+                        <button string="Check in" confirm="Are you sure? Do not forget to cross check" name="checkin_vehicle" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_rider_vehicle_checkin_wizard" model="ir.actions.act_window">
+            <field name="name">Rider Vehicle Checkin</field>
+            <field name="res_model">riders.checkin.vehicle</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+
+    </data>
+</odoo>

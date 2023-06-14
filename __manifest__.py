@@ -26,6 +26,7 @@
     'data': [
         'data/groups.xml',
         'wizard/reconcile.xml',
+        'wizard/checkin_out.xml',
         'views/actions.xml',
         'views/views.xml',
         'views/custom.xml',

@@ -69,3 +69,27 @@ class VehicleModel(models.Model):
 
     name = fields.Char()
 
+
+class VehicleCheckin(models.Model):
+    _name = 'vehicle.checkin'
+    _description = 'Vehicle Checkin'
+
+    vehicle_id = fields.Many2one(comodel_name='vehicles.rider', string='Vehicle')
+    millage = fields.Char(string='Millage')
+    driver_id = fields.Many2one(comodel_name='res.partner', string='Driver')
+    checkin_date = fields.Datetime(string="Check-in Date/Time", required=False, )
+    jack = fields.Boolean(string='Jack')
+    spare_tyre = fields.Boolean(string='Spare Tyre')
+    wheel_spanner = fields.Boolean(string='Wheel Spanner')
+    triangle = fields.Boolean(string='Triangle')
+    fire_extinguisher = fields.Boolean(string='Fire Extinguisher')
+    first_aid_kit = fields.Boolean(string='First Aid Kit')
+    others = fields.Char(string='Others')
+    in_out = fields.Selection(
+        string='In_out',
+        selection=[('in', 'In'),
+                   ('out', 'Out'), ],
+        required=False, )
+    jobcard_id = fields.Many2one(comodel_name='servicerequest.rider', string='Jobcard')
+
+
