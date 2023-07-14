@@ -14,8 +14,10 @@
                   <button name="quality_check" string="Quality Checked" class="oe_highlight" states="parts release" groups="rider.workshop_manager_group" type="object"/>
                   <button name="check_out" string="Check Out" class="oe_highlight" states="quality check" groups="rider.technician_group" type="object"/>
 <!--                  <button name="odometer" string="odometer" class="oe_highlight"  groups="rider.technician_group" type="object"/>-->
-                  <button name="%(action_rider_vehicle_checkin_wizard)d" class="oe_highlight" string="Checkin Vehicle" type="action" states="check-in" context="{'default_vehicle_id': vehicle_id,
-                  'default_jobcard_id': active_id,}"/>
+                  <button name="%(action_rider_vehicle_checkin_wizard)d" class="oe_highlight" string="Checkin Vehicle" type="action" context="{'default_vehicle_id': vehicle_id,
+                  'default_jobcard_id': active_id,}" attrs="{'invisible': [('vehicle_in', '=', True)]}"/>
+                  <button name="%(action_rider_vehicle_checkout_wizard)d" class="oe_highlight" string="Checkout Vehicle" type="action" context="{'default_vehicle_id': vehicle_id,
+                  'default_jobcard_id': active_id,}" attrs="{'invisible': [('vehicle_in', '=', False)]}"/>
                   <button name="customer_approval" string="Require Customer Approval" class="oe_highlight" states="check-in,Tech Eval" groups="rider.workshop_manager_group" type="object"/>
                   <button name="cancel" string="Cancel" class="oe_highlight" states="quality checked,customer approve,check-in,Tech Eval" groups="rider.workshop_manager_group" type="object"/>
 
@@ -41,6 +43,7 @@
                     <field name="vehicle_id" />
                     <field name="vehicle_reg"/>
                     <field name="client"/>
+                    <field name="vehicle_in" invisible="1"/>
 
                 </group>
                 <group>
@@ -88,6 +91,8 @@
                            <field name="checkin_ids" >
                                <tree string="Checkins">
                                    <field name="checkin_date"/>
+                                   <field name="in_out"/>
+                                   <field name="checkout_reason"/>
                                    <field name="millage"/>
                                    <field name="driver_id"/>
                                </tree>

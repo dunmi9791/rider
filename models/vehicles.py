@@ -90,6 +90,12 @@ class VehicleCheckin(models.Model):
         selection=[('in', 'In'),
                    ('out', 'Out'), ],
         required=False, )
+    checkout_reason = fields.Selection(
+        string='Checkout reason',
+        selection=[('job_complete', 'Job complete'),
+                   ('seek_approval', 'Seek Approval'),
+                   ('others', 'Others'), ],
+    required = False, )
     jobcard_id = fields.Many2one(comodel_name='servicerequest.rider', string='Jobcard')
 
 

@@ -40,6 +40,46 @@
             <field name="view_mode">form</field>
             <field name="target">new</field>
         </record>
+        <record model="ir.ui.view" id="vehicle_checkout_wizard_form">
+            <field name="name">vehicle.checkout.wizard.form</field>
+            <field name="model">riders.checkout.vehicle</field>
+            <field name="arch" type="xml">
+                <form string="Vehicle Check out">
+                    <group>
+                        <field name="checkout_reason"/>
+                        <field name="vehicle_id"/>
+                        <field name="driver_id"/>
+                    </group>
+                    <group>
+                        <field name="checkout_date"/>
+                        <field name="millage"/>
+                        <field name="jack" widget="boolean_toggle"/>
+                        <field name="spare_tyre" widget="boolean_toggle"/>
+                        <field name="fire_extinguisher" widget="boolean_toggle"/>
+                        <field name="first_aid_kit" widget="boolean_toggle"/>
+                        <field name="wheel_spanner" widget="boolean_toggle"/>
+                        <field name="triangle" widget="boolean_toggle"/>
+                        <field name="tools" widget="boolean_toggle"/>
+                        <field name="others"/>
+                    </group>
+
+
+
+        <footer>
+                        <button string="Check out" confirm="Are you sure? Do not forget to cross check" name="checkout_vehicle" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_rider_vehicle_checkout_wizard" model="ir.actions.act_window">
+            <field name="name">Rider Vehicle Checkout</field>
+            <field name="res_model">riders.checkout.vehicle</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
 
 
     </data>

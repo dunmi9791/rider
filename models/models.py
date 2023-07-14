@@ -92,6 +92,7 @@ class ServiceRequest(models.Model):
         inverse_name='jobcard_id',
         string='Checkin_ids',
         required=False)
+    vehicle_in = fields.Boolean(string='Vehicle In')
 
     @api.multi
     def get_parts_id(self):
