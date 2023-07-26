@@ -48,7 +48,11 @@ class ServiceRequest(models.Model):
     tyres_ta = fields.Selection(string="Tyres Assessment",
                                      selection=[('1', '1. Very poor condition'), ('2', '2. poor condition'), ('3', '3.fair condition'), ('4', '4. good condition'), ('5', '5. Excellent condition'), ],
                                      required=False, )
-    service_type = fields.Selection(string="Serivice Type", selection=[('Planned', 'Planned'), ('Accident', 'Accident'),('Breakdown', 'Breakdown'), ('Technical Problem', 'Technical Problem'), ('Demand Service','Demand service'), ('Return Job', 'Return Job'), ], required=False, )
+    service_type = fields.Selection(string="Serivice Type", selection=[('Planned', 'Planned'), ('Accident', 'Accident'),
+                                                                       ('Breakdown', 'Breakdown'), ('Technical Problem', 'Technical Problem'),
+                                                                       ('Demand Service','Demand service'), ('Return Job', 'Return Job'),
+                                                                       ('service_a', 'Service A'),('service_b', 'Service B'),
+                                                                       ('service_c', 'Service C') ], required=False, )
     checkin_comment = fields.Text(string="Check-in Comment", required=False, )
     technical_comment = fields.Text(string="Description of work required identified br technical assessment", required=False, )
     spare_tyre = fields.Boolean(string="Spare Tyre",  )

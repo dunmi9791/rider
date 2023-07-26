@@ -57,14 +57,14 @@
                       <field name="checkin_comment"/>
 <!--                      <field name="odometers"/>-->
                   </group>
-                  <group>
-                      <field name="spare_tyre"/>
-                      <field name="jack"/>
-                      <field name="wheel_spanner"/>
-                      <field name="tools"/>
-                      <field name="caution_triangle"/>
-                      <field name="fire_extinguisher"/>
-                  </group>
+<!--                  <group>-->
+<!--                      <field name="spare_tyre"/>-->
+<!--                      <field name="jack"/>-->
+<!--                      <field name="wheel_spanner"/>-->
+<!--                      <field name="tools"/>-->
+<!--                      <field name="caution_triangle"/>-->
+<!--                      <field name="fire_extinguisher"/>-->
+<!--                  </group>-->
               </group>
                 <group>
                   <group>
