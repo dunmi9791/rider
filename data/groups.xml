@@ -25,6 +25,11 @@
         <field name="comment">Workshop Manager Permission Group.</field>
         <field name="category_id" ref="rider.module_category_rider"/>
     </record>
+    <record id="workshop_editor_group" model="res.groups">
+        <field name="name">workshop Items Editor</field>
+        <field name="comment">Workshop Items editor Group.</field>
+        <field name="category_id" ref="rider.module_category_rider"/>
+    </record>
 
     <record id="supplychain_manager_group" model="res.groups">
         <field name="name">supply chain manager</field>
