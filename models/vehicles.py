@@ -18,6 +18,7 @@ class Vehicle(models.Model):
     jobcard_ids = fields.One2many(comodel_name="servicerequest.rider", inverse_name="vehicle_id", string="", required=False, )
     millage_ids = fields.One2many(comodel_name="vehicle.millage", inverse_name="vehicle_id", string="Millage")
     vehicle_full_name = fields.Char(string="Vehicle", compute="_vehicle_name", store=True)
+    odometers = fields.Char(string='Latest Odometer', compute='_compute_latest_millage')
 
     @api.one
     @api.depends('vehicle_make', 'vehicle_model', 'vehicle_year')
@@ -33,7 +34,13 @@ class Vehicle(models.Model):
             year_list.append((i, str(i)))
         return year_list
 
-
+    @api.depends('millage_ids')
+    def _compute_latest_millage(self):
+        for record in self:
+            valid_millages = record.millage_ids.filtered(lambda r: r.date)
+            if valid_millages:
+                latest_millage = max(valid_millages, key=lambda r: r.date)
+                record.odometers = latest_millage.millage if latest_millage else 0.0
 class VehicleMillage(models.Model):
     _name = 'vehicle.millage'
     _description = 'Vehicle Millage history'
