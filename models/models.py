@@ -210,6 +210,7 @@ class ServiceRequest(models.Model):
         if vals.get('state'):
             if vals.get('state') == 'Confirm':
                 lines = []
+                current_date = datetime.now().strftime('%Y-%m-%d')
                 for line in self.operations:
                     fund_line = {
                         'parts_id': line.parts_id.id,
@@ -220,6 +221,7 @@ class ServiceRequest(models.Model):
                 fund_dict = {
                         'jobcard_id': self.id,
                         'operations': lines,
+                        'date': current_date,
                     }
                 record = self.env['fundrequestw.rider']
                 record.create(fund_dict)
@@ -426,7 +428,7 @@ class JobcardQuote(models.Model):
             'team_id': self.team_id.id,
             'vehicle_no': self.jobcard_id.vehicle_reg,
             'chassis_no': self.jobcard_id.vehicle_id.chassis_no,
-            'odometer': self.jobcard_id.odometer,
+            'odometer': self.jobcard_id.vehicle_id.odometers,
             'jobcard': self.jobcard_id.jobcard_no,
             'vehicle_make': self.jobcard_id.vehicle_id.vehicle_make.name,
             'vehicle_model': self.jobcard_id.vehicle_id.vehicle_model.name,
