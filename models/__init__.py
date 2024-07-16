@@ -7,3 +7,4 @@ from . import orders
 from . import partner
 from . import fundrequest_workshop
 from . import ordermemo
+from . import workshop
