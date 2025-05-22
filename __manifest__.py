@@ -2,12 +2,17 @@
 {
     'name': "rider",
 
-    'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.openerp.com""",
+    'summary': """A comprehensive Odoo module for managing vehicle operations, including vehicle information, workshop activities (job cards, fund requests), and financial tracking (cash requisitions, expense requests).""",
 
     'description': """
-        Long description of module's purpose
+The Rider module provides a robust solution for businesses managing a fleet of vehicles or workshop operations. Key functionalities include:
+- Detailed vehicle information management (make, model, year, chassis number, registration, mileage history).
+- Vehicle check-in and check-out processes.
+- Workshop job card integration.
+- Management of fund requests for workshop parts and services.
+- Cash requisition and expense request workflows with multi-level approvals.
+- Tracking of parts, expenses, and financial reconciliation.
+This module integrates with core Odoo modules like Sales, Accounting, and HR to streamline operations and provide a centralized system for all vehicle-related activities.
     """,
 
     'author': "Secteur Network Solutions",
