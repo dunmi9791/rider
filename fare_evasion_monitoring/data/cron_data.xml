@@ -11,7 +11,7 @@
             <field name="user_id" ref="base.user_root"/> <!-- Run as Odoo Admin (superuser) -->
             <field name="interval_number">1</field>
             <field name="interval_type">days</field>
-            <field name="numbercall">-1</field> <!-- Run indefinitely -->
+            <field name="number_of_calls">-1</field> <!-- Run indefinitely -->
             <field name="doall">False</field> <!-- Process missed calls one by one -->
             <field name="nextcall" eval="(datetime.now() + timedelta(days=1)).strftime('%Y-%m-%d 02:00:00')" /> <!-- Next run at 2 AM server time -->
             <field name="active">True</field> <!-- Active by default, can be changed in UI -->
@@ -26,7 +26,7 @@
             <field name="user_id" ref="base.user_root"/>
             <field name="interval_number">15</field> <!-- Run every 15 minutes -->
             <field name="interval_type">minutes</field>
-            <field name="numbercall">-1</field>
+            <field name="number_of_calls">-1</field>
             <field name="doall">False</field>
             <!-- nextcall will be set automatically on creation to 15 mins from now -->
             <field name="active">True</field>
