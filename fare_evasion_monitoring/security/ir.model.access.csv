@@ -1,0 +1,29 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_vehicle_revenue_loss_log_user,vehicle.revenue.loss.log.user,model_vehicle_revenue_loss_log,fare_evasion_monitoring.group_fare_evasion_user,1,0,0,0
+access_vehicle_revenue_loss_log_manager,vehicle.revenue.loss.log.manager,model_vehicle_revenue_loss_log,fare_evasion_monitoring.group_fare_evasion_manager,1,1,1,1
+access_fare_evasion_utils_user,fare.evasion.utils.user,model_fare_evasion_utils,fare_evasion_monitoring.group_fare_evasion_user,1,0,0,0
+access_fare_evasion_utils_manager,fare.evasion.utils.manager,model_fare_evasion_utils,fare_evasion_monitoring.group_fare_evasion_manager,1,0,0,0
+# Access for fleet.vehicle is inherited from the fleet module. We are just adding fields.
+# Access for res.config.settings is handled by base Odoo (typically requires admin/settings group). Our fields appear based on group membership defined in res.config.settings model.
+
+# Note on fare_evasion_utils: AbstractModels usually don't need explicit CRUD permissions
+# as they are not directly interacted with via UI in the same way as regular models.
+# However, if any server actions or direct calls are made by non-privileged users
+# that somehow instantiate or call methods on it directly (unlikely for utils),
+# read access might be relevant. For system/cron usage, it's fine.
+# Giving read access to users/managers for completeness, though likely not strictly needed for utils.
+# Write/Create/Unlink are definitely not applicable for an AbstractModel like utils.
+# The cron jobs run as base.user_root, which bypasses these ACLs.
+# Methods on utils are called by other models' methods which have their own ACLs or run with sudo.
+# For now, including read access for consistency. This can be refined if it causes issues.
+# A common practice for pure utility AbstractModels is to not list them in ir.model.access.csv.
+# Removing fare_evasion_utils from here for now as it's an AbstractModel providing backend logic.
+# If specific server actions were to be exposed to users based on this model, then it would be needed.
+
+# Revised: Only vehicle.revenue.loss.log needs explicit new ACLs.
+# id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+# access_vehicle_revenue_loss_log_user,vehicle.revenue.loss.log.user,model_vehicle_revenue_loss_log,fare_evasion_monitoring.group_fare_evasion_user,1,0,0,0
+# access_vehicle_revenue_loss_log_manager,vehicle.revenue.loss.log.manager,model_vehicle_revenue_loss_log,fare_evasion_monitoring.group_fare_evasion_manager,1,1,1,1
+# The actual content will be just these two lines after comments.I've made a note in the content about `fare.evasion.utils`. AbstractModels used as utility classes/mixins typically don't need entries in `ir.model.access.csv` because they don't have a concrete table and aren't directly manipulated via the UI or standard ORM CRUD operations by end-users. Their methods are usually called internally by other models or system processes (like crons running as root).
+
+So, the `ir.model.access.csv` will focus on `vehicle.revenue.loss.log`.

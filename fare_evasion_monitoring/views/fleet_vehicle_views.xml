@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="fleet_vehicle_view_form_inherit_fare_evasion" model="ir.ui.view">
+        <field name="name">fleet.vehicle.form.inherit.fare.evasion</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+        <field name="arch" type="xml">
+            <!-- Add a button box for quick access to loss logs -->
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <button name="action_view_revenue_loss_logs"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-money"
+                    groups="fare_evasion_monitoring.group_fare_evasion_user">
+                    <field name="revenue_loss_log_count" widget="statinfo" string="Loss Logs"/>
+                </button>
+            </xpath>
+
+            <!-- Add a new page or group for fare evasion related fields -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Fare Evasion Monitoring" groups="fare_evasion_monitoring.group_fare_evasion_user">
+                    <group>
+                        <group string="Near Real-Time Spike Info">
+                            <field name="current_estimated_hourly_loss" widget="monetary" options="{'currency_field': 'company_currency_id'}"/>
+                            <field name="last_hourly_loss_update_time"/>
+                            <field name="company_currency_id" invisible="1"/>
+                        </group>
+                        <group string="Alerting Status">
+                            <field name="last_revenue_spike_alert_time"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Optional: Add to Tree view for quick overview if needed by managers -->
+    <record id="fleet_vehicle_view_tree_inherit_fare_evasion" model="ir.ui.view">
+        <field name="name">fleet.vehicle.tree.inherit.fare.evasion</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='model_id']" position="after">
+                 <field name="current_estimated_hourly_loss"
+                        widget="monetary"
+                        options="{'currency_field': 'company_currency_id'}"
+                        optional="show"
+                        groups="fare_evasion_monitoring.group_fare_evasion_manager"/>
+                 <field name="last_hourly_loss_update_time" optional="show" groups="fare_evasion_monitoring.group_fare_evasion_manager"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

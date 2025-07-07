@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Actions for Daily Summary Dashboard (using vehicle.revenue.loss.log) -->
+
+        <!-- KPI: Total Estimated Lost Revenue (Yesterday) -->
+        <record id="action_kpi_total_lost_revenue_yesterday" model="ir.actions.act_window">
+            <field name="name">Total Lost Revenue (Yesterday)</field>
+            <field name="res_model">vehicle.revenue.loss.log</field>
+            <field name="view_mode">kpi</field> <!-- Odoo's KPI view mode -->
+            <field name="view_id" ref="view_vehicle_revenue_loss_log_kpi_revenue"/>
+            <field name="context" eval="{'search_default_date_yesterday': 1, 'kpi_value_field': 'total_estimated_lost_revenue', 'kpi_name': 'Lost Revenue Yesterday', 'kpi_aggregate': 'sum'}" />
+            <field name="domain">[('date', '=', (context_today() - timedelta(days=1)).strftime('%Y-%m-%d'))]</field>
+        </record>
+        <!-- Custom KPI view for total_estimated_lost_revenue -->
+        <record id="view_vehicle_revenue_loss_log_kpi_revenue" model="ir.ui.view">
+            <field name="name">vehicle.revenue.loss.log.kpi.revenue</field>
+            <field name="model">vehicle.revenue.loss.log</field>
+            <field name="arch" type="xml">
+                <kpi string="Total Estimated Lost Revenue" value_field="total_estimated_lost_revenue" aggregate="sum"/>
+            </field>
+        </record>
+
+        <!-- KPI: Total Estimated Uncarded Journeys (Yesterday) -->
+        <record id="action_kpi_total_uncarded_journeys_yesterday" model="ir.actions.act_window">
+            <field name="name">Uncarded Journeys (Yesterday)</field>
+            <field name="res_model">vehicle.revenue.loss.log</field>
+            <field name="view_mode">kpi</field>
+            <field name="view_id" ref="view_vehicle_revenue_loss_log_kpi_journeys"/>
+            <field name="context" eval="{'search_default_date_yesterday': 1, 'kpi_value_field': 'estimated_uncarded_journeys', 'kpi_name': 'Uncarded Journeys Yesterday', 'kpi_aggregate': 'sum'}"/>
+            <field name="domain">[('date', '=', (context_today() - timedelta(days=1)).strftime('%Y-%m-%d'))]</field>
+        </record>
+         <!-- Custom KPI view for estimated_uncarded_journeys -->
+        <record id="view_vehicle_revenue_loss_log_kpi_journeys" model="ir.ui.view">
+            <field name="name">vehicle.revenue.loss.log.kpi.journeys</field>
+            <field name="model">vehicle.revenue.loss.log</field>
+            <field name="arch" type="xml">
+                <kpi string="Total Estimated Uncarded Journeys" value_field="estimated_uncarded_journeys" aggregate="sum"/>
+            </field>
+        </record>
+
+        <!-- KPI: Average Loss Per Vehicle (Yesterday) -->
+        <record id="action_kpi_avg_loss_per_vehicle_yesterday" model="ir.actions.act_window">
+            <field name="name">Avg. Loss/Vehicle (Yesterday)</field>
+            <field name="res_model">vehicle.revenue.loss.log</field>
+            <field name="view_mode">kpi</field>
+            <field name="view_id" ref="view_vehicle_revenue_loss_log_kpi_avg_revenue"/>
+            <field name="context" eval="{'search_default_date_yesterday': 1, 'kpi_value_field': 'total_estimated_lost_revenue', 'kpi_name': 'Avg Loss/Vehicle Yest.', 'kpi_aggregate': 'avg'}"/>
+            <field name="domain">[('date', '=', (context_today() - timedelta(days=1)).strftime('%Y-%m-%d'))]</field>
+        </record>
+        <!-- Custom KPI view for average total_estimated_lost_revenue -->
+        <record id="view_vehicle_revenue_loss_log_kpi_avg_revenue" model="ir.ui.view">
+            <field name="name">vehicle.revenue.loss.log.kpi.avg.revenue</field>
+            <field name="model">vehicle.revenue.loss.log</field>
+            <field name="arch" type="xml">
+                <kpi string="Average Loss Per Vehicle" value_field="total_estimated_lost_revenue" aggregate="avg"/>
+            </field>
+        </record>
+
+        <!-- Chart: Lost Revenue Per Vehicle (Bar Chart, Yesterday) -->
+        <record id="action_chart_lost_revenue_per_vehicle_yesterday" model="ir.actions.act_window">
+            <field name="name">Lost Revenue by Vehicle (Yesterday)</field>
+            <field name="res_model">vehicle.revenue.loss.log</field>
+            <field name="view_mode">graph</field>
+            <field name="view_id" ref="view_vehicle_revenue_loss_log_graph_by_vehicle"/>
+            <field name="domain">[('date', '=', (context_today() - timedelta(days=1)).strftime('%Y-%m-%d'))]</field>
+            <!-- Context can set default filters/grouping if the graph view itself doesn't define it -->
+            <field name="context">{'search_default_date_yesterday': 1}</field>
+        </record>
+        <!-- Custom Graph View for Lost Revenue by Vehicle -->
+        <record id="view_vehicle_revenue_loss_log_graph_by_vehicle" model="ir.ui.view">
+            <field name="name">vehicle.revenue.loss.log.graph.by.vehicle</field>
+            <field name="model">vehicle.revenue.loss.log</field>
+            <field name="arch" type="xml">
+                <graph string="Lost Revenue by Vehicle" type="bar">
+                    <field name="vehicle_id" type="row"/>
+                    <field name="total_estimated_lost_revenue" type="measure" operator="+"/>
+                </graph>
+            </field>
+        </record>
+
+        <!-- Chart: Daily Lost Revenue Trend (Line Chart - System Wide, Last 30 days) -->
+        <record id="action_chart_daily_lost_revenue_trend" model="ir.actions.act_window">
+            <field name="name">Daily Lost Revenue Trend (Last 30 Days)</field>
+            <field name="res_model">vehicle.revenue.loss.log</field>
+            <field name="view_mode">graph</field>
+            <field name="view_id" ref="view_vehicle_revenue_loss_log_graph_trend"/>
+            <field name="domain">[('date', '&gt;=', (context_today() - timedelta(days=30)).strftime('%Y-%m-%d'))]</field>
+            <field name="context">{'search_default_last_30_days': 1}</field>
+        </record>
+        <!-- Custom Graph View for Daily Lost Revenue Trend -->
+        <record id="view_vehicle_revenue_loss_log_graph_trend" model="ir.ui.view">
+            <field name="name">vehicle.revenue.loss.log.graph.trend</field>
+            <field name="model">vehicle.revenue.loss.log</field>
+            <field name="arch" type="xml">
+                <graph string="Daily Lost Revenue Trend" type="line">
+                    <field name="date" interval="day" type="row"/>
+                    <field name="total_estimated_lost_revenue" type="measure" operator="+"/>
+                </graph>
+            </field>
+        </record>
+
+        <!-- Table: Top Losing Vehicles (Yesterday - Table) -->
+        <record id="action_table_top_losing_vehicles_yesterday" model="ir.actions.act_window">
+            <field name="name">Top Losing Vehicles (Yesterday)</field>
+            <field name="res_model">vehicle.revenue.loss.log</field>
+            <field name="view_mode">tree</field> <!-- Use tree view, can be customized further -->
+            <field name="view_id" ref="view_vehicle_revenue_loss_log_tree_top_losing"/> <!-- Specific tree view if needed -->
+            <field name="domain">[('date', '=', (context_today() - timedelta(days=1)).strftime('%Y-%m-%d'))]</field>
+            <field name="context">{'search_default_date_yesterday': 1, 'default_order': 'total_estimated_lost_revenue desc'}</field>
+        </record>
+        <!-- Custom Tree View for Top Losing Vehicles (can reuse main tree or specialize) -->
+        <record id="view_vehicle_revenue_loss_log_tree_top_losing" model="ir.ui.view">
+            <field name="name">vehicle.revenue.loss.log.tree.top.losing</field>
+            <field name="model">vehicle.revenue.loss.log</field>
+            <field name="priority">20</field> <!-- Higher priority if used in specific action -->
+            <field name="arch" type="xml">
+                <tree string="Top Losing Vehicles" default_order="total_estimated_lost_revenue desc">
+                    <field name="vehicle_id"/>
+                    <field name="total_estimated_lost_revenue" sum="Total"/>
+                    <field name="estimated_uncarded_journeys"/>
+                    <!-- 'average_concurrent_uncarded_passengers' is not a direct field in vehicle.revenue.loss.log
+                         It might be derived from total_uncarded_passenger_intervals / total_20s_logs_processed if needed
+                         For now, keeping to defined fields. This could be a computed field if required.
+                    -->
+                    <field name="total_uncarded_passenger_intervals"/>
+                    <field name="total_20s_logs_processed"/>
+                    <field name="date" invisible="1"/> <!-- Date is fixed by domain -->
+                    <field name="currency_id" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <!-- Actions for Near Real-Time Monitoring Dashboard (using fleet.vehicle) -->
+
+        <!-- KPI: Vehicles Currently in Spike Alert State (Count) -->
+        <!-- This requires a way to define "currently in spike state".
+             If last_revenue_spike_alert_time is recent (e.g. within cool_down_minutes * 2 of now_dt),
+             AND current_estimated_hourly_loss > some_threshold.
+             This is more complex for a simple KPI action domain.
+             A simpler proxy: count of vehicles with recent last_revenue_spike_alert_time.
+        -->
+        <record id="action_kpi_vehicles_recent_spike_alert" model="ir.actions.act_window">
+            <field name="name">Vehicles with Recent Spike Alert</field>
+            <field name="res_model">fleet.vehicle</field>
+            <field name="view_mode">kpi</field>
+            <field name="view_id" ref="view_fleet_vehicle_kpi_recent_spike_count"/>
+            <!-- Domain: last alert time is within, e.g., the last 2 * cool_down period -->
+            <!-- This domain needs to be dynamic based on config. For now, let's say within last 2 hours if cool_down is 60 mins -->
+            <field name="domain" expression="[('last_revenue_spike_alert_time', '&gt;=', (datetime.now() - timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S'))]"/>
+            <field name="context" eval="{'kpi_name': 'Recent Spikes', 'kpi_model_count': True}"/>
+        </record>
+        <record id="view_fleet_vehicle_kpi_recent_spike_count" model="ir.ui.view">
+            <field name="name">fleet.vehicle.kpi.recent.spike.count</field>
+            <field name="model">fleet.vehicle</field>
+            <field name="arch" type="xml">
+                <kpi string="Vehicles with Recent Spike Alert" record_count="True"/>
+            </field>
+        </record>
+
+
+        <!-- KPI: Total Current Estimated Hourly Loss (All Vehicles) -->
+        <record id="action_kpi_total_current_hourly_loss" model="ir.actions.act_window">
+            <field name="name">Total Current Hourly Loss</field>
+            <field name="res_model">fleet.vehicle</field>
+            <field name="view_mode">kpi</field>
+            <field name="view_id" ref="view_fleet_vehicle_kpi_total_hourly_loss"/>
+            <!-- Domain: where last_hourly_loss_update_time is recent, e.g., within last 30 mins -->
+            <field name="domain" expression="[('last_hourly_loss_update_time', '&gt;=', (datetime.now() - timedelta(minutes=30)).strftime('%Y-%m-%d %H:%M:%S'))]"/>
+            <field name="context" eval="{'kpi_value_field': 'current_estimated_hourly_loss', 'kpi_name': 'Total Current Hourly Loss', 'kpi_aggregate': 'sum'}" />
+        </record>
+        <record id="view_fleet_vehicle_kpi_total_hourly_loss" model="ir.ui.view">
+            <field name="name">fleet.vehicle.kpi.total.hourly.loss</field>
+            <field name="model">fleet.vehicle</field>
+            <field name="arch" type="xml">
+                <kpi string="Total Current Estimated Hourly Loss" value_field="current_estimated_hourly_loss" aggregate="sum"/>
+            </field>
+        </record>
+
+        <!-- Table: Vehicles with High Current Hourly Loss -->
+        <record id="action_table_vehicles_high_current_loss" model="ir.actions.act_window">
+            <field name="name">Vehicles with High Current Loss</field>
+            <field name="res_model">fleet.vehicle</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_fleet_vehicle_tree_high_loss"/>
+            <!-- Domain: e.g., current_estimated_hourly_loss > a certain threshold (e.g., 10 currency units)
+                 AND last_hourly_loss_update_time is recent.
+                 This threshold should ideally be configurable or based on avg.
+                 For now, a fixed example or just sort by loss.
+            -->
+            <field name="domain" expression="[('current_estimated_hourly_loss', '&gt;', 10), ('last_hourly_loss_update_time', '&gt;=', (datetime.now() - timedelta(minutes=30)).strftime('%Y-%m-%d %H:%M:%S'))]"/>
+            <field name="context">{'default_order': 'current_estimated_hourly_loss desc'}</field>
+        </record>
+        <!-- Custom Tree view for vehicles with high current loss -->
+        <record id="view_fleet_vehicle_tree_high_loss" model="ir.ui.view">
+            <field name="name">fleet.vehicle.tree.high.loss</field>
+            <field name="model">fleet.vehicle</field>
+            <field name="arch" type="xml">
+                <tree string="Vehicles with High Current Loss" default_order="current_estimated_hourly_loss desc">
+                    <field name="name"/>
+                    <field name="current_estimated_hourly_loss" widget="monetary" options="{'currency_field': 'company_currency_id'}"/>
+                    <field name="last_hourly_loss_update_time"/>
+                    <field name="last_revenue_spike_alert_time"/>
+                    <field name="license_plate"/>
+                    <field name="company_currency_id" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Table: Vehicles with Recent Spike Alerts (List) -->
+        <record id="action_list_vehicles_recent_spike_alerts" model="ir.actions.act_window">
+            <field name="name">Vehicles with Recent Spike Alerts</field>
+            <field name="res_model">fleet.vehicle</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_fleet_vehicle_tree_high_loss"/> <!-- Can reuse the same tree view or make a specific one -->
+            <field name="domain" expression="[('last_revenue_spike_alert_time', '&gt;=', (datetime.now() - timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S'))]"/>
+            <field name="context">{'default_order': 'last_revenue_spike_alert_time desc'}</field>
+        </record>
+
+    </data>
+</odoo>

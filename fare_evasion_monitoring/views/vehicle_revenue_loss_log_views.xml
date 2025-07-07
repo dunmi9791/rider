@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- vehicle.revenue.loss.log Tree View -->
+        <record id="view_vehicle_revenue_loss_log_tree" model="ir.ui.view">
+            <field name="name">vehicle.revenue.loss.log.tree</field>
+            <field name="model">vehicle.revenue.loss.log</field>
+            <field name="arch" type="xml">
+                <tree string="Vehicle Revenue Loss Logs" decoration-danger="status=='error'" decoration-warning="status=='partial_error'" decoration-muted="status=='no_data'">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="vehicle_id"/>
+                    <field name="total_estimated_lost_revenue" sum="Total Lost Revenue"/>
+                    <field name="estimated_uncarded_journeys" sum="Total Uncarded Journeys"/>
+                    <field name="total_uncarded_passenger_intervals"/>
+                    <field name="status"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="currency_id" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- vehicle.revenue.loss.log Form View -->
+        <record id="view_vehicle_revenue_loss_log_form" model="ir.ui.view">
+            <field name="name">vehicle.revenue.loss.log.form</field>
+            <field name="model">vehicle.revenue.loss.log</field>
+            <field name="arch" type="xml">
+                <form string="Vehicle Revenue Loss Log">
+                    <header>
+                        <field name="status" widget="statusbar" statusbar_visible="pending,success,partial_error,no_data,error"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1><field name="name" readonly="1"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="vehicle_id"/>
+                                <field name="date"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                                <field name="currency_id" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="computation_datetime" readonly="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Loss Estimation Details">
+                                <group>
+                                    <group string="Estimated Loss">
+                                        <field name="total_estimated_lost_revenue"/>
+                                        <field name="estimated_uncarded_journeys"/>
+                                    </group>
+                                    <group string="Factors Used in Estimation">
+                                        <field name="average_fare_per_carded_trip_used"/>
+                                        <field name="average_carded_journey_duration_intervals_used"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Processed Log Data">
+                                <group>
+                                    <group string="Passenger Interval Data">
+                                        <field name="total_uncarded_passenger_intervals"/>
+                                        <field name="total_20s_logs_processed"/>
+                                    </group>
+                                    <group string="Raw Counts from Bus Logs">
+                                        <field name="total_machine_vision_passengers_raw"/>
+                                        <field name="total_machine_vision_passengers_adjusted"/>
+                                        <field name="total_carded_passengers_from_logs"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Error Information" attrs="{'invisible': [('status', 'not in', ['error', 'partial_error'])]}">
+                                <group>
+                                    <field name="error_message" readonly="1"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- vehicle.revenue.loss.log Search View -->
+        <record id="view_vehicle_revenue_loss_log_search" model="ir.ui.view">
+            <field name="name">vehicle.revenue.loss.log.search</field>
+            <field name="model">vehicle.revenue.loss.log</field>
+            <field name="arch" type="xml">
+                <search string="Search Vehicle Revenue Loss Logs">
+                    <field name="name"/>
+                    <field name="vehicle_id"/>
+                    <field name="date"/>
+                    <field name="status"/>
+                    <separator/>
+                    <filter string="Errors" name="filter_error" domain="[('status', '=', 'error')]"/>
+                    <filter string="Partial Errors" name="filter_partial_error" domain="[('status', '=', 'partial_error')]"/>
+                    <filter string="No Data" name="filter_no_data" domain="[('status', '=', 'no_data')]"/>
+                    <separator/>
+                    <filter string="Today" name="filter_today" date="date" domain="[('date', '=', context_today())]"/>
+                    <filter string="Yesterday" name="filter_yesterday" date="date" domain="[('date', '=', context_today() - datetime.timedelta(days=1))]"/>
+                    <filter string="Last 7 Days" name="filter_last_7_days" date="date" domain="[('date', '&gt;=', (context_today() - datetime.timedelta(days=7)).strftime('%Y-%m-%d'))]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Vehicle" name="group_by_vehicle" context="{'group_by': 'vehicle_id'}"/>
+                        <filter string="Date" name="group_by_date" context="{'group_by': 'date'}"/>
+                        <filter string="Status" name="group_by_status" context="{'group_by': 'status'}"/>
+                        <filter string="Company" name="group_by_company" context="{'group_by':'company_id'}" groups="base.group_multi_company"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- vehicle.revenue.loss.log Action Window -->
+        <record id="action_vehicle_revenue_loss_log" model="ir.actions.act_window">
+            <field name="name">Vehicle Revenue Loss Logs</field>
+            <field name="res_model">vehicle.revenue.loss.log</field>
+            <field name="view_mode">tree,form,graph,pivot</field> <!-- Added graph and pivot for potential dashboard usage -->
+            <field name="search_view_id" ref="view_vehicle_revenue_loss_log_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No vehicle revenue loss logs found.
+                </p><p>
+                    These logs are generated automatically by a scheduled job based on bus log data.
+                </p>
+            </field>
+        </record>
+
+        <!-- Menu Item -->
+        <menuitem id="menu_fare_evasion_monitoring_root"
+            name="Fare Evasion"
+            sequence="80"
+            web_icon="fare_evasion_monitoring,static/description/icon.png"  <!-- Placeholder icon -->
+            groups="group_fare_evasion_user"/>
+
+        <menuitem id="menu_vehicle_revenue_loss_log"
+            name="Revenue Loss Logs"
+            parent="menu_fare_evasion_monitoring_root"
+            action="action_vehicle_revenue_loss_log"
+            sequence="10"
+            groups="group_fare_evasion_user"/>
+
+    </data>
+</odoo>
