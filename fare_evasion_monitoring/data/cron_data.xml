@@ -13,7 +13,7 @@
             <field name="interval_type">days</field>
             <field name="number_of_calls">-1</field> <!-- Run indefinitely -->
             <field name="doall">False</field> <!-- Process missed calls one by one -->
-            <field name="nextcall" eval="(datetime.now() + timedelta(days=1)).strftime('%Y-%m-%d 02:00:00')" /> <!-- Next run at 2 AM server time -->
+            <field name="nextcall" eval="(datetime.now() + timedelta(days=1)).strftime('%Y-%m-%d 02:00:00')"/> <!-- Next run at 2 AM server time -->
             <field name="active">True</field> <!-- Active by default, can be changed in UI -->
         </record>
 
